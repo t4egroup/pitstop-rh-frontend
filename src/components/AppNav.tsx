@@ -3,20 +3,33 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard, GitPullRequest, ClipboardList,
   Users, BarChart2, Megaphone, UserCheck,
-  LogIn, LogOut, Settings,
+  LogIn, LogOut, Settings, Briefcase, Building2, User, Search,
 } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth, UserRole } from "@/contexts/AuthContext";
 import Logo from "@/components/Logo";
 
-const recruiterLinks = [
-  { to: "/dashboard",   label: "Dashboard",   icon: LayoutDashboard },
-  { to: "/processos",   label: "Processos",   icon: GitPullRequest  },
-  { to: "/requisicoes", label: "Requisições", icon: ClipboardList   },
-  { to: "/candidatos",  label: "Candidatos",  icon: Users           },
-  { to: "/relatorios",  label: "Relatórios",  icon: BarChart2       },
-  { to: "/branding",    label: "Branding",    icon: Megaphone       },
-  { to: "/admissao",    label: "Admissão",    icon: UserCheck       },
-];
+const navLinks: Record<UserRole, { to: string; label: string; icon: React.ElementType }[]> = {
+  recrutador: [
+    { to: "/dashboard",   label: "Dashboard",   icon: LayoutDashboard },
+    { to: "/processos",   label: "Processos",   icon: GitPullRequest  },
+    { to: "/requisicoes", label: "Requisições", icon: ClipboardList   },
+    { to: "/candidatos",  label: "Candidatos",  icon: Users           },
+    { to: "/relatorios",  label: "Relatórios",  icon: BarChart2       },
+    { to: "/branding",    label: "Branding",    icon: Megaphone       },
+    { to: "/admissao",    label: "Admissão",    icon: UserCheck       },
+  ],
+  candidato: [
+    { to: "/candidato/vagas", label: "Vagas", icon: Search },
+  ],
+  empresa: [
+    { to: "/empresa",             label: "Dashboard",  icon: LayoutDashboard },
+    { to: "/empresa/vagas",       label: "Vagas",      icon: Briefcase       },
+    { to: "/empresa/candidatos",  label: "Candidatos", icon: Users           },
+    { to: "/empresa/relatorios",  label: "Relatórios", icon: BarChart2       },
+    { to: "/empresa/branding",    label: "Branding",   icon: Megaphone       },
+    { to: "/empresa/perfil",      label: "Perfil",     icon: Building2       },
+  ],
+};
 
 const homeLinks = [
   { href: "#inicio", label: "Início" },
@@ -30,12 +43,13 @@ const homeLinks = [
 
 const AppNav = () => {
   const { pathname } = useLocation();
-  const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn, user, logout } = useAuth();
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const isPublicPage = pathname === "/" || pathname === "/planos";
+  const isLoginPage = pathname === "/login" || pathname === "/cadastro";
 
   const handleLogout = () => {
     setDropdownOpen(false);
@@ -53,43 +67,21 @@ const AppNav = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  if (isLoginPage || isLoggedIn) return null;
+
   return (
-    <header className="sticky top-0 z-40 border-b bg-card">
-      <div className="container flex h-16 items-center justify-between">
+    <header className="sticky top-0 z-40 px-4 sm:px-8 pt-4 bg-transparent">
+      <div className="max-w-5xl mx-auto mb-3 flex h-[80px] items-center justify-between rounded-2xl border-2 border-slate-300/80 bg-white/95 px-8 shadow-md backdrop-blur-xl dark:border-white/20 dark:bg-slate-900/96">
         {isLoggedIn ? (
           <div><Logo size="sm" /></div>
         ) : (
           <Link to="/"><Logo size="sm" /></Link>
         )}
 
-        {/* Desktop nav */}
-        {isPublicPage && !isLoggedIn ? (
+        {/* Desktop nav — usuários logados (centrado, tem muitos itens) */}
+        {isLoggedIn && user ? (
           <nav className="hidden md:flex items-center gap-1">
-            {homeLinks.map((l) => {
-              const isOnHome = pathname === "/";
-              const href = l.isRoute ? l.href : isOnHome ? l.href : `/${l.href}`;
-              return l.isRoute ? (
-                <Link
-                  key={l.href}
-                  to={href}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-muted"
-                >
-                  {l.label}
-                </Link>
-              ) : (
-                <a
-                  key={l.href}
-                  href={href}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-muted"
-                >
-                  {l.label}
-                </a>
-              );
-            })}
-          </nav>
-        ) : isLoggedIn ? (
-          <nav className="hidden md:flex items-center gap-1">
-            {recruiterLinks.map((l) => {
+            {navLinks[user.role].map((l) => {
               const active = pathname === l.to;
               return (
                 <Link
@@ -110,26 +102,54 @@ const AppNav = () => {
         ) : null}
 
         {/* Right side */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
+          {/* Nav pública — junto ao botão de login */}
+          {isPublicPage && !isLoggedIn && (
+            <nav className="hidden md:flex items-center gap-0.5 mr-2">
+              {homeLinks.map((l) => {
+                const isOnHome = pathname === "/";
+                const href = l.isRoute ? l.href : isOnHome ? l.href : `/${l.href}`;
+                return l.isRoute ? (
+                  <Link
+                    key={l.href}
+                    to={href}
+                    className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-muted"
+                  >
+                    {l.label}
+                  </Link>
+                ) : (
+                  <a
+                    key={l.href}
+                    href={href}
+                    className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-muted"
+                  >
+                    {l.label}
+                  </a>
+                );
+              })}
+            </nav>
+          )}
           {isLoggedIn ? (
             <>
               {/* Mobile nav icons */}
-              <nav className="flex md:hidden items-center gap-1">
-                {recruiterLinks.map((l) => {
-                  const active = pathname === l.to;
-                  return (
-                    <Link
-                      key={l.to}
-                      to={l.to}
-                      className={`flex items-center justify-center rounded-lg p-2 transition-colors ${
-                        active ? "bg-primary/10 text-primary" : "text-muted-foreground"
-                      }`}
-                    >
-                      <l.icon size={18} />
-                    </Link>
-                  );
-                })}
-              </nav>
+              {user && (
+                <nav className="flex md:hidden items-center gap-1">
+                  {navLinks[user.role].map((l) => {
+                    const active = pathname === l.to;
+                    return (
+                      <Link
+                        key={l.to}
+                        to={l.to}
+                        className={`flex items-center justify-center rounded-lg p-2 transition-colors ${
+                          active ? "bg-primary/10 text-primary" : "text-muted-foreground"
+                        }`}
+                      >
+                        <l.icon size={18} />
+                      </Link>
+                    );
+                  })}
+                </nav>
+              )}
 
               {/* Avatar dropdown */}
               <div className="relative" ref={dropdownRef}>
@@ -141,23 +161,45 @@ const AppNav = () => {
                       : "bg-primary/10 text-primary hover:bg-primary/20"
                   }`}
                 >
-                  A
+                  {user?.name?.[0]?.toUpperCase() ?? "?"}
                 </button>
 
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 rounded-xl border bg-card shadow-lg overflow-hidden z-50">
                     <div className="px-4 py-3 border-b">
-                      <p className="text-sm font-semibold">Amanda Silva</p>
-                      <p className="text-xs text-muted-foreground">amanda@empresa.com.br</p>
+                      <p className="text-sm font-semibold">{user?.name}</p>
+                      <p className="text-xs text-muted-foreground">{user?.email}</p>
                     </div>
-                    <Link
-                      to="/perfil"
-                      onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-muted transition-colors"
-                    >
-                      <Settings size={15} className="text-muted-foreground" />
-                      Configurações
-                    </Link>
+                    {user?.role === "candidato" && (
+                      <>
+                        <Link
+                          to="/candidato"
+                          onClick={() => setDropdownOpen(false)}
+                          className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-muted transition-colors"
+                        >
+                          <Briefcase size={15} className="text-muted-foreground" />
+                          Minhas Candidaturas
+                        </Link>
+                        <Link
+                          to="/candidato/perfil"
+                          onClick={() => setDropdownOpen(false)}
+                          className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-muted transition-colors"
+                        >
+                          <User size={15} className="text-muted-foreground" />
+                          Meu Perfil
+                        </Link>
+                      </>
+                    )}
+                    {user?.role === "recrutador" && (
+                      <Link
+                        to="/perfil"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-muted transition-colors"
+                      >
+                        <Settings size={15} className="text-muted-foreground" />
+                        Configurações
+                      </Link>
+                    )}
                     <button
                       onClick={handleLogout}
                       className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-destructive hover:bg-destructive/10 transition-colors"
@@ -172,11 +214,8 @@ const AppNav = () => {
           ) : (
             <Link
               to="/login"
-              className={`flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold transition-colors ${
-                pathname === "/login"
-                  ? "bg-primary/10 text-primary"
-                  : "border border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-              }`}
+              className="flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold text-white hover:opacity-90 transition-opacity shadow-md"
+              style={{ background: "linear-gradient(135deg,#ea3839 0%,#c0124a 15%,#3b6fd4 50%,#243c7e 100%)" }}
             >
               <LogIn size={15} />
               <span className="hidden sm:inline">Login</span>

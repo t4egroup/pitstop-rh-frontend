@@ -1,21 +1,31 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
+export type UserRole = "candidato" | "empresa" | "recrutador";
+
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+}
+
 interface AuthContextType {
   isLoggedIn: boolean;
-  login: () => void;
+  user: AuthUser | null;
+  login: (user: AuthUser) => void;
   logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<AuthUser | null>(null);
 
-  const login = () => setIsLoggedIn(true);
-  const logout = () => setIsLoggedIn(false);
+  const login = (userData: AuthUser) => setUser(userData);
+  const logout = () => setUser(null);
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn: !!user, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

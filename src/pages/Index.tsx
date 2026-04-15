@@ -37,196 +37,199 @@ const Index = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col" style={{ background: "#0f1f45" }}>
 
       {/* ══════════════════════════════════════════
           1. HERO
       ══════════════════════════════════════════ */}
-      <section
-        id="inicio"
-        className="relative flex items-center overflow-hidden bg-[#0c1d3f]"
-      >
-        {/* dot-grid overlay */}
-        <div className="dot-grid absolute inset-0 pointer-events-none" />
-        {/* glow radial */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_65%_50%,rgba(49,84,156,0.30),transparent)] pointer-events-none" />
-        {/* red accent line top */}
-        <div className="absolute top-0 left-0 right-0 h-[3px]" style={{ background: "linear-gradient(90deg,#ea3839 0%,#31549c 60%,transparent 100%)" }} />
+      <section id="inicio" className="relative flex flex-col justify-center gap-8 pb-16 overflow-x-hidden h-screen -mt-[6.75rem] pt-[6.75rem]" style={{ background: "linear-gradient(145deg, #0a1628 0%, #0f2044 40%, #162952 100%)" }}>
 
-        <div className="relative z-10 container max-w-6xl mx-auto px-4 py-20 sm:py-28 grid lg:grid-cols-2 gap-14 items-center">
+        {/* ── Geometric shapes ── */}
+        <div className="absolute top-0 right-0 w-[520px] h-[520px] pointer-events-none opacity-50"
+          style={{ background: "linear-gradient(160deg,#1e3a7a,#243c7e)", clipPath: "polygon(100% 0%,30% 0%,100% 70%)" }} />
+        <div className="absolute top-0 right-0 w-[320px] h-[320px] pointer-events-none opacity-30"
+          style={{ background: "#31549c", clipPath: "polygon(100% 0%,55% 0%,100% 45%)" }} />
+        <div className="absolute bottom-0 left-0 w-[380px] h-[380px] pointer-events-none opacity-30"
+          style={{ background: "linear-gradient(45deg,#c0392b,#ea3839)", clipPath: "polygon(0% 100%,0% 35%,65% 100%)" }} />
+        <div className="absolute bottom-0 right-0 w-[220px] h-[220px] pointer-events-none opacity-20"
+          style={{ background: "#f59e0b", clipPath: "polygon(100% 100%,30% 100%,100% 30%)" }} />
+        <div className="absolute top-1/2 -translate-y-1/2 -left-8 w-[160px] h-[300px] pointer-events-none opacity-10"
+          style={{ background: "#22c55e", clipPath: "polygon(0% 20%,100% 0%,100% 100%,0% 80%)" }} />
+        <div className="absolute inset-0 pointer-events-none opacity-[0.06]"
+          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.07 }} aria-hidden>
+          <circle cx="72%" cy="46%" r="180" fill="none" stroke="white" strokeWidth="1" />
+          <circle cx="72%" cy="46%" r="280" fill="none" stroke="white" strokeWidth="0.8" />
+          <circle cx="72%" cy="46%" r="380" fill="none" stroke="white" strokeWidth="0.5" />
+          <line x1="0" y1="100%" x2="40%" y2="0" stroke="white" strokeWidth="0.6" />
+          <line x1="100%" y1="0" x2="60%" y2="100%" stroke="white" strokeWidth="0.6" />
+        </svg>
+        <div className="dot-grid absolute inset-0 pointer-events-none opacity-15" />
+        <div className="absolute top-0 left-0 right-0 h-[3px] pointer-events-none"
+          style={{ background: "linear-gradient(90deg,#ea3839 0%,#243c7e 50%,transparent 100%)" }} />
 
-          {/* Left column */}
-          <div>
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-medium text-white/70 mb-6">
+        <div className="relative z-10 container max-w-6xl mx-auto px-4 py-6 grid lg:grid-cols-[1fr_1.1fr] gap-12 items-center">
+
+          {/* ── Left ── */}
+          <div className="space-y-7">
+
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-4 py-1.5 text-xs font-semibold text-white/80 backdrop-blur-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
               Plataforma líder em recrutamento inteligente
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-extrabold leading-[1.1] text-white mb-5">
-              A Parada certa para<br />
-              o seu <span style={{ color: "#ea3839" }}>Sucesso.</span>
-            </h1>
+            <div>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.0] tracking-tight text-white">
+                A Parada<br />
+                certa para<br />
+                o seu{" "}
+                <span style={{ color: "#ea3839" }}>Sucesso.</span>
+              </h1>
+            </div>
 
-            <p className="text-white/55 text-sm sm:text-base leading-relaxed max-w-md mb-8">
-              Na PitStop RH, cada contratação é uma parada estratégica para o sucesso. Conectamos empresas e talentos com propósito, velocidade e precisão.
+            <p className="text-white/55 text-base leading-relaxed max-w-sm">
+              Conectamos empresas e talentos com propósito, velocidade e precisão. Do operacional ao estratégico.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 mb-10">
+            <div className="flex flex-col sm:flex-row gap-3 pt-1">
               <Link
                 to="/login"
-                className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground px-7 py-3 text-sm font-bold hover:opacity-90 transition-opacity shadow-lg"
+                className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-sm font-bold text-white hover:opacity-90 transition-opacity shadow-2xl"
+                style={{ background: "linear-gradient(135deg,#ea3839 0%,#c0124a 15%,#3b6fd4 50%,#243c7e 100%)", boxShadow: "0 8px 30px rgba(234,56,57,0.35)" }}
               >
                 Solicitar demonstração <ArrowRight size={15} />
               </Link>
               <Link
-                to="/login"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 text-white/80 px-7 py-3 text-sm font-semibold hover:bg-white/5 transition-colors"
+                to="/cadastro"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 text-white/85 px-8 py-4 text-sm font-semibold hover:bg-white/10 transition-colors backdrop-blur-sm"
               >
                 Sou Candidato
               </Link>
             </div>
 
-            {/* trust strip */}
-            <div className="flex items-center gap-6">
+            {/* Stat row */}
+            <div className="flex items-stretch gap-0 pt-2">
               {[
-                { num: "+1000", label: "processos/ano" },
-                { num: "+600",  label: "vagas fechadas" },
-                { num: "98%",   label: "satisfação" },
+                { num: "+1000", label: "processos/ano",  accent: "#60a5fa", border: "border-r border-white/10" },
+                { num: "+600",  label: "vagas fechadas", accent: "#fbbf24", border: "border-r border-white/10" },
+                { num: "98%",   label: "satisfação",     accent: "#4ade80", border: "" },
               ].map((s, i) => (
-                <div key={i} className="text-center">
-                  <p className="text-lg font-extrabold text-white leading-none">{s.num}</p>
-                  <p className="text-[10px] text-white/40 mt-0.5">{s.label}</p>
+                <div key={i} className={`px-5 first:pl-0 ${s.border}`}>
+                  <p className="text-2xl font-extrabold leading-none" style={{ color: s.accent }}>{s.num}</p>
+                  <p className="text-[11px] text-white/40 mt-1.5 leading-tight">{s.label}</p>
                 </div>
               ))}
             </div>
+
           </div>
 
-          {/* Right column — recruitment dashboard mockup */}
-          <div className="relative flex justify-center lg:justify-end">
-            {/* glow blob */}
-            <div className="absolute -inset-6 rounded-3xl bg-[#31549c]/20 blur-3xl pointer-events-none" />
+          {/* ── Right — cards layout ── */}
+          <div className="relative h-[420px]">
 
-            {/* floating notification — top left */}
-            <div className="absolute -top-4 -left-2 z-30 flex items-center gap-2.5 rounded-xl border border-white/15 bg-[#0c1d3f]/90 backdrop-blur px-3 py-2 shadow-2xl">
-              <div className="h-7 w-7 rounded-full bg-green-500/20 flex items-center justify-center shrink-0">
-                <Users size={13} className="text-green-400" />
+            {/* Glow behind cards */}
+            <div className="absolute inset-0 pointer-events-none"
+              style={{ background: "radial-gradient(ellipse 70% 60% at 60% 50%, rgba(49,84,156,0.25), transparent)" }} />
+
+            {/* ── Card 1 (main) — center ── */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 rounded-2xl bg-white p-5 z-20 border border-slate-200" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.25)" }}>
+              {/* company */}
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2.5">
+                  <div className="h-9 w-9 rounded-xl flex items-center justify-center font-extrabold text-white text-xs shrink-0"
+                    style={{ background: "linear-gradient(135deg,#243c7e,#4f6ec0)" }}>TC</div>
+                  <div>
+                    <p className="text-[10px] text-slate-500">Tech Corp Brasil</p>
+                    <p className="text-sm font-bold text-slate-900">Dev Front-end Sr.</p>
+                    <p className="text-[10px] text-slate-500 mt-0.5">SP · CLT · R$ 12–18k</p>
+                  </div>
+                </div>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-50 text-green-600">Aberta</span>
+              </div>
+              {/* pipeline */}
+              <div className="space-y-1.5 mb-3">
+                {[
+                  { label: "Triagem",    n: 24, pct: 100, c: "#31549c" },
+                  { label: "Entrevista", n: 9,  pct: 38,  c: "#a78bfa" },
+                  { label: "Oferta",     n: 2,  pct: 8,   c: "#ea3839" },
+                ].map((p, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <span className="text-[9px] text-slate-600 w-16 shrink-0">{p.label}</span>
+                    <div className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden">
+                      <div className="h-full rounded-full" style={{ width: `${p.pct}%`, backgroundColor: p.c }} />
+                    </div>
+                    <span className="text-[10px] font-bold text-slate-600 w-4 text-right">{p.n}</span>
+                  </div>
+                ))}
+              </div>
+              {/* avatars */}
+              <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+                <div className="flex -space-x-1.5">
+                  {["from-blue-400 to-blue-600","from-amber-400 to-amber-500","from-green-400 to-green-600","from-pink-400 to-pink-600"].map((g, i) => (
+                    <div key={i} className={`h-6 w-6 rounded-full border-[1.5px] border-white bg-gradient-to-br ${g} text-white text-[9px] font-bold flex items-center justify-center`}>
+                      {["M","J","A","R"][i]}
+                    </div>
+                  ))}
+                  <div className="h-6 w-6 rounded-full border-[1.5px] border-white bg-slate-100 text-slate-600 text-[8px] font-bold flex items-center justify-center">+20</div>
+                </div>
+                <span className="text-[10px] text-slate-600">24 candidatos</span>
+              </div>
+            </div>
+
+            {/* ── Card 2 — top left ── */}
+            <div className="absolute top-4 left-0 w-44 rounded-2xl bg-white p-4 z-10 border border-slate-200" style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.18)" }}>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 mb-2">Tempo de fechamento</p>
+              <p className="text-3xl font-extrabold leading-none" style={{ color: "#f59e0b" }}>12<span className="text-base font-normal text-slate-500 ml-1">dias</span></p>
+              <p className="text-[10px] text-green-600 mt-2 flex items-center gap-1"><TrendingUp size={10} />–3 dias vs. mês ant.</p>
+            </div>
+
+            {/* ── Card 3 — top right ── */}
+            <div className="absolute top-8 right-0 w-36 rounded-2xl bg-white p-4 z-10 border border-slate-200" style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.18)" }}>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 mb-2">Match médio</p>
+              <p className="text-3xl font-extrabold leading-none text-slate-900">94<span className="text-base font-normal text-slate-500">%</span></p>
+              <p className="text-[10px] text-slate-600 mt-2">compatibilidade</p>
+            </div>
+
+            {/* ── Card 4 — bottom left — nova candidatura ── */}
+            <div className="absolute bottom-10 left-0 z-30 flex items-center gap-2.5 rounded-2xl bg-white px-4 py-3 border border-slate-200" style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.18)" }}>
+              <div className="h-8 w-8 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+                <Users size={13} className="text-green-600" />
               </div>
               <div>
-                <p className="text-[9px] text-white/40 leading-none mb-0.5">Nova candidatura</p>
-                <p className="text-xs font-bold text-white leading-none">Maria S. se candidatou</p>
+                <p className="text-[9px] text-slate-500">Nova candidatura</p>
+                <p className="text-xs font-bold text-slate-900">Maria S. se candidatou</p>
               </div>
               <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse shrink-0" />
             </div>
 
-            {/* floating badge — bottom right */}
-            <div className="absolute -bottom-3 -right-2 z-30 flex items-center gap-2 rounded-full border border-white/15 bg-[#ea3839] px-3.5 py-1.5 shadow-xl">
-              <Briefcase size={12} className="text-white" />
+            {/* ── Card 5 — bottom right — vagas ── */}
+            <div className="absolute bottom-8 right-0 z-30 flex items-center gap-2 rounded-full px-4 py-2 shadow-xl"
+              style={{ background: "linear-gradient(135deg,#ea3839,#c0392b)", boxShadow: "0 4px 20px rgba(234,56,57,0.4)" }}>
+              <Briefcase size={13} className="text-white" />
               <span className="text-xs font-bold text-white">247 vagas ativas</span>
             </div>
 
-            <div className="relative w-full max-w-[350px] space-y-3">
-
-              {/* Job card */}
-              <div className="rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-5 shadow-2xl">
-                {/* header */}
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-2.5">
-                    <div className="h-9 w-9 rounded-lg bg-[#31549c] flex items-center justify-center font-extrabold text-white text-xs shrink-0">
-                      TS
-                    </div>
-                    <div>
-                      <p className="text-[10px] text-white/45 leading-none mb-1">Tech Solutions Brasil</p>
-                      <p className="text-sm font-bold text-white leading-tight">Engenheiro de Software Sr.</p>
-                      <p className="text-[10px] text-white/35 mt-0.5">São Paulo · CLT · R$ 12k–18k</p>
-                    </div>
-                  </div>
-                  <span className="rounded-full bg-green-500/20 text-green-400 text-[10px] font-bold px-2 py-0.5 shrink-0">Aberta</span>
-                </div>
-
-                {/* pipeline bar */}
-                <p className="text-[9px] font-bold uppercase tracking-widest text-white/30 mb-2">Pipeline de seleção</p>
-                <div className="grid grid-cols-4 gap-1.5 mb-4">
-                  {[
-                    { label: "Triagem",     count: 24, w: "100%", color: "bg-[#31549c]" },
-                    { label: "Entrevista",  count: 8,  w: "33%",  color: "bg-indigo-400" },
-                    { label: "Assessment", count: 3,  w: "12%",  color: "bg-violet-400" },
-                    { label: "Oferta",     count: 1,  w: "4%",   color: "bg-[#ea3839]" },
-                  ].map((s, i) => (
-                    <div key={i}>
-                      <div className="h-1.5 rounded-full bg-white/10 overflow-hidden mb-1">
-                        <div className={`h-full rounded-full ${s.color} transition-all`} style={{ width: s.w }} />
-                      </div>
-                      <p className="text-[9px] text-white/35 text-center">{s.label}</p>
-                      <p className="text-[10px] font-bold text-white/60 text-center">{s.count}</p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* avatars + count */}
-                <div className="flex items-center justify-between">
-                  <div className="flex -space-x-2">
-                    {[
-                      "from-blue-400 to-blue-600",
-                      "from-indigo-400 to-indigo-600",
-                      "from-violet-400 to-violet-600",
-                      "from-pink-400 to-pink-600",
-                    ].map((grad, i) => (
-                      <div
-                        key={i}
-                        className={`h-7 w-7 rounded-full border-2 border-[#0c2050] bg-gradient-to-br ${grad} flex items-center justify-center text-white text-[10px] font-bold`}
-                      >
-                        {["M","J","A","R"][i]}
-                      </div>
-                    ))}
-                    <div className="h-7 w-7 rounded-full border-2 border-[#0c2050] bg-white/10 flex items-center justify-center text-white/50 text-[9px] font-bold">
-                      +20
-                    </div>
-                  </div>
-                  <p className="text-xs text-white/45">24 candidatos</p>
-                </div>
-              </div>
-
-              {/* Two metric cards */}
-              <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-4">
-                  <p className="text-[10px] text-white/35 mb-1">Tempo médio</p>
-                  <p className="text-2xl font-extrabold text-white leading-none">12 <span className="text-sm font-normal text-white/45">dias</span></p>
-                  <p className="text-[10px] text-green-400 mt-1.5 flex items-center gap-1">
-                    <TrendingUp size={10} /> 3 dias a menos
-                  </p>
-                </div>
-                <div className="rounded-xl border border-white/10 bg-white/5 backdrop-blur-sm p-4">
-                  <p className="text-[10px] text-white/35 mb-1">Match médio</p>
-                  <p className="text-2xl font-extrabold text-white leading-none">94<span className="text-sm font-normal text-white/45">%</span></p>
-                  <p className="text-[10px] text-white/35 mt-1.5">compatibilidade</p>
-                </div>
-              </div>
-
-            </div>
           </div>
         </div>
-      </section>
 
-      {/* ══════════════════════════════════════════
-          2. MARQUEE BAR — kept exactly as-is
-      ══════════════════════════════════════════ */}
-      <section className="border-y bg-card py-5 overflow-hidden">
-        <p className="text-center text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground mb-4">
-          Empresas que confiam na <span style={{ color: "#31549c" }}>PitStop</span>{" "}
-          <span style={{ color: "#ea3839" }}>RH</span>
-        </p>
-        <div className="relative overflow-hidden">
-          {/* Gradientes nas bordas */}
-          <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-card to-transparent z-10" />
-          <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-card to-transparent z-10" />
-
-          <div className="animate-marquee flex items-center gap-16 w-max">
-            {/* duplicado para loop perfeito */}
-            {[...clientLogos, ...clientLogos].map((logo, i) => (
-              <span key={i} className={`whitespace-nowrap ${logo.style}`}>
-                {logo.name}
-              </span>
-            ))}
+        {/* ── Floating marquee bar ── */}
+        <div className="relative z-30 container max-w-5xl mx-auto px-4 -mb-14">
+          <div className="rounded-2xl bg-card border overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.4)" }}>
+            <div className="px-8 pt-5 pb-1">
+              <p className="text-center text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
+                Empresas que confiam na{" "}
+                <span style={{ color: "#243c7e" }}>PitStop</span>{" "}
+                <span style={{ color: "#ea3839" }}>RH</span>
+              </p>
+            </div>
+            <div className="relative overflow-hidden py-4">
+              <div className="pointer-events-none absolute left-0 top-0 h-full w-20 bg-gradient-to-r from-card to-transparent z-10" />
+              <div className="pointer-events-none absolute right-0 top-0 h-full w-20 bg-gradient-to-l from-card to-transparent z-10" />
+              <div className="animate-marquee flex items-center gap-16 w-max">
+                {[...clientLogos, ...clientLogos].map((logo, i) => (
+                  <span key={i} className={`whitespace-nowrap ${logo.style}`}>{logo.name}</span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -234,7 +237,11 @@ const Index = () => {
       {/* ══════════════════════════════════════════
           3. SOBRE NÓS
       ══════════════════════════════════════════ */}
-      <section id="sobre-nos" className="py-20 sm:py-28 bg-background">
+      <section id="sobre-nos" className="pt-28 pb-20 sm:pb-28 relative rounded-[3rem]" style={{ background: "linear-gradient(160deg, #f8faff 0%, #eef3ff 100%)" }}>
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full pointer-events-none opacity-[0.07]"
+          style={{ background: "radial-gradient(circle, #243c7e, transparent)", transform: "translate(30%, -30%)" }} />
+        <div className="absolute bottom-0 left-0 w-[300px] h-[300px] rounded-full pointer-events-none opacity-[0.05]"
+          style={{ background: "radial-gradient(circle, #ea3839, transparent)", transform: "translate(-30%, 30%)" }} />
         <div className="container max-w-6xl grid lg:grid-cols-2 gap-16 items-center">
 
           {/* Left: stat grid */}
@@ -247,9 +254,10 @@ const Index = () => {
             ].map((s, i) => (
               <div
                 key={i}
-                className="rounded-xl border bg-card p-6 flex flex-col gap-1 hover:shadow-md transition-shadow"
+                className="rounded-xl border bg-white p-6 flex flex-col gap-1 hover:shadow-lg transition-all hover:-translate-y-0.5 duration-200"
+                style={{ borderLeft: "4px solid #243c7e" }}
               >
-                <p className="text-3xl font-extrabold text-primary leading-none">{s.num}</p>
+                <p className="text-3xl font-extrabold leading-none" style={{ color: "#243c7e" }}>{s.num}</p>
                 <p className="text-xs text-muted-foreground font-medium mt-1">{s.label}</p>
               </div>
             ))}
@@ -272,7 +280,8 @@ const Index = () => {
             </p>
             <Link
               to="/login"
-              className="inline-flex items-center gap-2 rounded-lg border text-foreground px-6 py-3 text-sm font-semibold hover:bg-muted/50 transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition-opacity shadow-md"
+              style={{ background: "linear-gradient(135deg,#ea3839 0%,#c0124a 15%,#3b6fd4 50%,#243c7e 100%)", boxShadow: "0 8px 30px rgba(234,56,57,0.35)" }}
             >
               Conheça nossa equipe <ArrowRight size={15} />
             </Link>
@@ -283,17 +292,19 @@ const Index = () => {
       {/* ══════════════════════════════════════════
           4. SOLUÇÕES — Bento grid
       ══════════════════════════════════════════ */}
-      <section id="solucoes" className="py-20 sm:py-28 bg-card">
+      <section id="solucoes" className="py-20 sm:py-28 relative overflow-hidden" style={{ background: "#0f1f45" }}>
+        <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
+          style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
         <div className="container max-w-6xl">
           <div className="text-center mb-14">
-            <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary mb-3">
+            <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-blue-300 mb-3">
               <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "#ea3839" }} />
               Nossas Soluções
             </p>
-            <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight mb-4">
+            <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight mb-4 text-white">
               Tudo que sua empresa precisa<br className="hidden sm:block" /> em um só lugar
             </h2>
-            <p className="text-muted-foreground text-sm max-w-xl mx-auto">
+            <p className="text-white/60 text-sm max-w-xl mx-auto">
               Do recrutamento estratégico à terceirização operacional, entregamos resultados com metodologia e cuidado.
             </p>
           </div>
@@ -302,96 +313,96 @@ const Index = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-auto">
 
             {/* Large card — Recrutamento e Seleção (spans 2 rows on lg) */}
-            <div className="lg:row-span-2 rounded-2xl border bg-background overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
-              <div className="h-1.5 w-full bg-primary" />
+            <div className="lg:row-span-2 rounded-2xl overflow-hidden hover:shadow-2xl transition-all hover:-translate-y-1 duration-200 flex flex-col" style={{ background: "linear-gradient(145deg, #1a3a8a, #243c7e)" }}>
+              <div className="h-1 w-full" style={{ background: "linear-gradient(90deg,#ea3839,#ff6b6b)" }} />
               <div className="p-7 flex flex-col flex-1">
-                <div className="h-11 w-11 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-5">
+                <div className="h-11 w-11 rounded-xl bg-white/10 flex items-center justify-center text-white mb-5">
                   <Search size={22} />
                 </div>
-                <h3 className="text-xl font-extrabold mb-3">Recrutamento e Seleção</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-6">
+                <h3 className="text-xl font-extrabold mb-3 text-white">Recrutamento e Seleção</h3>
+                <p className="text-white/65 text-sm leading-relaxed mb-6">
                   Processos ágeis, assertivos e humanizados. Conectamos sua empresa aos melhores candidatos com nossa metodologia exclusiva P.I.T.
                 </p>
                 {/* mini pipeline visual */}
                 <div className="flex items-center gap-1.5 mt-auto mb-6">
                   {["Triagem", "Entrevista", "Assessment", "Oferta"].map((step, i) => (
                     <div key={i} className="flex items-center gap-1.5">
-                      <div className="rounded-md bg-primary/10 border border-primary/20 px-2.5 py-1 text-[10px] font-semibold text-primary whitespace-nowrap">
+                      <div className="rounded-md bg-white/10 border border-white/20 px-2.5 py-1 text-[10px] font-semibold text-white whitespace-nowrap">
                         {step}
                       </div>
-                      {i < 3 && <ArrowRight size={10} className="text-muted-foreground shrink-0" />}
+                      {i < 3 && <ArrowRight size={10} className="text-white/40 shrink-0" />}
                     </div>
                   ))}
                 </div>
-                <Link to="/login" className="inline-flex items-center gap-1 text-primary font-semibold text-sm hover:underline">
+                <Link to="/login" className="inline-flex items-center gap-1 text-blue-300 font-semibold text-sm hover:underline">
                   Saiba mais <ArrowRight size={14} />
                 </Link>
               </div>
             </div>
 
             {/* Card — Mão de Obra Temporária */}
-            <div className="rounded-2xl border bg-background overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
+            <div className="rounded-2xl overflow-hidden hover:shadow-xl transition-all hover:-translate-y-0.5 duration-200 flex flex-col" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
               <div className="h-1.5 w-full bg-cyan-500" />
               <div className="p-7 flex flex-col flex-1">
-                <div className="h-11 w-11 rounded-xl bg-cyan-500/10 flex items-center justify-center text-cyan-600 dark:text-cyan-400 mb-5">
+                <div className="h-11 w-11 rounded-xl bg-cyan-400/15 flex items-center justify-center text-cyan-300 mb-5">
                   <CalendarRange size={22} />
                 </div>
-                <h3 className="text-lg font-extrabold mb-2">Mão de Obra Temporária</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">
+                <h3 className="text-lg font-extrabold mb-2 text-white">Mão de Obra Temporária</h3>
+                <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">
                   Flexibilidade para demandas sazonais, substituições emergenciais e projetos pontuais.
                 </p>
-                <Link to="/login" className="inline-flex items-center gap-1 text-primary font-semibold text-sm hover:underline mt-auto">
+                <Link to="/login" className="inline-flex items-center gap-1 text-blue-300 font-semibold text-sm hover:underline mt-auto">
                   Saiba mais <ArrowRight size={14} />
                 </Link>
               </div>
             </div>
 
             {/* Card — Terceirização */}
-            <div className="rounded-2xl border bg-background overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
+            <div className="rounded-2xl overflow-hidden hover:shadow-xl transition-all hover:-translate-y-0.5 duration-200 flex flex-col" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
               <div className="h-1.5 w-full bg-amber-500" />
               <div className="p-7 flex flex-col flex-1">
-                <div className="h-11 w-11 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-600 dark:text-amber-400 mb-5">
+                <div className="h-11 w-11 rounded-xl bg-amber-400/15 flex items-center justify-center text-amber-300 mb-5">
                   <Building2 size={22} />
                 </div>
-                <h3 className="text-lg font-extrabold mb-2">Terceirização</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">
+                <h3 className="text-lg font-extrabold mb-2 text-white">Terceirização</h3>
+                <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">
                   Recepção, logística, limpeza e apoio corporativo. Foque no core e deixe a operação conosco.
                 </p>
-                <Link to="/login" className="inline-flex items-center gap-1 text-primary font-semibold text-sm hover:underline mt-auto">
+                <Link to="/login" className="inline-flex items-center gap-1 text-blue-300 font-semibold text-sm hover:underline mt-auto">
                   Saiba mais <ArrowRight size={14} />
                 </Link>
               </div>
             </div>
 
             {/* Card — Hunting Ativo */}
-            <div className="rounded-2xl border bg-background overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
+            <div className="rounded-2xl overflow-hidden hover:shadow-xl transition-all hover:-translate-y-0.5 duration-200 flex flex-col" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
               <div className="h-1.5 w-full bg-violet-500" />
               <div className="p-7 flex flex-col flex-1">
-                <div className="h-11 w-11 rounded-xl bg-violet-500/10 flex items-center justify-center text-violet-600 dark:text-violet-400 mb-5">
+                <div className="h-11 w-11 rounded-xl bg-violet-400/15 flex items-center justify-center text-violet-300 mb-5">
                   <Target size={22} />
                 </div>
-                <h3 className="text-lg font-extrabold mb-2">Hunting Ativo</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">
+                <h3 className="text-lg font-extrabold mb-2 text-white">Hunting Ativo</h3>
+                <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">
                   Busca ativa dos melhores talentos, inclusive os que não estão no mercado aberto.
                 </p>
-                <Link to="/login" className="inline-flex items-center gap-1 text-primary font-semibold text-sm hover:underline mt-auto">
+                <Link to="/login" className="inline-flex items-center gap-1 text-blue-300 font-semibold text-sm hover:underline mt-auto">
                   Saiba mais <ArrowRight size={14} />
                 </Link>
               </div>
             </div>
 
             {/* Card — Employer Branding */}
-            <div className="rounded-2xl border bg-background overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
+            <div className="rounded-2xl overflow-hidden hover:shadow-xl transition-all hover:-translate-y-0.5 duration-200 flex flex-col" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
               <div className="h-1.5 w-full bg-rose-500" />
               <div className="p-7 flex flex-col flex-1">
-                <div className="h-11 w-11 rounded-xl bg-rose-500/10 flex items-center justify-center text-rose-600 dark:text-rose-400 mb-5">
+                <div className="h-11 w-11 rounded-xl bg-rose-400/15 flex items-center justify-center text-rose-300 mb-5">
                   <Award size={22} />
                 </div>
-                <h3 className="text-lg font-extrabold mb-2">Employer Branding</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">
+                <h3 className="text-lg font-extrabold mb-2 text-white">Employer Branding</h3>
+                <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">
                   Posicione-se como empresa dos sonhos. Atraia e retenha talentos com uma marca empregadora forte.
                 </p>
-                <Link to="/login" className="inline-flex items-center gap-1 text-primary font-semibold text-sm hover:underline mt-auto">
+                <Link to="/login" className="inline-flex items-center gap-1 text-blue-300 font-semibold text-sm hover:underline mt-auto">
                   Saiba mais <ArrowRight size={14} />
                 </Link>
               </div>
@@ -404,7 +415,9 @@ const Index = () => {
       {/* ══════════════════════════════════════════
           5. P.I.T
       ══════════════════════════════════════════ */}
-      <section id="pit" className="py-20 sm:py-28 bg-background">
+      <section id="pit" className="py-20 sm:py-28 relative overflow-hidden bg-background">
+        <div className="absolute left-0 top-0 bottom-0 w-1 pointer-events-none"
+          style={{ background: "linear-gradient(180deg, #ea3839, #243c7e, transparent)" }} />
         <div className="container max-w-6xl">
 
           {/* Heading */}
@@ -458,7 +471,7 @@ const Index = () => {
                 ring: "bg-cyan-500",
               },
             ].map((p, i) => (
-              <div key={i} className={`rounded-2xl border ${p.border} bg-card p-8 text-center hover:shadow-md transition-shadow`}>
+              <div key={i} className={`rounded-2xl border ${p.border} bg-card p-8 text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-200`}>
                 <div className={`mx-auto mb-4 h-16 w-16 rounded-full ${p.ring} flex items-center justify-center text-white text-2xl font-extrabold shadow-lg`}>
                   {p.letter}
                 </div>
@@ -501,20 +514,22 @@ const Index = () => {
       {/* ══════════════════════════════════════════
           6. KPIs — Dark bg
       ══════════════════════════════════════════ */}
-      <section className="py-20 sm:py-24 bg-[#0c1d3f]">
-        <div className="container max-w-5xl grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+      <section className="py-20 sm:py-24 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #07101e 0%, #0c1d3f 50%, #0f2654 100%)" }}>
+        <div className="absolute inset-0 pointer-events-none opacity-[0.05]"
+          style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+        <div className="absolute top-0 left-0 right-0 h-[2px] pointer-events-none"
+          style={{ background: "linear-gradient(90deg, transparent, #243c7e 30%, #ea3839 70%, transparent)" }} />
+        <div className="container max-w-5xl grid grid-cols-2 lg:grid-cols-4 gap-8">
           {[
-            { num: "+1000", label: "processos seletivos por ano" },
-            { num: "+600",  label: "vagas fechadas com sucesso" },
-            { num: "40%",   label: "menos rotação de talento" },
-            { num: "98%",   label: "taxa de satisfação" },
+            { num: "+1000", label: "processos seletivos por ano", color: "#60a5fa" },
+            { num: "+600",  label: "vagas fechadas com sucesso",  color: "#fbbf24" },
+            { num: "40%",   label: "menos rotação de talento",    color: "#4ade80" },
+            { num: "98%",   label: "taxa de satisfação",          color: "#f472b6" },
           ].map((s, i) => (
-            <div key={i} className="flex flex-col items-center gap-2">
-              <div className="relative">
-                <div className="absolute inset-0 rounded-full glow-blue pointer-events-none" />
-                <p className="relative text-5xl font-extrabold text-white">{s.num}</p>
-              </div>
-              <p className="text-white/60 text-sm">{s.label}</p>
+            <div key={i} className="flex flex-col items-center gap-3 group">
+              <p className="text-5xl font-extrabold transition-transform group-hover:scale-105 duration-200" style={{ color: s.color }}>{s.num}</p>
+              <div className="h-px w-8 rounded-full" style={{ backgroundColor: s.color, opacity: 0.5 }} />
+              <p className="text-white/55 text-sm text-center leading-snug">{s.label}</p>
             </div>
           ))}
         </div>
@@ -523,7 +538,9 @@ const Index = () => {
       {/* ══════════════════════════════════════════
           7. TESTIMONIALS
       ══════════════════════════════════════════ */}
-      <section className="py-20 sm:py-28 bg-background">
+      <section className="py-20 sm:py-28 bg-background relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none opacity-[0.04]"
+          style={{ background: "radial-gradient(circle, #243c7e, transparent)", transform: "translate(30%, -30%)" }} />
         <div className="container max-w-5xl">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-extrabold mb-3">
@@ -533,7 +550,7 @@ const Index = () => {
           </div>
 
           {/* Featured testimonial */}
-          <div className="rounded-2xl border bg-card p-8 sm:p-12 mb-6 relative overflow-hidden">
+          <div className="rounded-2xl border bg-card p-8 sm:p-12 mb-6 relative overflow-hidden hover:shadow-xl transition-shadow duration-300" style={{ borderLeft: "4px solid #243c7e" }}>
             <span className="absolute top-4 left-6 text-8xl font-serif text-primary/10 leading-none select-none">"</span>
             <div className="flex gap-1 mb-5">
               {[...Array(5)].map((_, i) => (
@@ -544,7 +561,7 @@ const Index = () => {
               "Conseguimos otimizar em 40% nossos processos de seleção com a PitStop RH. A metodologia P.I.T realmente faz diferença na qualidade das contratações — os profissionais chegam mais alinhados com a cultura e entregam resultados mais rápido."
             </blockquote>
             <div className="flex items-center gap-4">
-              <div className="h-11 w-11 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-base">
+              <div className="h-11 w-11 rounded-full flex items-center justify-center text-white font-bold text-base" style={{ background: "linear-gradient(135deg,#243c7e,#4f6ec0)" }}>
                 A
               </div>
               <div>
@@ -570,7 +587,7 @@ const Index = () => {
                 quote: "A terceirização com a PitStop transformou nossa operação. Reduzimos custos e ganhamos foco no que realmente importa.",
               },
             ].map((t, i) => (
-              <div key={i} className="rounded-2xl border bg-card p-7">
+              <div key={i} className="rounded-2xl border bg-card p-7 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
                 <div className="flex gap-1 mb-4">
                   {[...Array(5)].map((_, j) => (
                     <Star key={j} size={13} className="text-yellow-400 fill-yellow-400" />
@@ -578,7 +595,7 @@ const Index = () => {
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed mb-5">"{t.quote}"</p>
                 <div className="flex items-center gap-3">
-                  <div className="h-9 w-9 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-sm">
+                  <div className="h-9 w-9 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: "linear-gradient(135deg,#243c7e,#4f6ec0)" }}>
                     {t.initial}
                   </div>
                   <div>
@@ -636,78 +653,83 @@ const Index = () => {
       </section>
 
       {/* ══════════════════════════════════════════
-          9. CTA FINAL
+          9 + 10. CTA + FOOTER (merged, dark)
       ══════════════════════════════════════════ */}
-      <section className="py-20 sm:py-28 bg-background">
-        <div className="container max-w-4xl">
-          <div className="relative rounded-3xl border bg-card p-10 sm:p-16 text-center overflow-hidden">
-            {/* decorative blue ring */}
-            <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full border-[40px] border-primary/10 pointer-events-none" />
-            <div className="absolute -bottom-16 -left-16 h-56 w-56 rounded-full border-[30px] border-primary/8 pointer-events-none" />
+      <footer id="contato" className="relative overflow-hidden" style={{ background: "linear-gradient(145deg, #07101e 0%, #0c1d3f 50%, #0f2654 100%)" }}>
 
-            <div className="relative z-10">
-              <p className="inline-flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-widest text-primary mb-4">
+        {/* ── Decorative elements ── */}
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full pointer-events-none opacity-30"
+          style={{ background: "radial-gradient(circle, rgba(36,60,126,0.5), transparent)", transform: "translate(30%, -30%)" }} />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full pointer-events-none opacity-20"
+          style={{ background: "radial-gradient(circle, rgba(234,56,57,0.4), transparent)", transform: "translate(-30%, 30%)" }} />
+        <div className="absolute inset-0 pointer-events-none opacity-[0.05]"
+          style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+        <div className="absolute top-0 left-0 right-0 h-[2px] pointer-events-none"
+          style={{ background: "linear-gradient(90deg, #ea3839 0%, #243c7e 40%, transparent)" }} />
+
+        {/* ── CTA area ── */}
+        <div className="relative z-10 container max-w-6xl pt-20 sm:pt-28 pb-16">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+            <div>
+              <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-blue-400 mb-4">
                 <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "#ea3839" }} />
                 Pronto para começar?
               </p>
-              <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight mb-4">
-                Contrate melhor e mais<br className="hidden sm:block" /> rápido com a PitStop RH
+              <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight text-white max-w-lg">
+                Contrate melhor e mais rápido com a PitStop RH
               </h2>
-              <p className="text-muted-foreground text-sm sm:text-base max-w-lg mx-auto mb-10">
+              <p className="text-white/65 text-sm sm:text-base max-w-md mt-4">
                 Fale com nossos consultores e descubra como podemos tornar seu recrutamento mais inteligente, ágil e eficiente.
               </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link
-                  to="/login"
-                  className="inline-flex items-center gap-2 rounded-lg bg-primary text-primary-foreground px-8 py-3.5 text-sm font-bold hover:opacity-90 transition-opacity shadow-lg"
-                >
-                  Solicitar demonstração <ArrowRight size={15} />
-                </Link>
-                <a
-                  href="https://wa.me/5511933320173"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-lg border text-foreground px-8 py-3.5 text-sm font-semibold hover:bg-muted/50 transition-colors"
-                >
-                  <MessageCircle size={16} /> WhatsApp
-                </a>
-              </div>
+            </div>
+            <div className="flex flex-col gap-3 shrink-0">
+              <Link
+                to="/login"
+                className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-sm font-bold text-white hover:opacity-90 transition-opacity shadow-2xl"
+                style={{ background: "linear-gradient(135deg,#ea3839 0%,#c0124a 15%,#3b6fd4 50%,#243c7e 100%)", boxShadow: "0 8px 30px rgba(234,56,57,0.35)" }}
+              >
+                Solicitar demonstração <ArrowRight size={15} />
+              </Link>
+              <a
+                href="https://wa.me/5511933320173"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 bg-white/5 text-white/85 px-8 py-3.5 text-sm font-semibold hover:bg-white/10 transition-colors backdrop-blur-sm"
+              >
+                <MessageCircle size={16} /> WhatsApp
+              </a>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* ══════════════════════════════════════════
-          10. FOOTER
-      ══════════════════════════════════════════ */}
-      <footer id="contato" className="bg-[#0c1d3f] text-white py-14" style={{ borderTop: "3px solid #ea3839" }}>
-        <div className="container max-w-6xl">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 mb-12">
+        {/* ── Divider ── */}
+        <div className="relative z-10 container max-w-6xl"><div className="h-px bg-white/10" /></div>
 
-            {/* Brand */}
+        {/* ── Links area ── */}
+        <div className="relative z-10 container max-w-6xl py-14">
+          <div className="flex flex-col sm:flex-row gap-12 sm:gap-20">
+
+            {/* Conecte-se + social */}
             <div>
-              <Logo size="md" />
-              <p className="text-xs text-white/45 leading-relaxed mt-4 max-w-[220px]">
-                Sua parada certa para gestão de talentos. Conectamos empresas e profissionais com agilidade, inteligência e propósito.
-              </p>
-              <div className="flex items-center gap-4 mt-5">
-                <a href="#" aria-label="LinkedIn" className="text-white/40 hover:text-white transition-colors">
-                  <Linkedin size={18} />
+              <h3 className="text-lg font-extrabold text-white mb-4">Conecte-se</h3>
+              <div className="flex items-center gap-3">
+                <a href="#" aria-label="LinkedIn" className="h-10 w-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:border-white/40 transition-colors">
+                  <Linkedin size={17} />
                 </a>
-                <a href="#" aria-label="Instagram" className="text-white/40 hover:text-white transition-colors">
-                  <Instagram size={18} />
+                <a href="#" aria-label="Instagram" className="h-10 w-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:border-white/40 transition-colors">
+                  <Instagram size={17} />
                 </a>
-                <a href="https://wa.me/5511933320173" aria-label="WhatsApp" target="_blank" rel="noreferrer" className="text-white/40 hover:text-white transition-colors">
-                  <MessageCircle size={18} />
+                <a href="https://wa.me/5511933320173" target="_blank" rel="noreferrer" aria-label="WhatsApp" className="h-10 w-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:border-white/40 transition-colors">
+                  <MessageCircle size={17} />
                 </a>
               </div>
             </div>
 
-            {/* Services */}
+            {/* Soluções */}
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-4">Serviços</p>
-              <ul className="space-y-2.5 text-sm text-white/55">
-                {["Recrutamento e Seleção", "Mão de Obra Temporária", "Terceirização de Serviços", "Hunting Ativo", "Employer Branding"].map((item) => (
+              <h3 className="text-xs font-bold uppercase tracking-widest text-white/80 mb-4">Soluções</h3>
+              <ul className="space-y-2.5 text-sm text-white/60">
+                {["Recrutamento e Seleção", "Mão de Obra Temporária", "Terceirização", "Hunting Ativo", "Employer Branding"].map((item) => (
                   <li key={item}>
                     <a href="#solucoes" className="hover:text-white transition-colors">{item}</a>
                   </li>
@@ -715,41 +737,61 @@ const Index = () => {
               </ul>
             </div>
 
-            {/* Institutional */}
+            {/* Empresa */}
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-4">Institucional</p>
-              <ul className="space-y-2.5 text-sm text-white/55">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-white/80 mb-4">Empresa</h3>
+              <ul className="space-y-2.5 text-sm text-white/60">
                 <li><a href="#sobre-nos" className="hover:text-white transition-colors">Sobre Nós</a></li>
+                <li><a href="#pit" className="hover:text-white transition-colors">Metodologia P.I.T</a></li>
                 <li><a href="#faq" className="hover:text-white transition-colors">Perguntas Frequentes</a></li>
                 <li><Link to="/planos" className="hover:text-white transition-colors">Planos</Link></li>
-                <li><a href="#" className="hover:text-white transition-colors">Política de Privacidade</a></li>
                 <li><Link to="/cadastro" className="hover:text-white transition-colors">Trabalhe Conosco</Link></li>
               </ul>
             </div>
 
-            {/* Contact */}
+            {/* Contato */}
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-4">Contato</p>
-              <ul className="space-y-3 text-sm text-white/55">
-                <li className="flex items-start gap-2.5">
-                  <Mail size={14} className="mt-0.5 shrink-0 text-white/30" />
+              <h3 className="text-xs font-bold uppercase tracking-widest text-white/80 mb-4">Contato</h3>
+              <ul className="space-y-2.5 text-sm text-white/60">
+                <li className="flex items-start gap-2">
+                  <Mail size={14} className="mt-0.5 shrink-0 text-white/45" />
                   <span>atendimento@pitstoprh.com.br</span>
                 </li>
-                <li className="flex items-center gap-2.5">
-                  <Phone size={14} className="shrink-0 text-white/30" />
+                <li className="flex items-center gap-2">
+                  <Phone size={14} className="shrink-0 text-white/45" />
                   <span>(11) 93332-0173</span>
                 </li>
-                <li className="flex items-center gap-2.5">
-                  <MapPin size={14} className="shrink-0 text-white/30" />
+                <li className="flex items-center gap-2">
+                  <MapPin size={14} className="shrink-0 text-white/45" />
                   <span>Centro, São Paulo – SP</span>
                 </li>
               </ul>
             </div>
-          </div>
 
-          <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <p className="text-xs text-white/30">© 2025 PitStop RH Consultoria. Todos os direitos reservados.</p>
-            <p className="text-xs text-white/20">CNPJ: 00.000.000/0001-00</p>
+          </div>
+        </div>
+
+        {/* ── Big watermark logo ── */}
+        <div className="relative overflow-hidden">
+          <div className="container max-w-6xl flex justify-center py-8">
+            <img
+              src="/logo-branco.png"
+              alt=""
+              aria-hidden
+              className="w-full max-w-4xl h-auto opacity-[0.04] select-none pointer-events-none"
+              draggable={false}
+            />
+          </div>
+        </div>
+
+        {/* ── Bottom bar ── */}
+        <div className="relative z-10 border-t border-white/10">
+          <div className="container max-w-6xl py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p className="text-xs text-white/50">© 2025 PitStop RH Consultoria. Todos os direitos reservados.</p>
+            <div className="flex items-center gap-6 text-xs text-white/50">
+              <a href="#" className="hover:text-white/60 transition-colors">Política de Privacidade</a>
+              <a href="#" className="hover:text-white/60 transition-colors">Política de Cookies</a>
+            </div>
           </div>
         </div>
       </footer>
