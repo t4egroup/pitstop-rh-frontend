@@ -1,157 +1,144 @@
-import { useState } from "react";
-import { ChevronDown, ChevronUp, Filter, MessageSquare, Share2, Users, Eye } from "lucide-react";
-import FeedbackModal from "@/components/FeedbackModal";
-import ShareJobModal from "@/components/ShareJobModal";
+import {
+  Briefcase, Users, CalendarCheck, TrendingUp,
+  Clock, CheckCircle2, PauseCircle, ChevronRight,
+} from "lucide-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
-const jobs = [
-  { id: 1, title: "Analista de Marketing Digital", responsible: "Maria Silva", resumes: 42, status: "Aberta", pipeline: ["Triagem (42)", "Entrevista RH (18)", "Entrevista Técnica (7)", "Proposta (2)"] },
-  { id: 2, title: "Desenvolvedor Front-end Pleno", responsible: "Carlos Souza", resumes: 67, status: "Aberta", pipeline: ["Triagem (67)", "Teste Técnico (30)", "Entrevista (12)", "Proposta (4)"] },
-  { id: 3, title: "UX Designer Senior", responsible: "Ana Costa", resumes: 23, status: "Em Pausa", pipeline: ["Triagem (23)", "Portfólio (10)", "Entrevista (5)", "Proposta (1)"] },
-  { id: 4, title: "Product Manager", responsible: "João Lima", resumes: 55, status: "Aberta", pipeline: ["Triagem (55)", "Case (20)", "Painel (8)", "Proposta (3)"] },
-  { id: 5, title: "Analista de Dados Jr.", responsible: "Fernanda Reis", resumes: 89, status: "Encerrada", pipeline: ["Triagem (89)", "Teste (45)", "Entrevista (15)", "Contratado (1)"] },
+const kpis = [
+  { label: "Vagas Abertas",      value: "5",    delta: "+1 este mês",        icon: Briefcase,     color: "text-primary",      bg: "bg-primary/10"      },
+  { label: "Candidatos Ativos",  value: "276",  delta: "+48 esta semana",    icon: Users,         color: "text-blue-500",     bg: "bg-blue-500/10"     },
+  { label: "Entrevistas Hoje",   value: "4",    delta: "2 RH · 2 Técnica",  icon: CalendarCheck, color: "text-emerald-500",  bg: "bg-emerald-500/10"  },
+  { label: "Taxa de Conversão",  value: "3,1%", delta: "+0,3% vs mês ant.", icon: TrendingUp,    color: "text-amber-500",    bg: "bg-amber-500/10"    },
 ];
 
-const statusColors: Record<string, string> = {
-  Aberta: "bg-success/15 text-success",
-  "Em Pausa": "bg-warning/15 text-warning",
-  Encerrada: "bg-muted text-muted-foreground",
+const recentJobs = [
+  { title: "Analista de Marketing Digital", candidatos: 42, status: "Aberta"   },
+  { title: "Desenvolvedor Front-end Pleno", candidatos: 67, status: "Aberta"   },
+  { title: "UX Designer Senior",            candidatos: 23, status: "Em Pausa" },
+  { title: "Product Manager",               candidatos: 55, status: "Aberta"   },
+  { title: "Analista de Dados Jr.",         candidatos: 89, status: "Encerrada"},
+];
+
+const activity = [
+  { text: "Lucas Ferreira avançou para Entrevista Técnica",   time: "Há 20 min",  dot: "bg-primary"      },
+  { text: "Nova candidatura para Dev Front-end Pleno",         time: "Há 45 min",  dot: "bg-blue-500"     },
+  { text: "Beatriz Santos agendou entrevista de RH",           time: "Há 1 hora",  dot: "bg-emerald-500"  },
+  { text: "Vaga UX Designer colocada em pausa",                time: "Há 3 horas", dot: "bg-amber-500"    },
+  { text: "Rafael Oliveira aprovado na etapa final",           time: "Há 5 horas", dot: "bg-emerald-500"  },
+];
+
+const statusIcon: Record<string, { icon: typeof Clock; cls: string }> = {
+  Aberta:     { icon: CheckCircle2, cls: "text-emerald-500" },
+  "Em Pausa": { icon: PauseCircle,  cls: "text-amber-500"   },
+  Encerrada:  { icon: Clock,        cls: "text-muted-foreground" },
 };
 
 const CompanyDashboard = () => {
-  const [expandedId, setExpandedId] = useState<number | null>(null);
-  const [feedbackOpen, setFeedbackOpen] = useState(false);
-  const [shareOpen, setShareOpen] = useState(false);
-  const [filters, setFilters] = useState({ formacao: "", local: "", status: "" });
-
-  const filtered = jobs.filter((j) => {
-    if (filters.status && j.status !== filters.status) return false;
-    return true;
-  });
+  const { user } = useAuth();
+  const company = user?.name ?? "Empresa";
 
   return (
-    <div className="container py-8">
-      <h1 className="text-2xl font-bold mb-1">Gestão de Vagas</h1>
-      <p className="text-muted-foreground text-sm mb-6">Gerencie suas vagas abertas e acompanhe o pipeline de candidatos.</p>
+    <div className="container max-w-6xl py-8 space-y-6">
 
-      {/* Filters */}
-      <div className="mb-6 flex flex-wrap items-end gap-3 rounded-lg border bg-card p-4">
-        <Filter size={16} className="text-muted-foreground mb-2" />
-        <div>
-          <label className="block text-xs font-medium text-muted-foreground mb-1">Formação</label>
-          <select className="rounded-md border bg-background px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
-            <option value="">Todas</option>
-            <option>Graduação</option>
-            <option>Pós-Graduação</option>
-            <option>Mestrado</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-xs font-medium text-muted-foreground mb-1">Especialidade</label>
-          <select className="rounded-md border bg-background px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
-            <option value="">Todas</option>
-            <option>Tecnologia</option>
-            <option>Marketing</option>
-            <option>Design</option>
-            <option>Gestão</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-xs font-medium text-muted-foreground mb-1">Localização</label>
-          <select className="rounded-md border bg-background px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30">
-            <option value="">Todas</option>
-            <option>São Paulo</option>
-            <option>Rio de Janeiro</option>
-            <option>Remoto</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-xs font-medium text-muted-foreground mb-1">Status</label>
-          <select
-            value={filters.status}
-            onChange={(e) => setFilters((f) => ({ ...f, status: e.target.value }))}
-            className="rounded-md border bg-background px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
-          >
-            <option value="">Todos</option>
-            <option>Aberta</option>
-            <option>Em Pausa</option>
-            <option>Encerrada</option>
-          </select>
-        </div>
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-extrabold">Olá, {company} 👋</h1>
+        <p className="text-sm text-muted-foreground mt-1">
+          Visão geral dos seus processos seletivos.
+        </p>
       </div>
 
-      {/* Table */}
-      <div className="rounded-lg border bg-card overflow-hidden">
-        {/* Header */}
-        <div className="hidden md:grid grid-cols-12 gap-4 border-b bg-muted/50 px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-          <div className="col-span-4">Vaga</div>
-          <div className="col-span-2">Responsável</div>
-          <div className="col-span-2 text-center">Currículos</div>
-          <div className="col-span-2 text-center">Status</div>
-          <div className="col-span-2 text-right">Ações</div>
+      {/* KPIs */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {kpis.map(k => (
+          <div key={k.label} className="rounded-xl border bg-card p-4">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-xs font-medium text-muted-foreground">{k.label}</p>
+              <div className={`h-8 w-8 rounded-lg flex items-center justify-center ${k.bg}`}>
+                <k.icon size={16} className={k.color} />
+              </div>
+            </div>
+            <p className={`text-3xl font-extrabold ${k.color}`}>{k.value}</p>
+            <p className="text-xs text-muted-foreground mt-1">{k.delta}</p>
+          </div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        {/* Vagas recentes */}
+        <div className="lg:col-span-2 rounded-xl border bg-card">
+          <div className="flex items-center justify-between px-5 py-4 border-b">
+            <h2 className="text-sm font-semibold">Suas Vagas</h2>
+            <Link to="/empresa/vagas" className="flex items-center gap-1 text-xs text-primary hover:underline font-medium">
+              Ver todas <ChevronRight size={13} />
+            </Link>
+          </div>
+          <div className="divide-y">
+            {recentJobs.map((job, i) => {
+              const cfg = statusIcon[job.status];
+              const Icon = cfg.icon;
+              return (
+                <div key={i} className="flex items-center gap-4 px-5 py-3.5 hover:bg-muted/30 transition-colors">
+                  <Icon size={16} className={cfg.cls} />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium truncate">{job.title}</p>
+                    <p className="text-xs text-muted-foreground">{job.candidatos} candidatos</p>
+                  </div>
+                  <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${
+                    job.status === "Aberta"     ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/30 dark:text-emerald-400" :
+                    job.status === "Em Pausa"   ? "bg-amber-50 text-amber-700 dark:bg-amber-950/30 dark:text-amber-400"         :
+                                                  "bg-muted text-muted-foreground"
+                  }`}>{job.status}</span>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Rows */}
-        {filtered.map((job) => {
-          const expanded = expandedId === job.id;
-          return (
-            <div key={job.id} className="border-b last:border-b-0">
-              <div
-                className="grid grid-cols-1 md:grid-cols-12 gap-2 md:gap-4 items-center px-5 py-4 cursor-pointer hover:bg-muted/30 transition-colors"
-                onClick={() => setExpandedId(expanded ? null : job.id)}
-              >
-                <div className="md:col-span-4 flex items-center gap-2">
-                  {expanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-                  <span className="font-medium text-sm">{job.title}</span>
+        {/* Atividade recente */}
+        <div className="rounded-xl border bg-card">
+          <div className="px-5 py-4 border-b">
+            <h2 className="text-sm font-semibold">Atividade Recente</h2>
+          </div>
+          <div className="px-5 py-4 space-y-4">
+            {activity.map((a, i) => (
+              <div key={i} className="flex gap-3">
+                <div className="relative flex flex-col items-center">
+                  <div className={`h-2 w-2 rounded-full mt-1.5 shrink-0 ${a.dot}`} />
+                  {i < activity.length - 1 && <div className="w-px flex-1 bg-border mt-1" />}
                 </div>
-                <div className="md:col-span-2 text-sm text-muted-foreground">{job.responsible}</div>
-                <div className="md:col-span-2 text-center">
-                  <span className="inline-flex items-center gap-1 text-sm font-semibold">
-                    <Users size={14} className="text-muted-foreground" /> {job.resumes}
-                  </span>
-                </div>
-                <div className="md:col-span-2 text-center">
-                  <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${statusColors[job.status]}`}>
-                    {job.status}
-                  </span>
-                </div>
-                <div className="md:col-span-2 flex justify-end gap-1" onClick={(e) => e.stopPropagation()}>
-                  <button onClick={() => setFeedbackOpen(true)} className="rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" title="Feedback">
-                    <MessageSquare size={15} />
-                  </button>
-                  <button onClick={() => setShareOpen(true)} className="rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" title="Divulgar">
-                    <Share2 size={15} />
-                  </button>
-                  <button className="rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors" title="Visualizar">
-                    <Eye size={15} />
-                  </button>
+                <div className="pb-3">
+                  <p className="text-xs leading-relaxed">{a.text}</p>
+                  <p className="text-[11px] text-muted-foreground mt-0.5">{a.time}</p>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
 
-              {/* Pipeline */}
-              {expanded && (
-                <div className="border-t bg-muted/20 px-5 py-4">
-                  <p className="text-xs font-semibold text-muted-foreground uppercase mb-3">Macro Pipeline</p>
-                  <div className="flex flex-wrap gap-2">
-                    {job.pipeline.map((stage, i) => (
-                      <div key={i} className="flex items-center">
-                        <div className="rounded-lg border bg-card px-4 py-2 text-sm font-medium">
-                          {stage}
-                        </div>
-                        {i < job.pipeline.length - 1 && (
-                          <div className="mx-1 text-muted-foreground">→</div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        })}
       </div>
 
-      <FeedbackModal open={feedbackOpen} onClose={() => setFeedbackOpen(false)} />
-      <ShareJobModal open={shareOpen} onClose={() => setShareOpen(false)} />
+      {/* Quick links */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {[
+          { label: "Gerenciar Vagas",  to: "/empresa/vagas",      icon: Briefcase,    color: "text-primary"      },
+          { label: "Ver Candidatos",   to: "/empresa/candidatos", icon: Users,        color: "text-blue-500"     },
+          { label: "Relatórios",       to: "/empresa/relatorios", icon: TrendingUp,   color: "text-amber-500"    },
+          { label: "Perfil da Empresa",to: "/empresa/perfil",     icon: CalendarCheck,color: "text-emerald-500"  },
+        ].map(l => (
+          <Link
+            key={l.to}
+            to={l.to}
+            className="flex items-center gap-2 rounded-xl border bg-card px-4 py-3 text-sm font-medium hover:bg-muted/40 transition-colors"
+          >
+            <l.icon size={16} className={l.color} />
+            {l.label}
+          </Link>
+        ))}
+      </div>
+
     </div>
   );
 };
