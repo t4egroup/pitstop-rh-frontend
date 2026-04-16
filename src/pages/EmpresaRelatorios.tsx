@@ -56,7 +56,7 @@ const EmpresaRelatorios = () => (
     {/* KPIs */}
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
       {kpis.map(k => (
-        <div key={k.label} className="rounded-xl border bg-card p-4">
+        <div key={k.label} className="rounded-xl border bg-white p-4">
           <div className="flex items-center justify-between mb-3">
             <p className="text-xs font-medium text-muted-foreground">{k.label}</p>
             <div className={`h-8 w-8 rounded-lg flex items-center justify-center ${k.bg}`}>
@@ -72,7 +72,7 @@ const EmpresaRelatorios = () => (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
       {/* Candidatos por vaga */}
-      <div className="rounded-xl border bg-card p-5">
+      <div className="rounded-xl border bg-white p-5">
         <h2 className="text-sm font-semibold mb-4">Candidatos por Vaga</h2>
         <ResponsiveContainer width="100%" height={220}>
           <BarChart data={candidatosPorVaga} barSize={28}>
@@ -86,7 +86,7 @@ const EmpresaRelatorios = () => (
       </div>
 
       {/* Candidatos por mês */}
-      <div className="rounded-xl border bg-card p-5">
+      <div className="rounded-xl border bg-white p-5">
         <h2 className="text-sm font-semibold mb-4">Candidatos por Mês</h2>
         <ResponsiveContainer width="100%" height={220}>
           <LineChart data={candidatosPorMes}>
@@ -100,7 +100,7 @@ const EmpresaRelatorios = () => (
       </div>
 
       {/* Funil de seleção */}
-      <div className="rounded-xl border bg-card p-5">
+      <div className="rounded-xl border bg-white p-5">
         <h2 className="text-sm font-semibold mb-4">Funil de Seleção</h2>
         <div className="space-y-2">
           {funil.map((f, i) => {
@@ -124,7 +124,7 @@ const EmpresaRelatorios = () => (
       </div>
 
       {/* Status das vagas */}
-      <div className="rounded-xl border bg-card p-5">
+      <div className="rounded-xl border bg-white p-5">
         <h2 className="text-sm font-semibold mb-4">Status das Vagas</h2>
         <div className="flex items-center justify-between gap-6">
           <ResponsiveContainer width="50%" height={180}>

@@ -57,7 +57,7 @@ const SectionCard = ({
   title: string;
   children: React.ReactNode;
 }) => (
-  <div className="rounded-xl border bg-card">
+  <div className="rounded-xl border bg-white">
     <div className="flex items-center gap-2.5 px-5 py-4 border-b">
       <Icon size={16} className="text-primary" />
       <h2 className="text-sm font-semibold">{title}</h2>
@@ -83,14 +83,14 @@ const CandidateProfile = () => {
     <div className="container max-w-3xl py-8 space-y-5">
 
       {/* Header card */}
-      <div className="rounded-xl border bg-card px-6 py-5 flex items-start gap-5">
+      <div className="rounded-xl border bg-white px-6 py-5 flex items-start gap-5">
         {/* Avatar */}
         <div className="shrink-0 h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl font-extrabold text-primary">
           {p.name[0]}
         </div>
 
         <div className="flex-1 min-w-0">
-          <h1 className="text-xl font-extrabold truncate">{p.name}</h1>
+          <h1 className="text-2xl font-extrabold truncate">{p.name}</h1>
           <p className="text-sm text-muted-foreground">{p.headline}</p>
           <div className="flex flex-wrap gap-3 mt-2 text-xs text-muted-foreground">
             <span className="flex items-center gap-1"><Mail size={12} />{p.email}</span>

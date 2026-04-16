@@ -67,7 +67,7 @@ const Branding = () => {
           <div className="lg:col-span-2 space-y-6">
 
             {/* Informações gerais */}
-            <section className="rounded-xl border bg-card overflow-hidden">
+            <section className="rounded-xl border bg-white overflow-hidden">
               <div className="px-6 py-4 border-b">
                 <h2 className="font-bold">Informações gerais</h2>
               </div>
@@ -125,7 +125,7 @@ const Branding = () => {
                           https://<span className="font-bold">{form.dominio}</span>.pitstoprh.com.br/carreiras
                         </p>
                       )}
-                      <div className="flex items-start gap-2 rounded-lg bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 px-3 py-2">
+                      <div className="flex items-start gap-2 rounded-lg bg-blue-50 dark:bg-blue-950/30 border border-blue-300 dark:border-blue-800 px-3 py-2">
                         <Info size={13} className="text-blue-500 mt-0.5 shrink-0" />
                         <p className="text-xs text-blue-700 dark:text-blue-300">
                           Após realizar uma alteração no domínio e publicá-la, a atualização pode demorar até 1 hora para ser concluída.
@@ -207,7 +207,7 @@ const Branding = () => {
             </section>
 
             {/* Definição de cores */}
-            <section className="rounded-xl border bg-card overflow-hidden">
+            <section className="rounded-xl border bg-white overflow-hidden">
               <div className="px-6 py-4 border-b flex items-center gap-2">
                 <Palette size={15} />
                 <h2 className="font-bold">Definição de cores</h2>
@@ -238,7 +238,7 @@ const Branding = () => {
             </section>
 
             {/* Opções de exibição */}
-            <section className="rounded-xl border bg-card overflow-hidden">
+            <section className="rounded-xl border bg-white overflow-hidden">
               <div className="px-6 py-4 border-b">
                 <h2 className="font-bold">Opções de exibição</h2>
               </div>
@@ -271,7 +271,7 @@ const Branding = () => {
 
           {/* ── Preview lateral ── */}
           <div className="space-y-4">
-            <div className="rounded-xl border bg-card overflow-hidden sticky top-20">
+            <div className="rounded-xl border bg-white overflow-hidden sticky top-20">
               <div className="px-4 py-3 border-b">
                 <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide">Pré-visualização</p>
               </div>

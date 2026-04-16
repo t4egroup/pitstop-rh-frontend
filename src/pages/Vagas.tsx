@@ -145,12 +145,12 @@ const Pill = ({ label, onRemove }: { label: string; onRemove: () => void }) => (
 /* ── Job card ── */
 const modalityColor: Record<string, string> = {
   Remoto:     "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-800",
-  Híbrido:    "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-950/30 dark:text-blue-400 dark:border-blue-800",
+  Híbrido:    "bg-blue-50 text-blue-700 border-blue-300 dark:bg-blue-950/30 dark:text-blue-400 dark:border-blue-800",
   Presencial: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-800",
 };
 
 const JobCard = ({ job }: { job: Job }) => (
-  <div className="group rounded-xl border bg-card p-5 flex flex-col gap-3 hover:shadow-md hover:border-primary/30 transition-all">
+  <div className="group rounded-xl border bg-white p-5 flex flex-col gap-3 hover:shadow-md hover:border-primary/30 transition-all">
     {/* Header */}
     <div className="flex items-start gap-3">
       <div className="h-10 w-10 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center font-bold text-primary text-sm">
@@ -212,7 +212,7 @@ const FilterSelect = ({
     <select
       value={value}
       onChange={e => onChange(e.target.value)}
-      className="w-full appearance-none rounded-xl border bg-card px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 cursor-pointer"
+      className="w-full appearance-none rounded-xl border bg-white px-3 py-2 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 cursor-pointer"
     >
       {options.map(o => <option key={o} value={o}>{o}</option>)}
     </select>
@@ -272,7 +272,7 @@ const Vagas = () => {
             placeholder="Buscar por cargo, empresa ou habilidade..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full rounded-xl border bg-card pl-10 pr-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+            className="w-full rounded-xl border bg-white pl-10 pr-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
           />
           {search && (
             <button onClick={() => setSearch("")} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground">
@@ -300,7 +300,7 @@ const Vagas = () => {
 
         {/* ── Sidebar filters ── */}
         <aside className={`${showFilters ? "block" : "hidden"} lg:block w-full lg:w-56 shrink-0 space-y-4`}>
-          <div className="rounded-xl border bg-card p-4 space-y-4">
+          <div className="rounded-xl border bg-white p-4 space-y-4">
             <div className="flex items-center justify-between">
               <p className="text-sm font-semibold flex items-center gap-1.5">
                 <SlidersHorizontal size={14} className="text-primary" />

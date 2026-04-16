@@ -61,10 +61,30 @@ const Pricing = () => {
 
       {/* ── Hero header ── */}
       <section className="relative pb-20 sm:pb-28 -mt-[8.75rem] pt-[calc(6.75rem+4.75rem)] overflow-hidden" style={{ background: "linear-gradient(145deg, #0a1628 0%, #0f2044 40%, #162952 100%)" }}>
-        <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
-          style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
-        <div className="absolute top-0 left-0 right-0 h-[2px] pointer-events-none"
-          style={{ background: "linear-gradient(90deg, #ea3839 0%, #243c7e 40%, transparent)" }} />
+
+        {/* Geometric shapes */}
+        <div className="absolute top-0 right-0 w-[520px] h-[520px] pointer-events-none opacity-50"
+          style={{ background: "linear-gradient(160deg,#1e3a7a,#243c7e)", clipPath: "polygon(100% 0%,30% 0%,100% 70%)" }} />
+        <div className="absolute top-0 right-0 w-[320px] h-[320px] pointer-events-none opacity-30"
+          style={{ background: "#31549c", clipPath: "polygon(100% 0%,55% 0%,100% 45%)" }} />
+        <div className="absolute bottom-0 left-0 w-[380px] h-[380px] pointer-events-none opacity-30"
+          style={{ background: "linear-gradient(45deg,#c0392b,#ea3839)", clipPath: "polygon(0% 100%,0% 35%,65% 100%)" }} />
+        <div className="absolute bottom-0 right-0 w-[220px] h-[220px] pointer-events-none opacity-20"
+          style={{ background: "#f59e0b", clipPath: "polygon(100% 100%,30% 100%,100% 30%)" }} />
+        <div className="absolute top-1/2 -translate-y-1/2 -left-8 w-[160px] h-[300px] pointer-events-none opacity-10"
+          style={{ background: "#22c55e", clipPath: "polygon(0% 20%,100% 0%,100% 100%,0% 80%)" }} />
+        <div className="absolute inset-0 pointer-events-none opacity-[0.06]"
+          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.07 }} aria-hidden>
+          <circle cx="72%" cy="46%" r="180" fill="none" stroke="white" strokeWidth="1" />
+          <circle cx="72%" cy="46%" r="280" fill="none" stroke="white" strokeWidth="0.8" />
+          <circle cx="72%" cy="46%" r="380" fill="none" stroke="white" strokeWidth="0.5" />
+          <line x1="0" y1="100%" x2="40%" y2="0" stroke="white" strokeWidth="0.6" />
+          <line x1="100%" y1="0" x2="60%" y2="100%" stroke="white" strokeWidth="0.6" />
+        </svg>
+        <div className="dot-grid absolute inset-0 pointer-events-none opacity-15" />
+        <div className="absolute top-0 left-0 right-0 h-[3px] pointer-events-none"
+          style={{ background: "linear-gradient(90deg,#ea3839 0%,#243c7e 50%,transparent 100%)" }} />
         <div className="container max-w-5xl text-center relative z-10">
           <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-blue-400 mb-3">
             <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "#ea3839" }} />
@@ -89,12 +109,12 @@ const Pricing = () => {
                   className={`relative rounded-2xl border p-7 flex flex-col transition-all hover:-translate-y-1 hover:shadow-xl duration-200 ${
                     plan.highlight
                       ? "border-[#243c7e] bg-white shadow-lg ring-2 ring-[#243c7e]/20"
-                      : "bg-white border-slate-200"
+                      : "bg-white border-blue-300"
                   }`}
                 >
                   {plan.highlight && (
                     <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-xs font-bold text-white"
-                      style={{ background: "linear-gradient(135deg,#ea3839 0%,#c0124a 15%,#3b6fd4 50%,#243c7e 100%)" }}>
+                      style={{ background: "linear-gradient(135deg,#4060aa 0%,#638cdc 50%,#d04870 85%,#f06868 100%)" }}>
                       Mais Popular
                     </span>
                   )}
@@ -133,7 +153,7 @@ const Pricing = () => {
                         ? "text-white"
                         : "border-2 border-slate-300 text-slate-700 hover:bg-slate-50"
                     }`}
-                    style={plan.highlight ? { background: "linear-gradient(135deg,#ea3839 0%,#c0124a 15%,#3b6fd4 50%,#243c7e 100%)" } : {}}
+                    style={plan.highlight ? { background: "linear-gradient(135deg,#4060aa 0%,#638cdc 50%,#d04870 85%,#f06868 100%)" } : {}}
                   >
                     Começar agora {plan.highlight && <ArrowRight size={15} />}
                   </Link>
@@ -170,7 +190,7 @@ const Pricing = () => {
               { icon: Phone, title: "Telefone", info: "(11) 93332-0173", action: "Ligar agora", href: "tel:+5511933320173" },
               { icon: MessageCircle, title: "WhatsApp", info: "Resposta em até 1h útil", action: "Abrir WhatsApp", href: "https://wa.me/5511933320173" },
             ].map((c) => (
-              <div key={c.title} className="rounded-2xl border border-slate-200 bg-white p-7 flex flex-col items-center text-center gap-3 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
+              <div key={c.title} className="rounded-2xl border border-blue-300 bg-white p-7 flex flex-col items-center text-center gap-3 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
                 <div className="h-12 w-12 rounded-xl flex items-center justify-center text-white" style={{ background: "linear-gradient(135deg,#243c7e,#4f6ec0)" }}>
                   <c.icon size={22} />
                 </div>

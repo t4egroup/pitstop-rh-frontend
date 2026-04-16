@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { AlertTriangle, Save, ChevronDown, ChevronUp } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { AlertTriangle, Save, ChevronDown, ChevronUp, ArrowLeft } from "lucide-react";
 
 const sections = [
   {
@@ -50,6 +51,7 @@ const sections = [
 ];
 
 const CandidateRegistration = () => {
+  const navigate = useNavigate();
   const [filledSections, setFilledSections] = useState<Record<number, boolean>>({});
   const [openSections, setOpenSections] = useState<Record<number, boolean>>({ 0: true });
 
@@ -64,9 +66,16 @@ const CandidateRegistration = () => {
     setFilledSections((prev) => ({ ...prev, [i]: true }));
 
   return (
-    <div className="container max-w-3xl py-8">
-      <h1 className="text-2xl font-bold mb-1">Cadastro do Candidato</h1>
-      <p className="text-muted-foreground text-sm mb-6">Preencha todas as seções para ativar sua conta.</p>
+    <div className="min-h-screen bg-slate-50">
+    <div className="container max-w-3xl py-10">
+      <button
+        onClick={() => navigate("/")}
+        className="flex items-center gap-2 text-sm text-slate-500 hover:text-slate-900 transition-colors mb-6"
+      >
+        <ArrowLeft size={16} /> Voltar para o início
+      </button>
+      <h1 className="text-2xl font-bold mb-1 text-slate-900">Cadastro do Candidato</h1>
+      <p className="text-slate-500 text-sm mb-6">Preencha todas as seções para ativar sua conta.</p>
 
       {/* Alert */}
       <div className="mb-6 flex items-start gap-3 rounded-lg border border-warning/40 bg-warning/10 p-4 text-sm">
@@ -77,7 +86,7 @@ const CandidateRegistration = () => {
       {/* Progress */}
       <div className="mb-8">
         <div className="flex items-center justify-between text-sm mb-1.5">
-          <span className="font-medium">Progresso do cadastro</span>
+          <span className="font-medium text-slate-700">Progresso do cadastro</span>
           <span className="font-semibold text-primary">{progress}%</span>
         </div>
         <div className="h-2.5 w-full rounded-full bg-muted overflow-hidden">
@@ -94,7 +103,7 @@ const CandidateRegistration = () => {
           const open = openSections[idx];
           const filled = filledSections[idx];
           return (
-            <div key={idx} className="rounded-lg border bg-card overflow-hidden">
+            <div key={idx} className="rounded-lg border bg-white overflow-hidden">
               <button
                 onClick={() => toggleSection(idx)}
                 className="flex w-full items-center justify-between px-5 py-4 text-left"
@@ -157,6 +166,7 @@ const CandidateRegistration = () => {
           Finalizar Cadastro
         </button>
       </div>
+    </div>
     </div>
   );
 };

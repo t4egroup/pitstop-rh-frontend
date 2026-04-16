@@ -3,21 +3,40 @@ import {
   LayoutDashboard, GitPullRequest, ClipboardList,
   Users, BarChart2, Megaphone, UserCheck,
   LogOut, Settings, Briefcase, Building2, User, Search,
-  ChevronLeft, ChevronRight,
+  PanelLeftClose, PanelLeftOpen, ChevronDown,
+  Globe, List, FileText, MessageSquare, CheckSquare,
 } from "lucide-react";
 import { useState } from "react";
 import { useAuth, UserRole } from "@/contexts/AuthContext";
 import Logo from "@/components/Logo";
 
-const navLinks: Record<UserRole, { to: string; label: string; icon: React.ElementType }[]> = {
+type NavItem = {
+  to: string;
+  label: string;
+  icon: React.ElementType;
+  children?: { to: string; label: string }[];
+};
+
+const navLinks: Record<UserRole, NavItem[]> = {
   recrutador: [
-    { to: "/dashboard",   label: "Dashboard",   icon: LayoutDashboard },
-    { to: "/processos",   label: "Processos",   icon: GitPullRequest  },
-    { to: "/requisicoes", label: "Requisições", icon: ClipboardList   },
-    { to: "/candidatos",  label: "Candidatos",  icon: Users           },
-    { to: "/relatorios",  label: "Relatórios",  icon: BarChart2       },
-    { to: "/branding",    label: "Branding",    icon: Megaphone       },
-    { to: "/admissao",    label: "Admissão",    icon: UserCheck       },
+    { to: "/dashboard",        label: "Visão geral",      icon: LayoutDashboard },
+    { to: "/gestao-vagas",     label: "Gestão de vagas",  icon: Briefcase       },
+    {
+      to: "#",
+      label: "Gestão de talentos",
+      icon: Users,
+      children: [
+        { to: "/talentos",           label: "Talentos" },
+        { to: "/portal-talentos",    label: "Portal de Talentos" },
+        { to: "/listas-segmentadas", label: "Listas Segmentadas" },
+        { to: "/paginas-captacao",   label: "Páginas de Captação" },
+        { to: "/comunicacoes",       label: "Comunicações" },
+      ],
+    },
+    { to: "/analisar-dados",   label: "Analisar dados",   icon: BarChart2       },
+    { to: "/relatorios",       label: "Relatórios",       icon: FileText        },
+    { to: "/gerenciar-tarefas",label: "Gerenciar tarefas", icon: CheckSquare    },
+    { to: "/setup",              label: "Setup",             icon: Settings        },
   ],
   candidato: [
     { to: "/candidato/vagas", label: "Vagas",        icon: Search    },
@@ -35,7 +54,7 @@ const navLinks: Record<UserRole, { to: string; label: string; icon: React.Elemen
 };
 
 const bottomLinks: Record<UserRole, { to: string; label: string; icon: React.ElementType }[]> = {
-  recrutador: [{ to: "/perfil", label: "Configurações", icon: Settings }],
+  recrutador: [],
   candidato: [],
   empresa: [],
 };
@@ -45,11 +64,21 @@ const AppSidebar = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
+  const [openSubmenus, setOpenSubmenus] = useState<Record<string, boolean>>({});
 
   if (!user) return null;
 
   const links = navLinks[user.role];
-  const bottom = bottomLinks[user.role];
+
+  const handleToggleCollapse = () => {
+    setCollapsed(c => {
+      if (!c) {
+        // Closing: also close all submenus
+        setOpenSubmenus({});
+      }
+      return !c;
+    });
+  };
 
   const handleLogout = () => {
     logout();
@@ -58,95 +87,138 @@ const AppSidebar = () => {
 
   return (
     <aside
-      className={`sticky top-0 h-screen flex flex-col border-r border-slate-200 bg-white transition-all duration-200 shrink-0 ${
-        collapsed ? "w-[72px]" : "w-[240px]"
+      className={`sticky top-0 h-screen flex flex-col border-r border-[#1b2e63] transition-[width,min-width] duration-200 shrink-0 overflow-hidden whitespace-nowrap ${
+        collapsed ? "w-[68px] min-w-[68px]" : "w-[260px] min-w-[260px]"
       }`}
+      style={{ background: "linear-gradient(180deg, #243c7e 0%, #1b2e63 100%)" }}
     >
-      {/* Logo */}
-      <div className={`flex items-center h-16 border-b border-slate-100 shrink-0 ${collapsed ? "justify-center px-2" : "px-5"}`}>
+      {/* ── Header: só o logo ── */}
+      <div className={`flex items-center h-14 border-b border-white/10 shrink-0 ${collapsed ? "justify-center px-2" : "px-5"}`}>
         {collapsed ? (
-          <img src="/logo-colorido.png" alt="PitStop RH" className="h-7 w-auto object-contain" />
+          <img src="/logo-branco.png" alt="PitStop RH" className="h-9 w-9 object-contain" draggable={false} />
         ) : (
-          <Logo size="sm" />
+          <Logo size="sm" white />
         )}
       </div>
 
-      {/* Nav links */}
-      <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
+      {/* ── Perfil + botão recolher ── */}
+      <div className="border-b border-white/10 py-2 px-2 shrink-0">
+        <div className={`flex items-center gap-1 ${collapsed ? "justify-center" : ""}`}>
+
+          {!collapsed && (
+            <div className="flex items-center gap-2.5 flex-1 min-w-0 px-2 py-2">
+              <div
+                className="h-8 w-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
+                style={{ background: "linear-gradient(135deg,#4f6ec0,#7b9be0)" }}
+              >
+                {user.name?.[0]?.toUpperCase() ?? "?"}
+              </div>
+              <div className="flex-1 min-w-0 text-left">
+                <p className="text-sm font-semibold text-white truncate">{user.name}</p>
+                <p className="text-[11px] text-white/50 truncate">{user.email}</p>
+              </div>
+            </div>
+          )}
+
+          <button
+            onClick={handleToggleCollapse}
+            title={collapsed ? "Expandir" : "Recolher"}
+            className="p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-purple-400/20 transition-colors shrink-0 mx-auto"
+          >
+            {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
+          </button>
+        </div>
+      </div>
+
+      {/* ── Nav links ── */}
+      <nav className={`flex-1 overflow-y-auto overflow-x-hidden py-4 space-y-1 ${collapsed ? "px-2" : "px-3"}`}>
         {links.map((l) => {
+          if (l.children) {
+            const isChildActive = l.children.some((c) => pathname === c.to);
+            const isOpen = openSubmenus[l.label] ?? isChildActive;
+            return (
+              <div key={l.label}>
+                <button
+                  onClick={() => {
+                    if (collapsed) {
+                      setCollapsed(false);
+                      setOpenSubmenus((prev) => ({ ...prev, [l.label]: true }));
+                    } else {
+                      setOpenSubmenus((prev) => ({ ...prev, [l.label]: !isOpen }));
+                    }
+                  }}
+                  title={collapsed ? l.label : undefined}
+                  className={`flex items-center gap-3 rounded-xl py-2.5 text-sm font-medium transition-colors w-full ${
+                    isChildActive
+                      ? "bg-white/15 text-white font-semibold"
+                      : "text-indigo-200 hover:text-white hover:bg-purple-400/20"
+                  } ${collapsed ? "justify-center px-2" : "px-3"}`}
+                >
+                  <l.icon size={22} className="shrink-0 text-indigo-200" />
+                  {!collapsed && (
+                    <>
+                      <span className="flex-1 text-left">{l.label}</span>
+                      <ChevronDown
+                        size={14}
+                        className={`shrink-0 text-white/40 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                      />
+                    </>
+                  )}
+                </button>
+                {!collapsed && isOpen && (
+                  <div className="ml-8 mt-1 space-y-0.5 border-l-2 border-white/20 pl-3">
+                    {l.children.map((child) => {
+                      const childActive = pathname === child.to;
+                      return (
+                        <Link
+                          key={child.to}
+                          to={child.to}
+                          className={`block rounded-lg px-3 py-2 text-sm transition-colors ${
+                            childActive
+                              ? "bg-white/15 text-white font-semibold"
+                              : "text-indigo-200 hover:text-white hover:bg-purple-400/20"
+                          }`}
+                        >
+                          {child.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          }
+
           const active = pathname === l.to;
           return (
             <Link
               key={l.to}
               to={l.to}
               title={collapsed ? l.label : undefined}
-              className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
+              className={`flex items-center gap-3 rounded-xl py-2.5 text-sm font-medium transition-colors ${
                 active
-                  ? "bg-[#243c7e]/10 text-[#243c7e] font-semibold"
-                  : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
-              } ${collapsed ? "justify-center" : ""}`}
+                  ? "bg-white/15 text-white font-semibold"
+                  : "text-indigo-200 hover:text-white hover:bg-purple-400/20"
+              } ${collapsed ? "justify-center px-2" : "px-3"}`}
             >
-              <l.icon size={18} className="shrink-0" />
+              <l.icon size={22} className="shrink-0 text-indigo-200" />
               {!collapsed && <span>{l.label}</span>}
             </Link>
           );
         })}
       </nav>
 
-      {/* Bottom section */}
-      <div className="border-t border-slate-100 py-3 px-3 space-y-1 shrink-0">
-        {bottom.map((l) => {
-          const active = pathname === l.to;
-          return (
-            <Link
-              key={l.to}
-              to={l.to}
-              title={collapsed ? l.label : undefined}
-              className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors ${
-                active
-                  ? "bg-[#243c7e]/10 text-[#243c7e] font-semibold"
-                  : "text-slate-500 hover:text-slate-900 hover:bg-slate-100"
-              } ${collapsed ? "justify-center" : ""}`}
-            >
-              <l.icon size={18} className="shrink-0" />
-              {!collapsed && <span>{l.label}</span>}
-            </Link>
-          );
-        })}
-
-        {/* User info + logout */}
-        <div className={`flex items-center gap-3 rounded-xl px-3 py-2.5 ${collapsed ? "justify-center" : ""}`}>
-          <div className="h-8 w-8 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
-            style={{ background: "linear-gradient(135deg,#243c7e,#4f6ec0)" }}>
-            {user.name?.[0]?.toUpperCase() ?? "?"}
-          </div>
-          {!collapsed && (
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold text-slate-900 truncate">{user.name}</p>
-              <p className="text-[11px] text-slate-400 truncate">{user.email}</p>
-            </div>
-          )}
-        </div>
-
+      {/* ── Sair da conta ── */}
+      <div className={`border-t border-white/10 py-3 shrink-0 ${collapsed ? "px-2" : "px-3"}`}>
         <button
           onClick={handleLogout}
-          title={collapsed ? "Sair" : undefined}
-          className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-red-500 hover:bg-red-50 transition-colors w-full ${
-            collapsed ? "justify-center" : ""
+          title={collapsed ? "Sair da conta" : undefined}
+          className={`flex items-center gap-3 rounded-xl py-2.5 text-sm font-medium text-white/50 hover:text-red-300 hover:bg-purple-400/20 transition-colors w-full ${
+            collapsed ? "justify-center px-2" : "px-3"
           }`}
         >
-          <LogOut size={18} className="shrink-0" />
-          {!collapsed && <span>Sair</span>}
-        </button>
-
-        {/* Collapse toggle */}
-        <button
-          onClick={() => setCollapsed(!collapsed)}
-          className={`flex items-center gap-3 rounded-xl px-3 py-2 text-xs font-medium text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors w-full ${
-            collapsed ? "justify-center" : ""
-          }`}
-        >
-          {collapsed ? <ChevronRight size={16} /> : <><ChevronLeft size={16} /><span>Recolher</span></>}
+          <LogOut size={22} className="shrink-0" />
+          {!collapsed && <span>Sair da conta</span>}
         </button>
       </div>
     </aside>

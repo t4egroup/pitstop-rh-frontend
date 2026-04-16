@@ -69,7 +69,7 @@ const Login = () => {
             </div>
 
             {/* Role selector */}
-            <div className="flex rounded-full border border-slate-200 bg-white p-1 mb-6 shadow-sm">
+            <div className="flex rounded-full border border-blue-300 bg-white p-1 mb-6 shadow-sm">
               {roles.map(({ value, label }) => (
                 <button
                   key={value}
@@ -78,7 +78,7 @@ const Login = () => {
                   className="flex-1 py-1.5 text-xs font-semibold transition-all rounded-full"
                   style={
                     selectedRole === value
-                      ? { background: "linear-gradient(135deg,#ea3839 0%,#c0124a 15%,#3b6fd4 50%,#243c7e 100%)", color: "#fff" }
+                      ? { background: "linear-gradient(135deg,#4060aa 0%,#638cdc 50%,#d04870 85%,#f06868 100%)", color: "#fff" }
                       : { color: "#64748b" }
                   }
                 >
@@ -96,7 +96,7 @@ const Login = () => {
                   <input
                     type="email"
                     placeholder="seu@email.com"
-                    className="w-full rounded-xl border border-slate-200 bg-white pl-10 pr-4 py-2.5 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-[#243c7e]/25 focus:border-[#243c7e] transition-all shadow-sm placeholder:text-slate-400"
+                    className="w-full rounded-xl border border-blue-300 bg-white pl-10 pr-4 py-2.5 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-[#243c7e]/25 focus:border-[#243c7e] transition-all shadow-sm placeholder:text-slate-400"
                   />
                 </div>
               </div>
@@ -111,7 +111,7 @@ const Login = () => {
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
-                    className="w-full rounded-xl border border-slate-200 bg-white pl-10 pr-11 py-2.5 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-[#243c7e]/25 focus:border-[#243c7e] transition-all shadow-sm placeholder:text-slate-400"
+                    className="w-full rounded-xl border border-blue-300 bg-white pl-10 pr-11 py-2.5 text-sm text-slate-800 outline-none focus:ring-2 focus:ring-[#243c7e]/25 focus:border-[#243c7e] transition-all shadow-sm placeholder:text-slate-400"
                   />
                   <button
                     type="button"
@@ -126,7 +126,7 @@ const Login = () => {
               <button
                 type="submit"
                 className="w-full flex items-center justify-center gap-2 rounded-full py-3 text-sm font-bold text-white transition-opacity hover:opacity-90 shadow-md mt-2"
-                style={{ background: "linear-gradient(135deg,#ea3839 0%,#c0124a 15%,#3b6fd4 50%,#243c7e 100%)" }}
+                style={{ background: "linear-gradient(135deg,#4060aa 0%,#638cdc 50%,#d04870 85%,#f06868 100%)" }}
               >
                 Entrar <ArrowRight size={15} />
               </button>

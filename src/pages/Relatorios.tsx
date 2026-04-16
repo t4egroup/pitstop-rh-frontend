@@ -1,223 +1,249 @@
+import { useState } from "react";
 import {
-  BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
-  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-} from "recharts";
-import { Download, TrendingUp, TrendingDown, Users, Briefcase, Clock, CheckCircle2 } from "lucide-react";
+  Briefcase, Users, GitPullRequest, FileText,
+  Monitor, Building2, Mail, UserX,
+  ArrowLeft, ChevronRight, Info, Download,
+} from "lucide-react";
 
-const candidatosPorMes = [
-  { mes: "Out", candidatos: 45, contratados: 3 },
-  { mes: "Nov", candidatos: 62, contratados: 5 },
-  { mes: "Dez", candidatos: 38, contratados: 2 },
-  { mes: "Jan", candidatos: 71, contratados: 6 },
-  { mes: "Fev", candidatos: 89, contratados: 7 },
-  { mes: "Mar", candidatos: 74, contratados: 5 },
-  { mes: "Abr", candidatos: 95, contratados: 9 },
-];
+interface CategoriaRelatorio {
+  id: string;
+  titulo: string;
+  descricao: string;
+  icon: React.ElementType;
+  opcoes: { label: string; descricao?: string }[];
+}
 
-const tempoMedioPorVaga = [
-  { vaga: "Analista Mkt", dias: 22 },
-  { vaga: "Dev Front-end", dias: 35 },
-  { vaga: "UX Designer", dias: 28 },
-  { vaga: "Product Mgr", dias: 40 },
-  { vaga: "Analista Dados", dias: 18 },
-  { vaga: "Dev Back-end", dias: 32 },
-];
-
-const origemCandidatos = [
-  { name: "LinkedIn",      value: 42, color: "#0A66C2" },
-  { name: "Indeed",        value: 25, color: "#003A9B" },
-  { name: "Indicação",     value: 18, color: "#22c55e" },
-  { name: "Site próprio",  value: 10, color: "#f59e0b" },
-  { name: "Outros",        value: 5,  color: "#94a3b8" },
-];
-
-const motivoReprovacao = [
-  { motivo: "Habilidades técnicas", qtd: 38 },
-  { motivo: "Pretensão salarial",   qtd: 24 },
-  { motivo: "Fit cultural",         qtd: 19 },
-  { motivo: "Disponibilidade",      qtd: 12 },
-  { motivo: "Outros",               qtd: 7  },
-];
-
-const kpis = [
-  { label: "Candidatos recebidos",   value: "474",  delta: "+18%", up: true,  icon: Users,        color: "text-primary",   bg: "bg-primary/10"   },
-  { label: "Vagas fechadas",         value: "37",   delta: "+8%",  up: true,  icon: CheckCircle2, color: "text-green-600", bg: "bg-green-500/10" },
-  { label: "Tempo médio de seleção", value: "29d",  delta: "-3d",  up: true,  icon: Clock,        color: "text-amber-600", bg: "bg-amber-500/10" },
-  { label: "Taxa de conversão",      value: "7,8%", delta: "+1,2%",up: true,  icon: TrendingUp,   color: "text-teal-600",  bg: "bg-teal-500/10"  },
-  { label: "Vagas abertas",          value: "8",    delta: "+2",   up: true,  icon: Briefcase,    color: "text-blue-600",  bg: "bg-blue-500/10"  },
-  { label: "Custo por contratação",  value: "R$1.2k", delta: "-5%", up: true, icon: TrendingDown, color: "text-purple-600",bg: "bg-purple-500/10"},
-];
-
-const relatorios = [
-  { nome: "Relatório Mensal de Recrutamento — Abril 2026",     tipo: "PDF",  data: "14/04/2026" },
-  { nome: "Funil de Candidatos — 1º Trimestre 2026",           tipo: "XLSX", data: "01/04/2026" },
-  { nome: "Análise de Origem de Candidatos — Mar 2026",        tipo: "PDF",  data: "31/03/2026" },
-  { nome: "Relatório de Tempo de Seleção por Vaga — Fev 2026", tipo: "PDF",  data: "28/02/2026" },
-  { nome: "KPIs de RH — 4º Trimestre 2025",                    tipo: "XLSX", data: "05/01/2026" },
+const categorias: CategoriaRelatorio[] = [
+  {
+    id: "vagas",
+    titulo: "Vagas",
+    descricao: "Informações gerais sobre vagas e campos customizados",
+    icon: Briefcase,
+    opcoes: [
+      { label: "Vagas abertas", descricao: "Lista de vagas atualmente abertas com detalhes" },
+      { label: "Vagas encerradas", descricao: "Vagas finalizadas no período selecionado" },
+      { label: "Campos customizados", descricao: "Dados dos campos personalizados das vagas" },
+    ],
+  },
+  {
+    id: "candidaturas",
+    titulo: "Candidaturas",
+    descricao: "Informações sobre pessoas candidatas inscritas, contratadas e indicadas",
+    icon: Users,
+    opcoes: [
+      { label: "Candidatos inscritos", descricao: "Todas as inscrições realizadas no período" },
+      { label: "Candidatos contratados", descricao: "Pessoas contratadas via plataforma" },
+      { label: "Candidatos indicados", descricao: "Candidatos vindos de programa de indicação" },
+    ],
+  },
+  {
+    id: "etapas",
+    titulo: "Etapas",
+    descricao: "Informações sobre o tempo das etapas da vaga e do funil de pessoas candidatas",
+    icon: GitPullRequest,
+    opcoes: [
+      { label: "Tempo por etapa", descricao: "Tempo médio em cada etapa do funil" },
+      { label: "Movimentação no funil", descricao: "Transições entre etapas das vagas" },
+      { label: "Candidatos por etapa", descricao: "Quantidade de candidatos em cada etapa" },
+    ],
+  },
+  {
+    id: "resultado-testes",
+    titulo: "Resultado de testes",
+    descricao: "Informações sobre os testes realizados pelas pessoas candidatas",
+    icon: FileText,
+    opcoes: [
+      { label: "Resultados gerais", descricao: "Notas e aprovações dos testes aplicados" },
+      { label: "Testes por vaga", descricao: "Desempenho nos testes filtrado por vaga" },
+    ],
+  },
+  {
+    id: "uso-plataforma",
+    titulo: "Uso da plataforma",
+    descricao: "Informações sobre interações realizadas nas vagas",
+    icon: Monitor,
+    opcoes: [
+      { label: "Atividade dos recrutadores", descricao: "Ações realizadas pelos recrutadores" },
+      { label: "Interações nas vagas", descricao: "Histórico de movimentações e ações" },
+    ],
+  },
+  {
+    id: "dados-empresa",
+    titulo: "Dados da empresa",
+    descricao: "Informações gerais sobre dados da empresa",
+    icon: Building2,
+    opcoes: [
+      { label: "Usuários ativos", descricao: "Lista de recrutadores ativos na plataforma" },
+      { label: "Filiais", descricao: "Dados de filiais cadastradas" },
+      { label: "Áreas", descricao: "Áreas e departamentos da empresa" },
+      { label: "Cargos", descricao: "Cargos cadastrados na estrutura" },
+    ],
+  },
+  {
+    id: "carta-oferta",
+    titulo: "Carta Oferta",
+    descricao: "Informações sobre dados de Carta Oferta",
+    icon: Mail,
+    opcoes: [
+      { label: "Cartas enviadas", descricao: "Cartas oferta enviadas no período" },
+      { label: "Cartas aceitas", descricao: "Propostas aceitas pelos candidatos" },
+    ],
+  },
+  {
+    id: "exclusao-contas",
+    titulo: "Exclusão de contas",
+    descricao: "Informações sobre pessoas candidatas que solicitaram a exclusão da conta",
+    icon: UserX,
+    opcoes: [
+      { label: "Solicitações de exclusão", descricao: "Registro de pedidos de exclusão de conta" },
+    ],
+  },
 ];
 
 const Relatorios = () => {
+  const [categoriaAberta, setCategoriaAberta] = useState<CategoriaRelatorio | null>(null);
+  const [formato, setFormato] = useState<"CSV" | "XLSX" | null>(null);
+  const [opcaoSelecionada, setOpcaoSelecionada] = useState("");
+  const [enviado, setEnviado] = useState(false);
+
+  const handleEnviar = () => {
+    if (!formato || !opcaoSelecionada) return;
+    setEnviado(true);
+    setTimeout(() => setEnviado(false), 3000);
+  };
+
+  const handleVoltar = () => {
+    setCategoriaAberta(null);
+    setFormato(null);
+    setOpcaoSelecionada("");
+    setEnviado(false);
+  };
+
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container max-w-7xl py-8 space-y-8">
+    <div className="min-h-screen bg-blue-50">
+      <div className="max-w-5xl mx-auto px-6 py-8">
 
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-extrabold">Relatórios</h1>
-            <p className="text-muted-foreground text-sm mt-1">Indicadores e análises dos processos seletivos</p>
-          </div>
-          <div className="flex gap-2">
-            <select className="rounded-lg border bg-card px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30">
-              <option>Últimos 7 meses</option>
-              <option>Últimos 3 meses</option>
-              <option>Este ano</option>
-            </select>
-            <button className="flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary/90 transition-colors">
-              <Download size={15} /> Exportar
-            </button>
-          </div>
-        </div>
-
-        {/* KPIs */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-          {kpis.map((k) => (
-            <div key={k.label} className="rounded-xl border bg-card p-4">
-              <div className="flex items-center justify-between mb-2">
-                <div className={`rounded-lg p-1.5 ${k.bg}`}>
-                  <k.icon size={14} className={k.color} />
-                </div>
-                <span className={`text-xs font-semibold flex items-center gap-0.5 ${k.up ? "text-green-600" : "text-destructive"}`}>
-                  {k.up ? <TrendingUp size={11} /> : <TrendingDown size={11} />}{k.delta}
-                </span>
-              </div>
-              <p className="text-2xl font-extrabold">{k.value}</p>
-              <p className="text-xs text-muted-foreground mt-0.5 leading-tight">{k.label}</p>
+        {!categoriaAberta ? (
+          <>
+            {/* ── Listagem de categorias ── */}
+            <div className="mb-6">
+              <h1 className="text-2xl font-extrabold text-slate-900">Relatórios</h1>
+              <p className="text-sm text-slate-500 mt-1 leading-relaxed">
+                Aqui você encontra os relatórios disponíveis em nossa plataforma, agrupados por categorias.
+              </p>
+              <p className="text-sm text-slate-500 leading-relaxed">
+                Os dados são D-1, o que significa que as informações dos relatórios refletem os dados gerados até às 23:59h do dia anterior e foram atualizadas às 02h16 de 15/04/2026.
+              </p>
+              <p className="text-sm text-slate-500 leading-relaxed">
+                Selecione um relatório e enviaremos para você por <span className="font-bold text-slate-700">e-mail</span>.
+              </p>
             </div>
-          ))}
-        </div>
 
-        {/* Gráficos row 1 */}
-        <div className="grid lg:grid-cols-3 gap-6">
-
-          {/* Candidatos e contratados por mês */}
-          <div className="lg:col-span-2 rounded-xl border bg-card p-6">
-            <h2 className="font-bold mb-1">Candidatos × Contratados por Mês</h2>
-            <p className="text-xs text-muted-foreground mb-4">Volume recebido e conversões mensais</p>
-            <ResponsiveContainer width="100%" height={240}>
-              <BarChart data={candidatosPorMes} barGap={4}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
-                <XAxis dataKey="mes" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ borderRadius: 8, border: "1px solid hsl(var(--border))", background: "hsl(var(--card))" }} cursor={{ fill: "hsl(var(--muted))" }} />
-                <Bar dataKey="candidatos" fill="hsl(var(--primary))" radius={[4,4,0,0]} barSize={18} name="Candidatos" />
-                <Bar dataKey="contratados" fill="#22c55e" radius={[4,4,0,0]} barSize={18} name="Contratados" />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Origem dos candidatos */}
-          <div className="rounded-xl border bg-card p-6">
-            <h2 className="font-bold mb-1">Origem dos Candidatos</h2>
-            <p className="text-xs text-muted-foreground mb-4">De onde vêm os candidatos</p>
-            <ResponsiveContainer width="100%" height={160}>
-              <PieChart>
-                <Pie data={origemCandidatos} cx="50%" cy="50%" innerRadius={45} outerRadius={70} paddingAngle={3} dataKey="value">
-                  {origemCandidatos.map((e, i) => <Cell key={i} fill={e.color} />)}
-                </Pie>
-                <Tooltip contentStyle={{ borderRadius: 8, border: "1px solid hsl(var(--border))", background: "hsl(var(--card))" }} />
-              </PieChart>
-            </ResponsiveContainer>
-            <div className="mt-2 space-y-1.5">
-              {origemCandidatos.map((s) => (
-                <div key={s.name} className="flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2">
-                    <span className="h-2 w-2 rounded-full" style={{ background: s.color }} />
-                    <span className="text-muted-foreground">{s.name}</span>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {categorias.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setCategoriaAberta(cat)}
+                  className="flex items-start gap-3 rounded-xl bg-white border border-blue-300 p-5 text-left hover:shadow-md hover:border-[#243c7e]/30 transition-all group"
+                >
+                  <cat.icon size={20} className="text-[#243c7e] shrink-0 mt-0.5" />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-bold text-sm text-[#243c7e] group-hover:underline">{cat.titulo}</p>
+                    <p className="text-xs text-slate-500 mt-1 leading-relaxed">{cat.descricao}</p>
                   </div>
-                  <span className="font-bold">{s.value}%</span>
-                </div>
+                  <ChevronRight size={16} className="text-slate-300 group-hover:text-[#243c7e] shrink-0 mt-0.5 transition-colors" />
+                </button>
               ))}
             </div>
-          </div>
-        </div>
+          </>
+        ) : (
+          <>
+            {/* ── Detalhe da categoria ── */}
+            <button
+              onClick={handleVoltar}
+              className="flex items-center gap-2 text-sm font-semibold text-[#243c7e] hover:underline mb-6"
+            >
+              <ArrowLeft size={16} /> Voltar para relatórios
+            </button>
 
-        {/* Gráficos row 2 */}
-        <div className="grid lg:grid-cols-2 gap-6">
-
-          {/* Tempo médio por vaga */}
-          <div className="rounded-xl border bg-card p-6">
-            <h2 className="font-bold mb-1">Tempo Médio de Seleção por Vaga</h2>
-            <p className="text-xs text-muted-foreground mb-4">Em dias — do anúncio à contratação</p>
-            <ResponsiveContainer width="100%" height={220}>
-              <BarChart data={tempoMedioPorVaga} layout="vertical" barSize={16}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" horizontal={false} />
-                <XAxis type="number" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} unit="d" />
-                <YAxis dataKey="vaga" type="category" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} width={90} />
-                <Tooltip contentStyle={{ borderRadius: 8, border: "1px solid hsl(var(--border))", background: "hsl(var(--card))" }} cursor={{ fill: "hsl(var(--muted))" }} formatter={(v) => [`${v} dias`]} />
-                <Bar dataKey="dias" fill="hsl(var(--primary))" radius={[0,4,4,0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-
-          {/* Motivo de reprovação */}
-          <div className="rounded-xl border bg-card p-6">
-            <h2 className="font-bold mb-1">Principais Motivos de Reprovação</h2>
-            <p className="text-xs text-muted-foreground mb-4">Por que candidatos saem do processo</p>
-            <ResponsiveContainer width="100%" height={220}>
-              <BarChart data={motivoReprovacao} layout="vertical" barSize={16}>
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" horizontal={false} />
-                <XAxis type="number" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis dataKey="motivo" type="category" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} width={130} />
-                <Tooltip contentStyle={{ borderRadius: 8, border: "1px solid hsl(var(--border))", background: "hsl(var(--card))" }} cursor={{ fill: "hsl(var(--muted))" }} />
-                <Bar dataKey="qtd" fill="#f59e0b" radius={[0,4,4,0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-
-        {/* Evolução da taxa de conversão */}
-        <div className="rounded-xl border bg-card p-6">
-          <h2 className="font-bold mb-1">Evolução Mensal de Candidatos</h2>
-          <p className="text-xs text-muted-foreground mb-4">Tendência dos últimos 7 meses</p>
-          <ResponsiveContainer width="100%" height={180}>
-            <LineChart data={candidatosPorMes}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
-              <XAxis dataKey="mes" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
-              <Tooltip contentStyle={{ borderRadius: 8, border: "1px solid hsl(var(--border))", background: "hsl(var(--card))" }} />
-              <Line type="monotone" dataKey="candidatos" stroke="hsl(var(--primary))" strokeWidth={2.5} dot={{ r: 4, fill: "hsl(var(--primary))" }} activeDot={{ r: 6 }} name="Candidatos" />
-              <Line type="monotone" dataKey="contratados" stroke="#22c55e" strokeWidth={2.5} dot={{ r: 4, fill: "#22c55e" }} activeDot={{ r: 6 }} name="Contratados" />
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-
-        {/* Relatórios gerados */}
-        <div className="rounded-xl border bg-card overflow-hidden">
-          <div className="px-6 py-4 border-b flex items-center justify-between">
-            <h2 className="font-bold">Relatórios Gerados</h2>
-            <button className="text-xs font-semibold text-primary hover:underline">Ver todos</button>
-          </div>
-          <div className="divide-y">
-            {relatorios.map((r, i) => (
-              <div key={i} className="flex items-center justify-between px-6 py-3.5 hover:bg-muted/40 transition-colors">
-                <div className="flex items-center gap-3">
-                  <span className={`text-xs font-bold px-2 py-0.5 rounded ${r.tipo === "PDF" ? "bg-red-500/10 text-red-600" : "bg-green-500/10 text-green-700"}`}>
-                    {r.tipo}
-                  </span>
-                  <p className="text-sm font-medium">{r.nome}</p>
-                </div>
-                <div className="flex items-center gap-4 shrink-0">
-                  <span className="text-xs text-muted-foreground hidden sm:block">{r.data}</span>
-                  <button className="flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
-                    <Download size={13} /> Baixar
-                  </button>
-                </div>
+            <div className="rounded-xl bg-white border border-blue-300 p-6">
+              <div className="flex items-center gap-3 mb-2">
+                <categoriaAberta.icon size={20} className="text-[#243c7e]" />
+                <h2 className="text-lg font-extrabold text-slate-900">{categoriaAberta.titulo}</h2>
               </div>
-            ))}
-          </div>
-        </div>
 
+              <p className="text-sm text-slate-600 mb-1">{categoriaAberta.titulo}</p>
+              <p className="text-sm text-slate-500 mb-5">
+                {categoriaAberta.descricao}. Acesse uma prévia dos relatórios disponíveis.
+              </p>
+
+              {/* Info box */}
+              <div className="rounded-lg bg-blue-50 px-4 py-3 mb-6 flex items-start gap-2">
+                <Info size={14} className="text-blue-500 mt-0.5 shrink-0" />
+                <p className="text-sm text-slate-600">
+                  Para estes relatórios não é necessário selecionar nenhum filtro.
+                </p>
+              </div>
+
+              {/* Formato */}
+              <p className="text-sm text-slate-600 mb-3">Escolha o formato para gerar seu relatório</p>
+              <div className="flex items-center gap-4 mb-6">
+                {(["CSV", "XLSX"] as const).map((f) => (
+                  <button
+                    key={f}
+                    type="button"
+                    onClick={() => setFormato(f)}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <span
+                      className={`h-5 w-5 rounded-full border-2 flex items-center justify-center transition-colors ${
+                        formato === f ? "border-[#243c7e]" : "border-slate-300"
+                      }`}
+                    >
+                      {formato === f && <span className="h-2.5 w-2.5 rounded-full bg-[#243c7e]" />}
+                    </span>
+                    <span className="text-sm font-medium text-slate-700">{f}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Select opção */}
+              <select
+                value={opcaoSelecionada}
+                onChange={(e) => setOpcaoSelecionada(e.target.value)}
+                className="w-full rounded-lg border border-blue-300 bg-white px-4 py-3 text-sm text-slate-700 outline-none focus:ring-2 focus:ring-[#243c7e]/20 focus:border-[#243c7e] transition-all mb-6 appearance-none"
+                style={{ backgroundImage: "url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e\")", backgroundPosition: "right 0.75rem center", backgroundRepeat: "no-repeat", backgroundSize: "1.25em 1.25em" }}
+              >
+                <option value="">Selecione uma opção</option>
+                {categoriaAberta.opcoes.map((op) => (
+                  <option key={op.label} value={op.label}>{op.label}</option>
+                ))}
+              </select>
+
+              {/* Botão enviar */}
+              <div className="flex justify-end">
+                <button
+                  onClick={handleEnviar}
+                  disabled={!formato || !opcaoSelecionada}
+                  className={`flex items-center gap-2 rounded-lg px-6 py-3 text-sm font-bold transition-all ${
+                    formato && opcaoSelecionada
+                      ? "bg-[#243c7e] text-white hover:bg-[#1a2d5e] shadow-md"
+                      : "bg-slate-100 text-slate-400 cursor-not-allowed"
+                  }`}
+                >
+                  <Download size={14} />
+                  Enviar por e-mail
+                </button>
+              </div>
+
+              {enviado && (
+                <div className="mt-4 rounded-lg bg-green-50 border border-green-200 px-4 py-3 text-sm text-green-700">
+                  Relatório solicitado com sucesso! Você receberá o arquivo por e-mail em alguns minutos.
+                </div>
+              )}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

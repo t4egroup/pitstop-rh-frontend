@@ -141,7 +141,7 @@ const Admissao = () => {
         </div>
 
         {/* Fluxo */}
-        <div className="rounded-xl border bg-card p-4">
+        <div className="rounded-xl border bg-white p-4">
           <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-3">Etapas do processo</p>
           <div className="flex flex-wrap items-center gap-2 text-xs">
             {[
@@ -168,7 +168,7 @@ const Admissao = () => {
             { label: "Aguardando documentos",    value: counts.aguardando, color: "text-blue-600"        },
             { label: "Concluídas",               value: counts.concluidas, color: "text-green-600"       },
           ].map((k) => (
-            <div key={k.label} className="rounded-xl border bg-card p-4 text-center">
+            <div key={k.label} className="rounded-xl border bg-white p-4 text-center">
               <p className={`text-3xl font-extrabold ${k.color}`}>{k.value}</p>
               <p className="text-xs text-muted-foreground mt-1">{k.label}</p>
             </div>
@@ -184,13 +184,13 @@ const Admissao = () => {
               placeholder="Buscar por candidato, cargo ou departamento..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-lg border bg-card pl-9 pr-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+              className="w-full rounded-lg border bg-white pl-9 pr-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
             />
           </div>
           <select
             value={filtroStatus}
             onChange={(e) => setFiltroStatus(e.target.value)}
-            className="rounded-lg border bg-card px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+            className="rounded-lg border bg-white px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30"
           >
             <option value="">Todos os status</option>
             <option>Em andamento</option>
@@ -202,7 +202,7 @@ const Admissao = () => {
         {/* Lista */}
         <div className="space-y-3">
           {filtradas.length === 0 && (
-            <div className="rounded-xl border bg-card py-12 text-center text-sm text-muted-foreground">
+            <div className="rounded-xl border bg-white py-12 text-center text-sm text-muted-foreground">
               Nenhuma admissão encontrada.
             </div>
           )}
@@ -215,7 +215,7 @@ const Admissao = () => {
             const progresso = Math.round((feitas / a.etapas.length) * 100);
 
             return (
-              <div key={a.id} className="rounded-xl border bg-card overflow-hidden">
+              <div key={a.id} className="rounded-xl border bg-white overflow-hidden">
                 <div
                   className="flex items-center gap-4 px-5 py-4 cursor-pointer hover:bg-muted/30 transition-colors"
                   onClick={() => setExpandedId(expanded ? null : a.id)}
@@ -294,7 +294,7 @@ const Admissao = () => {
                       <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-3">Checklist de Admissão</p>
                       <div className="space-y-2">
                         {a.etapas.map((etapa, i) => (
-                          <div key={i} className="flex items-center justify-between rounded-lg border bg-card px-4 py-3">
+                          <div key={i} className="flex items-center justify-between rounded-lg border bg-white px-4 py-3">
                             <div className="flex items-center gap-3">
                               <div className={`h-5 w-5 rounded-full flex items-center justify-center shrink-0 ${etapa.feito ? "bg-green-500" : "border-2 border-muted-foreground/30"}`}>
                                 {etapa.feito && (

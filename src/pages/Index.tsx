@@ -5,9 +5,45 @@ import {
   Search, CalendarRange, ClipboardCheck, Handshake,
   TrendingUp, Lightbulb, Clock, ChevronDown, ChevronUp,
   Mail, Phone, MapPin, Linkedin, Instagram, MessageCircle,
-  ArrowRight, Users, BarChart3, Shield, Building2, Star,
+  ArrowRight, ArrowLeft, Users, BarChart3, Shield, Building2,
   Briefcase, Target, Zap, Award, ExternalLink, Plus, Minus,
 } from "lucide-react";
+
+/* ───── Testimonials Data ───── */
+const testimonials = [
+  {
+    companyDisplay: "Tech Solutions",
+    size: "Mid-Market",
+    industry: "Tecnologia",
+    quote: "Conseguimos otimizar em 40% nossos processos de seleção com a PitStop RH. A metodologia P.I.T realmente faz diferença na qualidade das contratações — os profissionais chegam mais alinhados com a cultura e entregam resultados mais rápido.",
+    author: "Ana Paula Rodrigues",
+    role: "Coordenadora de RH · Tech Solutions Brasil",
+  },
+  {
+    companyDisplay: "Startup XP",
+    size: "Startup",
+    industry: "Fintech",
+    quote: "A equipe da PitStop entendeu exatamente o perfil técnico que precisávamos em poucos dias. Contratamos 3 engenheiros seniores em tempo recorde, sem abrir mão da qualidade ou do fit cultural com o time.",
+    author: "Ricardo Mendes",
+    role: "CEO · StartupXP",
+  },
+  {
+    companyDisplay: "LOG BR",
+    size: "Enterprise",
+    industry: "Logística",
+    quote: "A terceirização com a PitStop transformou nossa operação completamente. Reduzimos custos em 30% e ganhamos foco total no que realmente importa para o negócio. O suporte é impecável e a comunicação sempre clara.",
+    author: "Fernanda Lima",
+    role: "Diretora de Operações · LogBR",
+  },
+  {
+    companyDisplay: "GrupoHR",
+    size: "Enterprise",
+    industry: "Recursos Humanos",
+    quote: "Com a PitStop estruturamos nosso processo de hunting ativo para posições estratégicas. A assertividade nas indicações é incomparável — os candidatos chegam realmente prontos para o desafio e para a cultura da empresa.",
+    author: "Carlos Souza",
+    role: "Head de Talent Acquisition · GrupoHR",
+  },
+];
 
 /* ───── FAQ Data ───── */
 const faqs = [
@@ -35,6 +71,9 @@ const clientLogos = [
 
 const Index = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const prevTestimonial = () => setActiveTestimonial(i => (i - 1 + testimonials.length) % testimonials.length);
+  const nextTestimonial = () => setActiveTestimonial(i => (i + 1) % testimonials.length);
 
   return (
     <div className="flex flex-col" style={{ background: "#0f1f45" }}>
@@ -42,7 +81,7 @@ const Index = () => {
       {/* ══════════════════════════════════════════
           1. HERO
       ══════════════════════════════════════════ */}
-      <section id="inicio" className="relative flex flex-col justify-center gap-8 pb-16 overflow-x-hidden h-screen -mt-[6.75rem] pt-[6.75rem]" style={{ background: "linear-gradient(145deg, #0a1628 0%, #0f2044 40%, #162952 100%)" }}>
+      <section id="inicio" className="relative z-10 flex flex-col justify-center gap-8 pb-16 overflow-x-hidden h-screen -mt-[6.75rem] pt-[6.75rem]" style={{ background: "linear-gradient(145deg, #0a1628 0%, #0f2044 40%, #162952 100%)" }}>
 
         {/* ── Geometric shapes ── */}
         <div className="absolute top-0 right-0 w-[520px] h-[520px] pointer-events-none opacity-50"
@@ -95,7 +134,7 @@ const Index = () => {
               <Link
                 to="/login"
                 className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-sm font-bold text-white hover:opacity-90 transition-opacity shadow-2xl"
-                style={{ background: "linear-gradient(135deg,#ea3839 0%,#c0124a 15%,#3b6fd4 50%,#243c7e 100%)", boxShadow: "0 8px 30px rgba(234,56,57,0.35)" }}
+                style={{ background: "linear-gradient(135deg,#4060aa 0%,#638cdc 50%,#d04870 85%,#f06868 100%)", boxShadow: "0 8px 30px rgba(234,56,57,0.35)" }}
               >
                 Solicitar demonstração <ArrowRight size={15} />
               </Link>
@@ -124,14 +163,61 @@ const Index = () => {
           </div>
 
           {/* ── Right — cards layout ── */}
-          <div className="relative h-[420px]">
+          <div className="relative h-[580px] lg:-ml-16">
 
-            {/* Glow behind cards */}
+            {/* Glow */}
             <div className="absolute inset-0 pointer-events-none"
-              style={{ background: "radial-gradient(ellipse 70% 60% at 60% 50%, rgba(49,84,156,0.25), transparent)" }} />
+              style={{ background: "radial-gradient(ellipse 70% 60% at 55% 45%, rgba(49,84,156,0.22), transparent)" }} />
 
-            {/* ── Card 1 (main) — center ── */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 rounded-2xl bg-white p-5 z-20 border border-slate-200" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.25)" }}>
+            {/* ── Foto — grande, quase full height ── */}
+            <div
+              className="absolute top-0 bottom-0 rounded-2xl overflow-hidden"
+              style={{
+                left: "42%",
+                transform: "translateX(-50%)",
+                width: "370px",
+                zIndex: 5,
+                boxShadow: "0 28px 70px rgba(0,0,0,0.5)",
+                border: "1px solid rgba(255,255,255,0.10)",
+              }}
+            >
+              <img src="/personhero.png" alt="" className="h-full w-full object-cover object-top" draggable={false} />
+              <div className="absolute inset-x-0 bottom-0 h-32 pointer-events-none"
+                style={{ background: "linear-gradient(to bottom, transparent, rgba(8,18,36,0.55))" }} />
+            </div>
+
+            {/* ── Card 2 — topo esquerdo ── */}
+            <div className="absolute top-6 left-0 w-44 rounded-2xl bg-white p-4 z-20 border border-blue-300"
+              style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.18)" }}>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 mb-2">Tempo de fechamento</p>
+              <p className="text-3xl font-extrabold leading-none" style={{ color: "#f59e0b" }}>12<span className="text-base font-normal text-slate-500 ml-1">dias</span></p>
+              <p className="text-[10px] text-green-600 mt-2 flex items-center gap-1"><TrendingUp size={10} />–3 dias vs. mês ant.</p>
+            </div>
+
+            {/* ── Card 3 — topo, sobre a foto ── */}
+            <div className="absolute top-4 right-[14%] w-36 rounded-2xl bg-white p-4 z-20 border border-blue-300"
+              style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.18)" }}>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 mb-2">Match médio</p>
+              <p className="text-3xl font-extrabold leading-none text-slate-900">94<span className="text-base font-normal text-slate-500">%</span></p>
+              <p className="text-[10px] text-slate-600 mt-2">compatibilidade</p>
+            </div>
+
+            {/* ── Card 4 — esquerdo, mais para baixo ── */}
+            <div className="absolute left-0 z-20 flex items-center gap-2.5 rounded-2xl bg-white px-4 py-3 border border-blue-300"
+              style={{ top: "62%", transform: "translateY(-50%)", boxShadow: "0 10px 40px rgba(0,0,0,0.18)" }}>
+              <div className="h-8 w-8 rounded-full bg-green-50 flex items-center justify-center shrink-0">
+                <Users size={13} className="text-green-600" />
+              </div>
+              <div>
+                <p className="text-[9px] text-slate-500">Nova candidatura</p>
+                <p className="text-xs font-bold text-slate-900">Maria S. se candidatou</p>
+              </div>
+              <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse shrink-0" />
+            </div>
+
+            {/* ── Card 1 (main) — canto inferior direito, vaza para baixo ── */}
+            <div className="absolute -bottom-10 right-0 w-72 rounded-2xl bg-white p-5 z-30 border border-blue-300"
+              style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.28)" }}>
               {/* company */}
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2.5">
@@ -175,35 +261,9 @@ const Index = () => {
               </div>
             </div>
 
-            {/* ── Card 2 — top left ── */}
-            <div className="absolute top-4 left-0 w-44 rounded-2xl bg-white p-4 z-10 border border-slate-200" style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.18)" }}>
-              <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 mb-2">Tempo de fechamento</p>
-              <p className="text-3xl font-extrabold leading-none" style={{ color: "#f59e0b" }}>12<span className="text-base font-normal text-slate-500 ml-1">dias</span></p>
-              <p className="text-[10px] text-green-600 mt-2 flex items-center gap-1"><TrendingUp size={10} />–3 dias vs. mês ant.</p>
-            </div>
-
-            {/* ── Card 3 — top right ── */}
-            <div className="absolute top-8 right-0 w-36 rounded-2xl bg-white p-4 z-10 border border-slate-200" style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.18)" }}>
-              <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 mb-2">Match médio</p>
-              <p className="text-3xl font-extrabold leading-none text-slate-900">94<span className="text-base font-normal text-slate-500">%</span></p>
-              <p className="text-[10px] text-slate-600 mt-2">compatibilidade</p>
-            </div>
-
-            {/* ── Card 4 — bottom left — nova candidatura ── */}
-            <div className="absolute bottom-10 left-0 z-30 flex items-center gap-2.5 rounded-2xl bg-white px-4 py-3 border border-slate-200" style={{ boxShadow: "0 10px 40px rgba(0,0,0,0.18)" }}>
-              <div className="h-8 w-8 rounded-full bg-green-50 flex items-center justify-center shrink-0">
-                <Users size={13} className="text-green-600" />
-              </div>
-              <div>
-                <p className="text-[9px] text-slate-500">Nova candidatura</p>
-                <p className="text-xs font-bold text-slate-900">Maria S. se candidatou</p>
-              </div>
-              <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse shrink-0" />
-            </div>
-
-            {/* ── Card 5 — bottom right — vagas ── */}
-            <div className="absolute bottom-8 right-0 z-30 flex items-center gap-2 rounded-full px-4 py-2 shadow-xl"
-              style={{ background: "linear-gradient(135deg,#ea3839,#c0392b)", boxShadow: "0 4px 20px rgba(234,56,57,0.4)" }}>
+            {/* ── Card 5 — sobre a foto, mais para cima ── */}
+            <div className="absolute z-20 flex items-center gap-2 rounded-full px-4 py-2 shadow-xl"
+              style={{ top: "24%", right: "10%", transform: "translateY(-50%)", background: "linear-gradient(135deg,#ea3839,#c0392b)", boxShadow: "0 4px 20px rgba(234,56,57,0.4)" }}>
               <Briefcase size={13} className="text-white" />
               <span className="text-xs font-bold text-white">247 vagas ativas</span>
             </div>
@@ -213,7 +273,7 @@ const Index = () => {
 
         {/* ── Floating marquee bar ── */}
         <div className="relative z-30 container max-w-5xl mx-auto px-4 -mb-14">
-          <div className="rounded-2xl bg-card border overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.4)" }}>
+          <div className="rounded-2xl bg-white border overflow-hidden" style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.4)" }}>
             <div className="px-8 pt-5 pb-1">
               <p className="text-center text-[11px] font-bold uppercase tracking-[0.2em] text-muted-foreground">
                 Empresas que confiam na{" "}
@@ -281,7 +341,7 @@ const Index = () => {
             <Link
               to="/login"
               className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition-opacity shadow-md"
-              style={{ background: "linear-gradient(135deg,#ea3839 0%,#c0124a 15%,#3b6fd4 50%,#243c7e 100%)", boxShadow: "0 8px 30px rgba(234,56,57,0.35)" }}
+              style={{ background: "linear-gradient(135deg,#4060aa 0%,#638cdc 50%,#d04870 85%,#f06868 100%)", boxShadow: "0 8px 30px rgba(234,56,57,0.35)" }}
             >
               Conheça nossa equipe <ArrowRight size={15} />
             </Link>
@@ -415,99 +475,132 @@ const Index = () => {
       {/* ══════════════════════════════════════════
           5. P.I.T
       ══════════════════════════════════════════ */}
-      <section id="pit" className="py-20 sm:py-28 relative overflow-hidden bg-background">
-        <div className="absolute left-0 top-0 bottom-0 w-1 pointer-events-none"
-          style={{ background: "linear-gradient(180deg, #ea3839, #243c7e, transparent)" }} />
-        <div className="container max-w-6xl">
+      <section id="pit" className="py-20 sm:py-28 relative overflow-hidden"
+        style={{
+          background: "linear-gradient(160deg, #f8faff 0%, #eef3ff 100%)",
+          borderRadius: "2rem 2rem 0 0",
+          marginTop: "-2rem",
+          position: "relative",
+          zIndex: 2,
+        }}>
 
-          {/* Heading */}
+        {/* Soft glow top-right */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none opacity-30"
+          style={{ background: "radial-gradient(circle, #dce8ff, transparent)", transform: "translate(30%, -30%)" }} />
+
+        <div className="container max-w-6xl relative z-10">
+
+          {/* Header */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-extrabold mb-2 relative inline-block">
+            <p className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-widest mb-5" style={{ color: "#ea3839" }}>
+              <span className="h-px w-10 rounded-full" style={{ background: "#ea3839" }} />
+              Metodologia
+              <span className="h-px w-10 rounded-full" style={{ background: "#ea3839" }} />
+            </p>
+            <h2 className="text-4xl sm:text-5xl font-extrabold mb-4">
               A metodologia{" "}
-              <span className="relative">
+              <span style={{ background: "linear-gradient(135deg, #ea3839 0%, #3b6fd4 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                 P.I.T
-                <span
-                  className="absolute bottom-0 left-0 w-full h-1 rounded-full"
-                  style={{ bottom: "-6px", backgroundColor: "#ea3839" }}
-                />
               </span>
             </h2>
-            <p className="text-muted-foreground text-sm mt-5 max-w-xl mx-auto">
+            <p className="text-muted-foreground text-sm max-w-lg mx-auto">
               Três pilares que sustentam cada processo da PitStop RH — do diagnóstico à entrega.
             </p>
           </div>
 
-          {/* 3 pillars */}
-          <div className="grid sm:grid-cols-3 gap-6 mb-16">
+          {/* Pillars */}
+          <div className="grid sm:grid-cols-3 gap-5 mb-5">
             {[
               {
-                letter: "P",
-                title: "Performance",
+                letter: "P", title: "Performance",
                 desc: "Entregamos resultados mensuráveis com KPIs claros e relatórios em tempo real para cada processo seletivo.",
                 icon: TrendingUp,
-                color: "text-blue-500",
-                bg: "bg-blue-500/10",
-                border: "border-blue-500/20",
-                ring: "bg-blue-500",
+                accent: "#3b6fd4",
+                gradient: "linear-gradient(135deg, #3b6fd4, #243c7e)",
+                bg: "rgba(59,111,212,0.06)",
+                borderColor: "rgba(59,111,212,0.18)",
               },
               {
-                letter: "I",
-                title: "Inteligência",
+                letter: "I", title: "Inteligência",
                 desc: "Análise de dados, mapeamento de mercado e avaliação comportamental para decisões mais assertivas.",
                 icon: Lightbulb,
-                color: "text-indigo-500",
-                bg: "bg-indigo-500/10",
-                border: "border-indigo-500/20",
-                ring: "bg-indigo-500",
+                accent: "#8b5cf6",
+                gradient: "linear-gradient(135deg, #8b5cf6, #6d28d9)",
+                bg: "rgba(139,92,246,0.06)",
+                borderColor: "rgba(139,92,246,0.18)",
               },
               {
-                letter: "T",
-                title: "Tempo",
+                letter: "T", title: "Tempo",
                 desc: "Agilidade sem abrir mão da qualidade. Processos estruturados que respeitam os prazos do seu negócio.",
                 icon: Clock,
-                color: "text-cyan-500",
-                bg: "bg-cyan-500/10",
-                border: "border-cyan-500/20",
-                ring: "bg-cyan-500",
+                accent: "#0284c7",
+                gradient: "linear-gradient(135deg, #06b6d4, #0284c7)",
+                bg: "rgba(2,132,199,0.06)",
+                borderColor: "rgba(2,132,199,0.18)",
               },
             ].map((p, i) => (
-              <div key={i} className={`rounded-2xl border ${p.border} bg-card p-8 text-center hover:shadow-lg hover:-translate-y-1 transition-all duration-200`}>
-                <div className={`mx-auto mb-4 h-16 w-16 rounded-full ${p.ring} flex items-center justify-center text-white text-2xl font-extrabold shadow-lg`}>
+              <div key={i}
+                className="relative rounded-2xl overflow-hidden p-8 group hover:-translate-y-1.5 hover:shadow-xl transition-all duration-300 bg-white"
+                style={{
+                  border: `1px solid ${p.borderColor}`,
+                  borderTop: `3px solid ${p.accent}`,
+                }}>
+
+                {/* Faded background letter */}
+                <div className="absolute bottom-0 right-1 text-[8rem] font-black leading-none select-none pointer-events-none"
+                  style={{ color: p.accent, opacity: 0.05 }}>
                   {p.letter}
                 </div>
-                <p.icon size={22} className={`${p.color} mx-auto mb-3`} />
-                <h3 className="font-extrabold text-lg mb-3">{p.title}</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">{p.desc}</p>
+
+                {/* Icon badge */}
+                <div className="h-12 w-12 rounded-xl flex items-center justify-center mb-6 shadow-md"
+                  style={{ background: p.gradient }}>
+                  <p.icon size={22} className="text-white" />
+                </div>
+
+                {/* Large letter accent */}
+                <div className="text-5xl font-black leading-none mb-3" style={{ color: p.accent }}>
+                  {p.letter}
+                </div>
+
+                <h3 className="font-extrabold text-slate-800 text-lg mb-2">{p.title}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">{p.desc}</p>
               </div>
             ))}
           </div>
 
-          {/* S.T.O.P process bar */}
-          <div className="rounded-2xl border bg-card p-8 sm:p-10">
-            <p className="text-xs font-bold uppercase tracking-widest text-primary text-center mb-8">
+          {/* S.T.O.P steps */}
+          <div className="rounded-2xl p-8 sm:p-10 bg-white shadow-sm"
+            style={{ border: "1px solid rgba(36,60,126,0.1)" }}>
+
+            <p className="text-center text-xs font-bold uppercase tracking-[0.2em] mb-10 text-muted-foreground">
               Processo S.T.O.P — A Parada Estratégica
             </p>
-            <div className="grid sm:grid-cols-4 gap-4 relative">
-              {/* connector line (desktop only) */}
-              <div className="hidden sm:block absolute top-6 left-[12.5%] right-[12.5%] h-px bg-border z-0" />
+
+            <div className="grid sm:grid-cols-4 gap-6 relative">
+              {/* Gradient connector line */}
+              <div className="hidden sm:block absolute top-5 left-[12.5%] right-[12.5%] h-px z-0"
+                style={{ background: "linear-gradient(90deg, #ea3839 0%, #f97316 33%, #3b6fd4 66%, #243c7e 100%)", opacity: 0.4 }} />
 
               {[
-                { letter: "S", icon: Search,        title: "Sinergia",    desc: "Diagnóstico da vaga e cultura da empresa." },
-                { letter: "T", icon: CalendarRange,  title: "Triagem",     desc: "Hunting ativo e mapeamento de candidatos." },
-                { letter: "O", icon: ClipboardCheck, title: "Observação",  desc: "Entrevistas e avaliações personalizadas." },
-                { letter: "P", icon: Handshake,      title: "Parceria",    desc: "Acompanhamento pós-contratação." },
+                { letter: "S", icon: Search,        title: "Sinergia",   desc: "Diagnóstico da vaga e cultura da empresa.", color: "#ea3839" },
+                { letter: "T", icon: CalendarRange,  title: "Triagem",    desc: "Hunting ativo e mapeamento de candidatos.",  color: "#f97316" },
+                { letter: "O", icon: ClipboardCheck, title: "Observação", desc: "Entrevistas e avaliações personalizadas.",   color: "#3b6fd4" },
+                { letter: "P", icon: Handshake,      title: "Parceria",   desc: "Acompanhamento pós-contratação.",            color: "#243c7e" },
               ].map((step, i) => (
                 <div key={i} className="relative z-10 flex flex-col items-center text-center">
-                  <div className="h-12 w-12 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-extrabold text-lg mb-3 shadow-md">
+                  <div className="h-10 w-10 rounded-full flex items-center justify-center font-extrabold text-sm mb-3 shadow-md"
+                    style={{ background: step.color, color: "#fff" }}>
                     {step.letter}
                   </div>
-                  <step.icon size={15} className="text-muted-foreground mb-2" />
-                  <p className="font-bold text-sm mb-1">{step.title}</p>
+                  <step.icon size={14} className="mb-2 text-muted-foreground" />
+                  <p className="font-bold text-slate-800 text-sm mb-1">{step.title}</p>
                   <p className="text-xs text-muted-foreground leading-relaxed">{step.desc}</p>
                 </div>
               ))}
             </div>
           </div>
+
         </div>
       </section>
 
@@ -542,69 +635,99 @@ const Index = () => {
         <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none opacity-[0.04]"
           style={{ background: "radial-gradient(circle, #243c7e, transparent)", transform: "translate(30%, -30%)" }} />
         <div className="container max-w-5xl">
+
+          {/* Section header */}
           <div className="text-center mb-12">
+            <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary mb-3">
+              <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "#ea3839" }} />
+              Depoimentos
+            </p>
             <h2 className="text-3xl sm:text-4xl font-extrabold mb-3">
               Clientes que confiam na PitStop RH
             </h2>
             <p className="text-muted-foreground text-sm">O que dizem quem já passou pela nossa parada estratégica.</p>
           </div>
 
-          {/* Featured testimonial */}
-          <div className="rounded-2xl border bg-card p-8 sm:p-12 mb-6 relative overflow-hidden hover:shadow-xl transition-shadow duration-300" style={{ borderLeft: "4px solid #243c7e" }}>
-            <span className="absolute top-4 left-6 text-8xl font-serif text-primary/10 leading-none select-none">"</span>
-            <div className="flex gap-1 mb-5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} size={16} className="text-yellow-400 fill-yellow-400" />
+          {/* Carousel controls row */}
+          <div className="flex items-center justify-between mb-5">
+            {/* Dot indicators */}
+            <div className="flex items-center gap-2">
+              {testimonials.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActiveTestimonial(i)}
+                  className="rounded-full transition-all duration-300"
+                  style={{
+                    width: i === activeTestimonial ? "24px" : "10px",
+                    height: "10px",
+                    backgroundColor: i === activeTestimonial ? "#ea3839" : "#cbd5e1",
+                  }}
+                  aria-label={`Depoimento ${i + 1}`}
+                />
               ))}
             </div>
-            <blockquote className="text-base sm:text-xl font-medium leading-relaxed mb-8 max-w-3xl relative z-10">
-              "Conseguimos otimizar em 40% nossos processos de seleção com a PitStop RH. A metodologia P.I.T realmente faz diferença na qualidade das contratações — os profissionais chegam mais alinhados com a cultura e entregam resultados mais rápido."
-            </blockquote>
-            <div className="flex items-center gap-4">
-              <div className="h-11 w-11 rounded-full flex items-center justify-center text-white font-bold text-base" style={{ background: "linear-gradient(135deg,#243c7e,#4f6ec0)" }}>
-                A
-              </div>
-              <div>
-                <p className="font-bold text-sm">Ana Paula Rodrigues</p>
-                <p className="text-xs text-muted-foreground">Coordenadora de RH · Tech Solutions Brasil</p>
-              </div>
+
+            {/* Arrow buttons */}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={prevTestimonial}
+                className="h-10 w-10 rounded-full border border-blue-300 bg-background flex items-center justify-center hover:bg-slate-50 hover:border-slate-300 transition-all duration-200"
+                aria-label="Anterior"
+              >
+                <ArrowLeft size={15} className="text-slate-600" />
+              </button>
+              <button
+                onClick={nextTestimonial}
+                className="h-10 w-10 rounded-full border border-blue-300 bg-background flex items-center justify-center hover:bg-slate-50 hover:border-slate-300 transition-all duration-200"
+                aria-label="Próximo"
+              >
+                <ArrowRight size={15} className="text-slate-600" />
+              </button>
             </div>
           </div>
 
-          {/* 2 smaller testimonials */}
-          <div className="grid sm:grid-cols-2 gap-6">
-            {[
-              {
-                initial: "R",
-                name: "Ricardo Mendes",
-                role: "CEO · StartupXP",
-                quote: "A equipe da PitStop entendeu o perfil técnico que precisávamos em poucos dias. Contratamos 3 engenheiros em tempo recorde.",
-              },
-              {
-                initial: "F",
-                name: "Fernanda Lima",
-                role: "Diretora de Operações · LogBR",
-                quote: "A terceirização com a PitStop transformou nossa operação. Reduzimos custos e ganhamos foco no que realmente importa.",
-              },
-            ].map((t, i) => (
-              <div key={i} className="rounded-2xl border bg-card p-7 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200">
-                <div className="flex gap-1 mb-4">
-                  {[...Array(5)].map((_, j) => (
-                    <Star key={j} size={13} className="text-yellow-400 fill-yellow-400" />
-                  ))}
+          {/* Carousel card */}
+          <div className="rounded-2xl overflow-hidden shadow-xl grid grid-cols-1 lg:grid-cols-[2fr_3fr]">
+
+            {/* Left panel — company info */}
+            <div className="flex flex-col p-8 lg:p-10 min-h-[260px] lg:min-h-[360px]" style={{ backgroundColor: "#f5f4f0" }}>
+              {/* Company name */}
+              <div className="flex-1 flex items-center">
+                <span className="text-2xl font-black tracking-wider uppercase" style={{ color: "#243c7e" }}>
+                  {testimonials[activeTestimonial].companyDisplay}
+                </span>
+              </div>
+
+              {/* Metadata */}
+              <div className="border-t border-blue-300 pt-5 space-y-4">
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400 mb-0.5">Tamanho da Empresa</p>
+                  <p className="font-semibold text-slate-800 text-sm">{testimonials[activeTestimonial].size}</p>
                 </div>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-5">"{t.quote}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="h-9 w-9 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ background: "linear-gradient(135deg,#243c7e,#4f6ec0)" }}>
-                    {t.initial}
-                  </div>
-                  <div>
-                    <p className="font-bold text-sm">{t.name}</p>
-                    <p className="text-xs text-muted-foreground">{t.role}</p>
-                  </div>
+                <div>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400 mb-0.5">Indústria</p>
+                  <p className="font-semibold text-slate-800 text-sm">{testimonials[activeTestimonial].industry}</p>
                 </div>
               </div>
-            ))}
+            </div>
+
+            {/* Right panel — quote */}
+            <div className="flex flex-col p-8 lg:p-12" style={{ backgroundColor: "#0f1f45" }}>
+              {/* Opening quote mark */}
+              <div className="text-5xl font-bold leading-none mb-3 select-none" style={{ color: "#ea3839" }}>"</div>
+
+              {/* Quote text */}
+              <blockquote className="text-base sm:text-lg leading-relaxed flex-1" style={{ color: "rgba(255,255,255,0.88)" }}>
+                {testimonials[activeTestimonial].quote}
+              </blockquote>
+
+              {/* Author */}
+              <div className="mt-8 pt-5 border-t" style={{ borderColor: "rgba(255,255,255,0.1)" }}>
+                <p className="font-bold text-white text-sm">{testimonials[activeTestimonial].author}</p>
+                <p className="text-sm" style={{ color: "rgba(255,255,255,0.45)" }}>{testimonials[activeTestimonial].role}</p>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
@@ -612,7 +735,7 @@ const Index = () => {
       {/* ══════════════════════════════════════════
           8. FAQ
       ══════════════════════════════════════════ */}
-      <section id="faq" className="py-20 sm:py-28 bg-card">
+      <section id="faq" className="py-20 sm:py-28 bg-white">
         <div className="container max-w-3xl">
           <div className="text-center mb-12">
             <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary mb-3">
@@ -686,7 +809,7 @@ const Index = () => {
               <Link
                 to="/login"
                 className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-sm font-bold text-white hover:opacity-90 transition-opacity shadow-2xl"
-                style={{ background: "linear-gradient(135deg,#ea3839 0%,#c0124a 15%,#3b6fd4 50%,#243c7e 100%)", boxShadow: "0 8px 30px rgba(234,56,57,0.35)" }}
+                style={{ background: "linear-gradient(135deg,#4060aa 0%,#638cdc 50%,#d04870 85%,#f06868 100%)", boxShadow: "0 8px 30px rgba(234,56,57,0.35)" }}
               >
                 Solicitar demonstração <ArrowRight size={15} />
               </Link>

@@ -37,7 +37,7 @@ const RecruiterProfile = () => {
         </div>
 
         {/* Avatar + name card */}
-        <div className="rounded-xl border bg-card p-6 flex items-center gap-5">
+        <div className="rounded-xl border bg-white p-6 flex items-center gap-5">
           <div className="relative shrink-0">
             <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center text-primary font-extrabold text-2xl">
               {profile.name.charAt(0)}
@@ -54,7 +54,7 @@ const RecruiterProfile = () => {
         </div>
 
         {/* Dados Pessoais */}
-        <div className="rounded-xl border bg-card overflow-hidden">
+        <div className="rounded-xl border bg-white overflow-hidden">
           <div className="px-6 py-4 border-b">
             <h2 className="font-bold flex items-center gap-2"><User size={16} /> Dados Pessoais</h2>
           </div>
@@ -123,7 +123,7 @@ const RecruiterProfile = () => {
         </div>
 
         {/* Segurança */}
-        <div className="rounded-xl border bg-card overflow-hidden">
+        <div className="rounded-xl border bg-white overflow-hidden">
           <div className="px-6 py-4 border-b">
             <h2 className="font-bold flex items-center gap-2"><Lock size={16} /> Segurança</h2>
           </div>
@@ -189,7 +189,7 @@ const RecruiterProfile = () => {
         </div>
 
         {/* Notificações */}
-        <div className="rounded-xl border bg-card overflow-hidden">
+        <div className="rounded-xl border bg-white overflow-hidden">
           <div className="px-6 py-4 border-b">
             <h2 className="font-bold flex items-center gap-2"><Bell size={16} /> Notificações</h2>
           </div>

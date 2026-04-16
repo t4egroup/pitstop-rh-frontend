@@ -4,8 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
+html, body {
   scroll-behavior: smooth;
+  background-color: #0f1f45;
+  font-size: 17px;
 }
 
 @keyframes marquee {
@@ -41,7 +43,7 @@ html {
     --popover: 0 0% 100%;
     --popover-foreground: 220 30% 15%;
 
-    --primary: 221 52% 40%;
+    --primary: 263 70% 58%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 220 14% 92%;
@@ -64,18 +66,18 @@ html {
 
     --border: 220 13% 89%;
     --input: 220 13% 89%;
-    --ring: 221 52% 40%;
+    --ring: 263 70% 58%;
 
     --radius: 0.625rem;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 221 52% 40%;
+    --sidebar-primary: 263 70% 58%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 220 14% 95%;
     --sidebar-accent-foreground: 220 30% 20%;
     --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 221 52% 40%;
+    --sidebar-ring: 263 70% 58%;
   }
 
   .dark {
@@ -88,7 +90,7 @@ html {
     --popover: 222 25% 12%;
     --popover-foreground: 210 20% 92%;
 
-    --primary: 221 52% 50%;
+    --primary: 263 70% 62%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 222 20% 18%;
@@ -111,11 +113,11 @@ html {
 
     --border: 222 20% 20%;
     --input: 222 20% 20%;
-    --ring: 221 52% 50%;
+    --ring: 263 70% 62%;
 
     --sidebar-background: 222 25% 10%;
     --sidebar-foreground: 210 20% 85%;
-    --sidebar-primary: 221 52% 50%;
+    --sidebar-primary: 263 70% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 222 20% 16%;
     --sidebar-accent-foreground: 210 20% 85%;
