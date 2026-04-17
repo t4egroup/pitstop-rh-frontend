@@ -139,7 +139,7 @@ const prioridadeBadge: Record<string, string> = {
 
 const motivoBadge: Record<string, string> = {
   "Nova posição":     "bg-primary/10 text-primary",
-  "Substituição":     "bg-purple-500/10 text-purple-600",
+  "Substituição":     "bg-blue-500/10 text-purple-600",
   "Expansão do time": "bg-teal-500/10 text-teal-600",
 };
 
@@ -187,7 +187,7 @@ const Requisicoes = () => {
         </div>
 
         {/* Fluxo explicativo */}
-        <div className="rounded-xl border bg-card p-4">
+        <div className="rounded-xl border bg-white p-4">
           <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-3">Como funciona</p>
           <div className="flex flex-wrap items-center gap-2 text-xs">
             {[
@@ -197,7 +197,7 @@ const Requisicoes = () => {
               { step: "→", label: "", color: "" },
               { step: "3", label: "Aprovação", color: "bg-green-500/10 text-green-600" },
               { step: "→", label: "", color: "" },
-              { step: "4", label: "Processo seletivo aberto", color: "bg-purple-500/10 text-purple-600" },
+              { step: "4", label: "Processo seletivo aberto", color: "bg-blue-500/10 text-purple-600" },
             ].map((s, i) =>
               s.label ? (
                 <span key={i} className={`px-3 py-1.5 rounded-full font-semibold ${s.color}`}>
@@ -219,7 +219,7 @@ const Requisicoes = () => {
             { label: "Pendentes", value: counts.pendentes, color: "text-muted-foreground" },
             { label: "Reprovadas", value: counts.reprovadas, color: "text-destructive" },
           ].map((k) => (
-            <div key={k.label} className="rounded-xl border bg-card p-4 text-center">
+            <div key={k.label} className="rounded-xl border bg-white p-4 text-center">
               <p className={`text-3xl font-extrabold ${k.color}`}>{k.value}</p>
               <p className="text-xs text-muted-foreground mt-1">{k.label}</p>
             </div>
@@ -235,13 +235,13 @@ const Requisicoes = () => {
               placeholder="Buscar por cargo, departamento ou solicitante..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-lg border bg-card pl-9 pr-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+              className="w-full rounded-lg border bg-white pl-9 pr-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
             />
           </div>
           <select
             value={filtroStatus}
             onChange={(e) => setFiltroStatus(e.target.value)}
-            className="rounded-lg border bg-card px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+            className="rounded-lg border bg-white px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30"
           >
             <option value="">Todos os status</option>
             <option>Aprovada</option>
@@ -254,7 +254,7 @@ const Requisicoes = () => {
         {/* Lista */}
         <div className="space-y-3">
           {filtradas.length === 0 && (
-            <div className="rounded-xl border bg-card py-12 text-center text-sm text-muted-foreground">
+            <div className="rounded-xl border bg-white py-12 text-center text-sm text-muted-foreground">
               Nenhuma requisição encontrada.
             </div>
           )}
@@ -265,7 +265,7 @@ const Requisicoes = () => {
             const expanded = expandedId === r.id;
 
             return (
-              <div key={r.id} className="rounded-xl border bg-card overflow-hidden">
+              <div key={r.id} className="rounded-xl border bg-white overflow-hidden">
                 {/* Row */}
                 <div
                   className="flex items-center gap-4 px-5 py-4 cursor-pointer hover:bg-muted/30 transition-colors"
@@ -378,7 +378,7 @@ const Requisicoes = () => {
       {/* Modal nova requisição (simplificado) */}
       {novaRequisicao && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div className="w-full max-w-lg rounded-2xl border bg-card shadow-xl">
+          <div className="w-full max-w-lg rounded-2xl border bg-white shadow-xl">
             <div className="flex items-center justify-between px-6 py-4 border-b">
               <h2 className="font-bold">Nova Requisição de Vaga</h2>
               <button onClick={() => setNovaRequisicao(false)} className="text-muted-foreground hover:text-foreground">✕</button>

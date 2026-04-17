@@ -58,7 +58,7 @@ const CandidateDashboard = () => {
       {/* Stats */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {stats.map(s => (
-          <div key={s.label} className="rounded-xl border bg-card p-4 text-center">
+          <div key={s.label} className="rounded-xl border bg-white p-4 text-center">
             <p className={`text-2xl font-extrabold ${s.color}`}>{s.value}</p>
             <p className="text-xs text-muted-foreground mt-1 leading-tight">{s.label}</p>
           </div>
@@ -79,7 +79,7 @@ const CandidateDashboard = () => {
             return (
               <div
                 key={p.id}
-                className="flex items-center gap-4 rounded-xl border bg-card px-4 py-3.5 transition-colors hover:bg-muted/40"
+                className="flex items-center gap-4 rounded-xl border bg-white px-4 py-3.5 transition-colors hover:bg-muted/40"
               >
                 <div className={`shrink-0 ${cfg.className}`}>
                   <Icon size={20} />

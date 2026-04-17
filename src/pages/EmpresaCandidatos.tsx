@@ -34,7 +34,7 @@ const candidatos = [
 
 const etapaStyle: Record<string, string> = {
   "Triagem":          "bg-blue-500/10 text-blue-600",
-  "Entrevista RH":    "bg-purple-500/10 text-purple-600",
+  "Entrevista RH":    "bg-blue-500/10 text-purple-600",
   "Teste Técnico":    "bg-amber-500/10 text-amber-600",
   "Portfólio":        "bg-amber-500/10 text-amber-600",
   "Entrevista Final": "bg-orange-500/10 text-orange-600",
@@ -81,7 +81,7 @@ const EmpresaCandidatos = () => {
           { label: "Aprovados",    value: candidatos.filter(c => c.status === "Aprovado").length,         color: "text-emerald-500"   },
           { label: "Reprovados",   value: candidatos.filter(c => c.status === "Reprovado").length,        color: "text-destructive"   },
         ].map(k => (
-          <div key={k.label} className="rounded-xl border bg-card p-4 text-center">
+          <div key={k.label} className="rounded-xl border bg-white p-4 text-center">
             <p className={`text-2xl font-extrabold ${k.color}`}>{k.value}</p>
             <p className="text-xs text-muted-foreground mt-1">{k.label}</p>
           </div>
@@ -97,13 +97,13 @@ const EmpresaCandidatos = () => {
             placeholder="Buscar por nome, cargo ou cidade..."
             value={search}
             onChange={e => setSearch(e.target.value)}
-            className="w-full rounded-xl border bg-card pl-9 pr-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+            className="w-full rounded-xl border bg-white pl-9 pr-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30"
           />
         </div>
         <select
           value={statusFiltro}
           onChange={e => setStatusFiltro(e.target.value)}
-          className="rounded-xl border bg-card px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+          className="rounded-xl border bg-white px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30"
         >
           <option value="">Todos</option>
           <option>Em processo</option>
@@ -113,7 +113,7 @@ const EmpresaCandidatos = () => {
       </div>
 
       {/* List */}
-      <div className="rounded-xl border bg-card overflow-hidden">
+      <div className="rounded-xl border bg-white overflow-hidden">
         <div className="hidden md:grid grid-cols-12 gap-4 border-b bg-muted/40 px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
           <div className="col-span-3">Candidato</div>
           <div className="col-span-2">Cargo</div>
@@ -162,7 +162,7 @@ const EmpresaCandidatos = () => {
                   <p className="text-xs font-bold text-muted-foreground uppercase tracking-wide mb-3">Vagas ({c.vagas.length})</p>
                   <div className="space-y-2">
                     {c.vagas.map((v, i) => (
-                      <div key={i} className="flex items-center justify-between rounded-lg border bg-card px-4 py-3">
+                      <div key={i} className="flex items-center justify-between rounded-lg border bg-white px-4 py-3">
                         <div className="flex items-center gap-3">
                           <Star size={13} className="text-primary shrink-0" />
                           <div>

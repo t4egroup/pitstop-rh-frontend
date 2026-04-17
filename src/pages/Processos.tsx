@@ -19,7 +19,7 @@ const processos = [
     candidatos: 67,
     pipeline: [
       { etapa: "Triagem", total: 67, cor: "bg-blue-500" },
-      { etapa: "Entrevista RH", total: 30, cor: "bg-purple-500" },
+      { etapa: "Entrevista RH", total: 30, cor: "bg-blue-500" },
       { etapa: "Teste Técnico", total: 12, cor: "bg-amber-500" },
       { etapa: "Entrevista Final", total: 4, cor: "bg-orange-500" },
       { etapa: "Proposta", total: 1, cor: "bg-green-500" },
@@ -39,7 +39,7 @@ const processos = [
     candidatos: 42,
     pipeline: [
       { etapa: "Triagem", total: 42, cor: "bg-blue-500" },
-      { etapa: "Entrevista RH", total: 18, cor: "bg-purple-500" },
+      { etapa: "Entrevista RH", total: 18, cor: "bg-blue-500" },
       { etapa: "Case", total: 7, cor: "bg-amber-500" },
       { etapa: "Proposta", total: 2, cor: "bg-green-500" },
     ],
@@ -58,7 +58,7 @@ const processos = [
     candidatos: 23,
     pipeline: [
       { etapa: "Triagem", total: 23, cor: "bg-blue-500" },
-      { etapa: "Portfólio", total: 10, cor: "bg-purple-500" },
+      { etapa: "Portfólio", total: 10, cor: "bg-blue-500" },
       { etapa: "Entrevista", total: 5, cor: "bg-amber-500" },
       { etapa: "Proposta", total: 1, cor: "bg-green-500" },
     ],
@@ -77,7 +77,7 @@ const processos = [
     candidatos: 55,
     pipeline: [
       { etapa: "Triagem", total: 55, cor: "bg-blue-500" },
-      { etapa: "Entrevista RH", total: 20, cor: "bg-purple-500" },
+      { etapa: "Entrevista RH", total: 20, cor: "bg-blue-500" },
       { etapa: "Case", total: 8, cor: "bg-amber-500" },
       { etapa: "Painel", total: 3, cor: "bg-orange-500" },
       { etapa: "Proposta", total: 1, cor: "bg-green-500" },
@@ -97,7 +97,7 @@ const processos = [
     candidatos: 89,
     pipeline: [
       { etapa: "Triagem", total: 89, cor: "bg-blue-500" },
-      { etapa: "Teste Técnico", total: 45, cor: "bg-purple-500" },
+      { etapa: "Teste Técnico", total: 45, cor: "bg-blue-500" },
       { etapa: "Entrevista", total: 15, cor: "bg-amber-500" },
       { etapa: "Proposta", total: 2, cor: "bg-orange-500" },
       { etapa: "Contratado", total: 1, cor: "bg-green-500" },
@@ -117,7 +117,7 @@ const processos = [
     candidatos: 34,
     pipeline: [
       { etapa: "Triagem", total: 34, cor: "bg-blue-500" },
-      { etapa: "Entrevista RH", total: 14, cor: "bg-purple-500" },
+      { etapa: "Entrevista RH", total: 14, cor: "bg-blue-500" },
       { etapa: "Teste Técnico", total: 6, cor: "bg-amber-500" },
       { etapa: "Proposta", total: 0, cor: "bg-green-500" },
     ],
@@ -139,7 +139,7 @@ const prioridadeStyle: Record<string, string> = {
 const modeloStyle: Record<string, string> = {
   Remoto: "bg-green-500/10 text-green-700",
   Híbrido: "bg-blue-500/10 text-blue-700",
-  Presencial: "bg-purple-500/10 text-purple-700",
+  Presencial: "bg-blue-500/10 text-purple-700",
 };
 
 const Processos = () => {
@@ -184,7 +184,7 @@ const Processos = () => {
             { label: "Em Pausa", value: counts.pausadas, color: "text-amber-600" },
             { label: "Encerradas", value: counts.encerradas, color: "text-muted-foreground" },
           ].map((k) => (
-            <div key={k.label} className="rounded-xl border bg-card p-4 text-center">
+            <div key={k.label} className="rounded-xl border bg-white p-4 text-center">
               <p className={`text-3xl font-extrabold ${k.color}`}>{k.value}</p>
               <p className="text-xs text-muted-foreground mt-1">{k.label}</p>
             </div>
@@ -200,13 +200,13 @@ const Processos = () => {
               placeholder="Buscar por cargo ou departamento..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-lg border bg-card pl-9 pr-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
+              className="w-full rounded-lg border bg-white pl-9 pr-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
             />
           </div>
           <select
             value={filtroStatus}
             onChange={(e) => setFiltroStatus(e.target.value)}
-            className="rounded-lg border bg-card px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30"
+            className="rounded-lg border bg-white px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30"
           >
             <option value="">Todos os status</option>
             <option>Aberta</option>
@@ -216,7 +216,7 @@ const Processos = () => {
         </div>
 
         {/* Table */}
-        <div className="rounded-xl border bg-card overflow-hidden">
+        <div className="rounded-xl border bg-white overflow-hidden">
           <div className="hidden lg:grid grid-cols-12 gap-4 border-b bg-muted/40 px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
             <div className="col-span-4">Vaga</div>
             <div className="col-span-2">Responsável</div>
@@ -301,7 +301,7 @@ const Processos = () => {
                     <div className="flex flex-wrap gap-3 items-center">
                       {p.pipeline.map((etapa, i) => (
                         <div key={i} className="flex items-center gap-2">
-                          <div className="rounded-lg border bg-card px-4 py-3 min-w-[110px] text-center shadow-sm">
+                          <div className="rounded-lg border bg-white px-4 py-3 min-w-[110px] text-center shadow-sm">
                             <p className="text-xs text-muted-foreground mb-1">{etapa.etapa}</p>
                             <div className="flex items-center justify-center gap-1.5">
                               <span className={`h-2 w-2 rounded-full ${etapa.cor}`} />

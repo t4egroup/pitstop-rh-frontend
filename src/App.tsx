@@ -8,7 +8,6 @@ import AppNav from "@/components/AppNav";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import DashboardLayout from "@/components/DashboardLayout";
 import ScrollToTop from "@/components/ScrollToTop";
-import ThemeToggle from "@/components/ThemeToggle";
 import Index from "./pages/Index";
 import CandidateRegistration from "./pages/CandidateRegistration";
 import CandidateDashboard from "./pages/CandidateDashboard";
@@ -29,6 +28,27 @@ import Branding from "./pages/Branding";
 import Requisicoes from "./pages/Requisicoes";
 import Relatorios from "./pages/Relatorios";
 import Admissao from "./pages/Admissao";
+import GestaoVagas from "./pages/GestaoVagas";
+import Talentos from "./pages/Talentos";
+import TalentoProfile from "./pages/TalentoProfile";
+import PortalTalentos from "./pages/PortalTalentos";
+import ListasSegmentadas from "./pages/ListasSegmentadas";
+import PaginasCaptacao from "./pages/PaginasCaptacao";
+import Comunicacoes from "./pages/Comunicacoes";
+import AnalisarDados from "./pages/AnalisarDados";
+import GerenciarTarefas from "./pages/GerenciarTarefas";
+import Parceiros from "./pages/Parceiros";
+import RecruiterHome from "./pages/RecruiterHome";
+import Setup from "./pages/setup/Setup";
+import SetupCargos from "./pages/setup/SetupCargos";
+import SetupAreas from "./pages/setup/SetupAreas";
+import SetupColaboradores from "./pages/setup/SetupColaboradores";
+import SetupTestes from "./pages/setup/SetupTestes";
+import SetupFitCultural from "./pages/setup/SetupFitCultural";
+import SetupTemplatesVaga from "./pages/setup/SetupTemplatesVaga";
+import SetupTemplatesEmail from "./pages/setup/SetupTemplatesEmail";
+import SetupRoteiros from "./pages/setup/SetupRoteiros";
+import SetupPesquisaSatisfacao from "./pages/setup/SetupPesquisaSatisfacao";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -95,6 +115,12 @@ const App = () => (
             </ProtectedRoute>
           } />
 
+          <Route path="/inicio" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><RecruiterHome /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+
           <Route path="/dashboard" element={
             <ProtectedRoute roles={["recrutador"]}>
               <DashboardLayout><RecruiterDashboard /></DashboardLayout>
@@ -135,9 +161,108 @@ const App = () => (
               <DashboardLayout><Admissao /></DashboardLayout>
             </ProtectedRoute>
           } />
+          <Route path="/gestao-vagas" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><GestaoVagas /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/talentos" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><Talentos /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/talentos/:id" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><TalentoProfile /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/portal-talentos" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><PortalTalentos /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/listas-segmentadas" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><ListasSegmentadas /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/paginas-captacao" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><PaginasCaptacao /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/comunicacoes" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><Comunicacoes /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/analisar-dados" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><AnalisarDados /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/gerenciar-tarefas" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><GerenciarTarefas /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/setup" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><Setup /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/setup/cargos" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><SetupCargos /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/setup/areas" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><SetupAreas /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/setup/colaboradores" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><SetupColaboradores /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/setup/testes" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><SetupTestes /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/setup/fit-cultural" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><SetupFitCultural /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/setup/templates-vaga" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><SetupTemplatesVaga /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/setup/templates-email" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><SetupTemplatesEmail /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/setup/roteiros" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><SetupRoteiros /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/setup/pesquisa-satisfacao" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><SetupPesquisaSatisfacao /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/parceiros" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><Parceiros /></DashboardLayout>
+            </ProtectedRoute>
+          } />
           <Route path="*" element={<NotFound />} />
         </Routes>
-        <ThemeToggle />
       </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>

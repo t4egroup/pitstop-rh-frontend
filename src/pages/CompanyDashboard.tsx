@@ -52,7 +52,7 @@ const CompanyDashboard = () => {
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {kpis.map(k => (
-          <div key={k.label} className="rounded-xl border bg-card p-4">
+          <div key={k.label} className="rounded-xl border bg-white p-4">
             <div className="flex items-center justify-between mb-3">
               <p className="text-xs font-medium text-muted-foreground">{k.label}</p>
               <div className={`h-8 w-8 rounded-lg flex items-center justify-center ${k.bg}`}>
@@ -68,7 +68,7 @@ const CompanyDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* Vagas recentes */}
-        <div className="lg:col-span-2 rounded-xl border bg-card">
+        <div className="lg:col-span-2 rounded-xl border bg-white">
           <div className="flex items-center justify-between px-5 py-4 border-b">
             <h2 className="text-sm font-semibold">Suas Vagas</h2>
             <Link to="/empresa/vagas" className="flex items-center gap-1 text-xs text-primary hover:underline font-medium">
@@ -98,7 +98,7 @@ const CompanyDashboard = () => {
         </div>
 
         {/* Atividade recente */}
-        <div className="rounded-xl border bg-card">
+        <div className="rounded-xl border bg-white">
           <div className="px-5 py-4 border-b">
             <h2 className="text-sm font-semibold">Atividade Recente</h2>
           </div>
@@ -131,7 +131,7 @@ const CompanyDashboard = () => {
           <Link
             key={l.to}
             to={l.to}
-            className="flex items-center gap-2 rounded-xl border bg-card px-4 py-3 text-sm font-medium hover:bg-muted/40 transition-colors"
+            className="flex items-center gap-2 rounded-xl border bg-white px-4 py-3 text-sm font-medium hover:bg-muted/40 transition-colors"
           >
             <l.icon size={16} className={l.color} />
             {l.label}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { User, Mail, Phone, Building2, Lock, Bell, Eye, EyeOff, Save, Camera } from "lucide-react";
+import { User, Mail, Phone, Building2, Lock, Bell, Eye, EyeOff, Save, Camera, ShieldAlert } from "lucide-react";
 
 const RecruiterProfile = () => {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
@@ -37,7 +37,7 @@ const RecruiterProfile = () => {
         </div>
 
         {/* Avatar + name card */}
-        <div className="rounded-xl border bg-card p-6 flex items-center gap-5">
+        <div className="rounded-xl border bg-white p-6 flex items-center gap-5">
           <div className="relative shrink-0">
             <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center text-primary font-extrabold text-2xl">
               {profile.name.charAt(0)}
@@ -54,76 +54,41 @@ const RecruiterProfile = () => {
         </div>
 
         {/* Dados Pessoais */}
-        <div className="rounded-xl border bg-card overflow-hidden">
-          <div className="px-6 py-4 border-b">
+        <div className="rounded-xl border bg-white overflow-hidden">
+          <div className="px-6 py-4 border-b flex items-center justify-between">
             <h2 className="font-bold flex items-center gap-2"><User size={16} /> Dados Pessoais</h2>
+            <span className="flex items-center gap-1.5 text-xs text-muted-foreground bg-slate-100 px-2.5 py-1 rounded-full">
+              <ShieldAlert size={11} /> Somente leitura
+            </span>
           </div>
           <div className="p-6 space-y-4">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Nome completo</label>
-                <input
-                  type="text"
-                  value={profile.name}
-                  onChange={(e) => setProfile((p) => ({ ...p, name: e.target.value }))}
-                  className="w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Cargo</label>
-                <input
-                  type="text"
-                  value={profile.role}
-                  onChange={(e) => setProfile((p) => ({ ...p, role: e.target.value }))}
-                  className="w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1.5"><Mail size={12} /> E-mail</label>
-                <input
-                  type="email"
-                  value={profile.email}
-                  onChange={(e) => setProfile((p) => ({ ...p, email: e.target.value }))}
-                  className="w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-                />
-              </div>
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1.5"><Phone size={12} /> Telefone</label>
-                <input
-                  type="tel"
-                  value={profile.phone}
-                  onChange={(e) => setProfile((p) => ({ ...p, phone: e.target.value }))}
-                  className="w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-                />
-              </div>
-              <div className="space-y-1.5 sm:col-span-2">
-                <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1.5"><Building2 size={12} /> Empresa</label>
-                <input
-                  type="text"
-                  value={profile.company}
-                  onChange={(e) => setProfile((p) => ({ ...p, company: e.target.value }))}
-                  className="w-full rounded-lg border bg-background px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all"
-                />
-              </div>
+            <div className="flex items-start gap-2 rounded-lg bg-amber-50 border border-amber-200 px-4 py-3 text-xs text-amber-700">
+              <ShieldAlert size={14} className="mt-0.5 shrink-0" />
+              Os dados pessoais são gerenciados pelo administrador da conta e não podem ser alterados aqui.
             </div>
-            <div className="flex items-center justify-between pt-2">
-              {saved === "profile" && (
-                <span className="text-xs text-green-600 font-medium">Salvo com sucesso!</span>
-              )}
-              <div className="ml-auto">
-                <button
-                  onClick={() => handleSave("profile")}
-                  className="flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground hover:bg-primary/90 transition-colors"
-                >
-                  <Save size={14} /> Salvar alterações
-                </button>
-              </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {[
+                { label: "Nome completo",           value: profile.name,    icon: null     },
+                { label: "Cargo",                   value: profile.role,    icon: null     },
+                { label: "E-mail",                  value: profile.email,   icon: Mail     },
+                { label: "Telefone",                value: profile.phone,   icon: Phone    },
+                { label: "Empresa", value: profile.company, icon: Building2, full: true },
+              ].map(({ label, value, icon: Icon, full }) => (
+                <div key={label} className={`space-y-1.5 ${full ? "sm:col-span-2" : ""}`}>
+                  <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1.5">
+                    {Icon && <Icon size={12} />} {label}
+                  </label>
+                  <div className="w-full rounded-lg border border-dashed bg-slate-50 px-3 py-2.5 text-sm text-slate-500 cursor-not-allowed select-none">
+                    {value}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
 
         {/* Segurança */}
-        <div className="rounded-xl border bg-card overflow-hidden">
+        <div className="rounded-xl border bg-white overflow-hidden">
           <div className="px-6 py-4 border-b">
             <h2 className="font-bold flex items-center gap-2"><Lock size={16} /> Segurança</h2>
           </div>
@@ -189,7 +154,7 @@ const RecruiterProfile = () => {
         </div>
 
         {/* Notificações */}
-        <div className="rounded-xl border bg-card overflow-hidden">
+        <div className="rounded-xl border bg-white overflow-hidden">
           <div className="px-6 py-4 border-b">
             <h2 className="font-bold flex items-center gap-2"><Bell size={16} /> Notificações</h2>
           </div>

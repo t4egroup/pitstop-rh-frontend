@@ -30,7 +30,7 @@ const Field = ({ label, value }: { label: string; value: string }) => (
 );
 
 const SectionCard = ({ icon: Icon, title, children }: { icon: React.ElementType; title: string; children: React.ReactNode }) => (
-  <div className="rounded-xl border bg-card">
+  <div className="rounded-xl border bg-white">
     <div className="flex items-center gap-2.5 px-5 py-4 border-b">
       <Icon size={16} className="text-primary" />
       <h2 className="text-sm font-semibold">{title}</h2>
@@ -47,14 +47,14 @@ const EmpresaPerfil = () => {
     <div className="container max-w-3xl py-8 space-y-5">
 
       {/* Header */}
-      <div className="rounded-xl border bg-card px-6 py-5 flex items-start gap-5">
+      <div className="rounded-xl border bg-white px-6 py-5 flex items-start gap-5">
         {/* Logo placeholder */}
         <div className="shrink-0 h-16 w-16 rounded-xl bg-primary/10 flex items-center justify-center text-2xl font-extrabold text-primary border">
           {p.name[0]}
         </div>
 
         <div className="flex-1 min-w-0">
-          <h1 className="text-xl font-extrabold truncate">{p.name}</h1>
+          <h1 className="text-2xl font-extrabold truncate">{p.name}</h1>
           <p className="text-sm text-muted-foreground">{p.setor}</p>
           <div className="flex flex-wrap gap-3 mt-2 text-xs text-muted-foreground">
             <span className="flex items-center gap-1"><MapPin size={12} />{p.city}, {p.state}</span>
@@ -71,7 +71,7 @@ const EmpresaPerfil = () => {
 
       {/* Quick stats */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="rounded-xl border bg-card p-4 flex items-center gap-3">
+        <div className="rounded-xl border bg-white p-4 flex items-center gap-3">
           <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
             <Briefcase size={18} className="text-primary" />
           </div>
@@ -80,7 +80,7 @@ const EmpresaPerfil = () => {
             <p className="text-xs text-muted-foreground">Vagas ativas</p>
           </div>
         </div>
-        <div className="rounded-xl border bg-card p-4 flex items-center gap-3">
+        <div className="rounded-xl border bg-white p-4 flex items-center gap-3">
           <div className="h-10 w-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
             <Users size={18} className="text-blue-500" />
           </div>
