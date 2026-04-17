@@ -4,7 +4,7 @@ import {
   Users, BarChart2, Megaphone, UserCheck,
   LogOut, Settings, Briefcase, Building2, User, Search,
   PanelLeftClose, PanelLeftOpen, ChevronDown,
-  Globe, List, FileText, MessageSquare, CheckSquare,
+  Globe, List, FileText, MessageSquare, CheckSquare, Handshake,
 } from "lucide-react";
 import { useState } from "react";
 import { useAuth, UserRole } from "@/contexts/AuthContext";
@@ -19,15 +19,16 @@ type NavItem = {
 
 const navLinks: Record<UserRole, NavItem[]> = {
   recrutador: [
-    { to: "/dashboard",        label: "Visão geral",      icon: LayoutDashboard },
+    { to: "/inicio",           label: "Início",            icon: LayoutDashboard },
+    { to: "/dashboard",        label: "Visão geral",       icon: BarChart2       },
     { to: "/gestao-vagas",     label: "Gestão de vagas",  icon: Briefcase       },
     {
       to: "#",
       label: "Gestão de talentos",
       icon: Users,
       children: [
-        { to: "/talentos",           label: "Talentos" },
-        { to: "/portal-talentos",    label: "Portal de Talentos" },
+        { to: "/talentos",           label: "Base Pitstop" },
+        { to: "/portal-talentos",    label: "Base Empresa" },
         { to: "/listas-segmentadas", label: "Listas Segmentadas" },
         { to: "/paginas-captacao",   label: "Páginas de Captação" },
         { to: "/comunicacoes",       label: "Comunicações" },
@@ -36,6 +37,7 @@ const navLinks: Record<UserRole, NavItem[]> = {
     { to: "/analisar-dados",   label: "Analisar dados",   icon: BarChart2       },
     { to: "/relatorios",       label: "Relatórios",       icon: FileText        },
     { to: "/gerenciar-tarefas",label: "Gerenciar tarefas", icon: CheckSquare    },
+    { to: "/parceiros",        label: "Parceiros",         icon: Handshake       },
     { to: "/setup",              label: "Setup",             icon: Settings        },
   ],
   candidato: [

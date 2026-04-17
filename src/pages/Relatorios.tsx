@@ -90,12 +90,13 @@ const categorias: CategoriaRelatorio[] = [
     ],
   },
   {
-    id: "exclusao-contas",
-    titulo: "Exclusão de contas",
-    descricao: "Informações sobre pessoas candidatas que solicitaram a exclusão da conta",
+    id: "desistencia-vagas",
+    titulo: "Desistência de vagas",
+    descricao: "Informações sobre candidatos que desistiram ou foram removidos de processos seletivos",
     icon: UserX,
     opcoes: [
-      { label: "Solicitações de exclusão", descricao: "Registro de pedidos de exclusão de conta" },
+      { label: "Desistências por vaga", descricao: "Registro de candidatos que desistiram por vaga" },
+      { label: "Motivo da desistência", descricao: "Análise dos principais motivos de abandono do processo" },
     ],
   },
 ];

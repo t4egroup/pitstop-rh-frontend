@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Logo from "@/components/Logo";
 import {
@@ -72,8 +72,22 @@ const clientLogos = [
 const Index = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const prevTestimonial = () => setActiveTestimonial(i => (i - 1 + testimonials.length) % testimonials.length);
-  const nextTestimonial = () => setActiveTestimonial(i => (i + 1) % testimonials.length);
+  const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const startAutoplay = () => {
+    if (autoplayRef.current) clearInterval(autoplayRef.current);
+    autoplayRef.current = setInterval(() => {
+      setActiveTestimonial(i => (i + 1) % testimonials.length);
+    }, 5000);
+  };
+
+  useEffect(() => {
+    startAutoplay();
+    return () => { if (autoplayRef.current) clearInterval(autoplayRef.current); };
+  }, []);
+
+  const prevTestimonial = () => { setActiveTestimonial(i => (i - 1 + testimonials.length) % testimonials.length); startAutoplay(); };
+  const nextTestimonial = () => { setActiveTestimonial(i => (i + 1) % testimonials.length); startAutoplay(); };
 
   return (
     <div className="flex flex-col" style={{ background: "#0f1f45" }}>
@@ -122,7 +136,7 @@ const Index = () => {
                 A Parada<br />
                 certa para<br />
                 o seu{" "}
-                <span style={{ color: "#ea3839" }}>Sucesso.</span>
+                <span style={{ color: "#FFD700" }}>Sucesso.</span>
               </h1>
             </div>
 
@@ -263,7 +277,7 @@ const Index = () => {
 
             {/* ── Card 5 — sobre a foto, mais para cima ── */}
             <div className="absolute z-20 flex items-center gap-2 rounded-full px-4 py-2 shadow-xl"
-              style={{ top: "24%", right: "10%", transform: "translateY(-50%)", background: "linear-gradient(135deg,#ea3839,#c0392b)", boxShadow: "0 4px 20px rgba(234,56,57,0.4)" }}>
+              style={{ top: "24%", right: "10%", transform: "translateY(-50%)", background: "linear-gradient(135deg,#22c55e,#15803d)", boxShadow: "0 4px 20px rgba(34,197,94,0.4)" }}>
               <Briefcase size={13} className="text-white" />
               <span className="text-xs font-bold text-white">247 vagas ativas</span>
             </div>
@@ -622,7 +636,11 @@ const Index = () => {
             <div key={i} className="flex flex-col items-center gap-3 group">
               <p className="text-5xl font-extrabold transition-transform group-hover:scale-105 duration-200" style={{ color: s.color }}>{s.num}</p>
               <div className="h-px w-8 rounded-full" style={{ backgroundColor: s.color, opacity: 0.5 }} />
-              <p className="text-white/55 text-sm text-center leading-snug">{s.label}</p>
+              <p className="text-white/55 text-sm text-center leading-snug">
+                {s.label.includes("sucesso")
+                  ? <>{s.label.split("sucesso")[0]}<span style={{ color: "#FFD700" }}>sucesso</span>{s.label.split("sucesso")[1]}</>
+                  : s.label}
+              </p>
             </div>
           ))}
         </div>
@@ -655,7 +673,7 @@ const Index = () => {
               {testimonials.map((_, i) => (
                 <button
                   key={i}
-                  onClick={() => setActiveTestimonial(i)}
+                  onClick={() => { setActiveTestimonial(i); startAutoplay(); }}
                   className="rounded-full transition-all duration-300"
                   style={{
                     width: i === activeTestimonial ? "24px" : "10px",

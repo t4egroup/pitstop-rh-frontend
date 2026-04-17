@@ -80,13 +80,37 @@ const AppNav = () => {
     <header className="sticky top-0 z-40 bg-transparent">
       <div className="px-3 pt-5 pb-2">
         <div
-          className="mx-auto flex items-center justify-between rounded-2xl border-2 border-slate-300/80 bg-white/95 px-8 h-[80px] backdrop-blur-xl shadow-lg transition-all duration-300 ease-in-out"
-          style={{ maxWidth: scrolled ? "1024px" : "1200px" }}
+          className="mx-auto flex items-center justify-between rounded-2xl px-8 h-[80px] transition-all duration-500 ease-in-out relative overflow-hidden"
+          style={{
+            maxWidth: scrolled ? "1024px" : "1200px",
+            background: scrolled
+              ? "rgba(255,255,255,0.30)"
+              : "rgba(255,255,255,0.55)",
+            backdropFilter: "blur(24px) saturate(160%) brightness(1.05)",
+            WebkitBackdropFilter: "blur(24px) saturate(160%) brightness(1.05)",
+            border: "1px solid rgba(255,255,255,0.55)",
+            boxShadow: scrolled
+              ? "0 8px 32px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(255,255,255,0.2)"
+              : "0 8px 40px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.75), inset 0 -1px 0 rgba(255,255,255,0.15)",
+          }}
         >
+          {/* Liquid glass inner gradient overlay */}
+          <div
+            className="absolute inset-0 pointer-events-none rounded-2xl"
+            style={{
+              background: scrolled
+                ? "linear-gradient(135deg, rgba(255,255,255,0.50) 0%, rgba(255,255,255,0.10) 60%, rgba(220,228,255,0.12) 100%)"
+                : "linear-gradient(135deg, rgba(255,255,255,0.40) 0%, rgba(255,255,255,0.08) 60%, rgba(220,228,255,0.10) 100%)",
+            }}
+          />
         {isLoggedIn ? (
-          <div><Logo size={scrolled ? "sm" : "md"} /></div>
+          <div className="relative z-10 shrink-0" style={{ filter: "drop-shadow(0 1px 6px rgba(0,0,0,0.18))" }}>
+            <Logo size="md" />
+          </div>
         ) : (
-          <Link to="/"><Logo size={scrolled ? "sm" : "md"} /></Link>
+          <Link to="/" className="relative z-10 shrink-0" style={{ filter: "drop-shadow(0 1px 6px rgba(0,0,0,0.18))" }}>
+            <Logo size="md" />
+          </Link>
         )}
 
         {/* Desktop nav — usuários logados (centrado, tem muitos itens) */}
@@ -120,22 +144,11 @@ const AppNav = () => {
               {homeLinks.map((l) => {
                 const isOnHome = pathname === "/";
                 const href = l.isRoute ? l.href : isOnHome ? l.href : `/${l.href}`;
+                const linkCls = `rounded-lg px-3 py-2 text-sm font-medium transition-colors text-slate-700 hover:text-slate-900 hover:bg-black/5`;
                 return l.isRoute ? (
-                  <Link
-                    key={l.href}
-                    to={href}
-                    className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-muted"
-                  >
-                    {l.label}
-                  </Link>
+                  <Link key={l.href} to={href} className={linkCls}>{l.label}</Link>
                 ) : (
-                  <a
-                    key={l.href}
-                    href={href}
-                    className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground hover:bg-muted"
-                  >
-                    {l.label}
-                  </a>
+                  <a key={l.href} href={href} className={linkCls}>{l.label}</a>
                 );
               })}
             </nav>

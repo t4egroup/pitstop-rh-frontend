@@ -30,12 +30,15 @@ import Relatorios from "./pages/Relatorios";
 import Admissao from "./pages/Admissao";
 import GestaoVagas from "./pages/GestaoVagas";
 import Talentos from "./pages/Talentos";
+import TalentoProfile from "./pages/TalentoProfile";
 import PortalTalentos from "./pages/PortalTalentos";
 import ListasSegmentadas from "./pages/ListasSegmentadas";
 import PaginasCaptacao from "./pages/PaginasCaptacao";
 import Comunicacoes from "./pages/Comunicacoes";
 import AnalisarDados from "./pages/AnalisarDados";
 import GerenciarTarefas from "./pages/GerenciarTarefas";
+import Parceiros from "./pages/Parceiros";
+import RecruiterHome from "./pages/RecruiterHome";
 import Setup from "./pages/setup/Setup";
 import SetupCargos from "./pages/setup/SetupCargos";
 import SetupAreas from "./pages/setup/SetupAreas";
@@ -112,6 +115,12 @@ const App = () => (
             </ProtectedRoute>
           } />
 
+          <Route path="/inicio" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><RecruiterHome /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+
           <Route path="/dashboard" element={
             <ProtectedRoute roles={["recrutador"]}>
               <DashboardLayout><RecruiterDashboard /></DashboardLayout>
@@ -160,6 +169,11 @@ const App = () => (
           <Route path="/talentos" element={
             <ProtectedRoute roles={["recrutador"]}>
               <DashboardLayout><Talentos /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/talentos/:id" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><TalentoProfile /></DashboardLayout>
             </ProtectedRoute>
           } />
           <Route path="/portal-talentos" element={
@@ -240,6 +254,11 @@ const App = () => (
           <Route path="/setup/pesquisa-satisfacao" element={
             <ProtectedRoute roles={["recrutador"]}>
               <DashboardLayout><SetupPesquisaSatisfacao /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/parceiros" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><Parceiros /></DashboardLayout>
             </ProtectedRoute>
           } />
           <Route path="*" element={<NotFound />} />
