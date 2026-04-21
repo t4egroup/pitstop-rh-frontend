@@ -42,17 +42,6 @@ const anuncios = [
     bg: "linear-gradient(135deg, #78350f 0%, #92400e 60%, #d97706 100%)",
     icon: Sparkles,
   },
-  {
-    id: 4,
-    tag: "Lembrete",
-    tagColor: "#db2777",
-    titulo: "Complete o perfil da sua conta",
-    descricao: "Um perfil completo aumenta a confiança das empresas e melhora os resultados.",
-    cta: "Completar perfil",
-    ctaLink: "/perfil",
-    bg: "linear-gradient(135deg, #831843 0%, #9d174d 60%, #db2777 100%)",
-    icon: Bell,
-  },
 ];
 
 /* ─── Tarefas (mesmos dados do GerenciarTarefas) ─── */
@@ -147,36 +136,49 @@ const RecruiterHome = () => {
         </div>
 
         {/* ── Carousel ── */}
-        <div className="relative rounded-2xl overflow-hidden shadow-lg select-none" style={{ minHeight: 180 }}>
+        <div className="relative rounded-2xl overflow-hidden shadow-lg select-none">
+          {/* slides empilhados — apenas o ativo é visível e ocupa espaço */}
           {anuncios.map((a, i) => {
             const Icon = a.icon;
             return (
               <div
                 key={a.id}
-                className={`absolute inset-0 flex items-center px-8 sm:px-12 gap-6 transition-opacity duration-500 ${i === slide ? "opacity-100 z-10" : "opacity-0 z-0"}`}
+                className={`transition-opacity duration-500 ${i === slide ? "opacity-100 relative z-10" : "opacity-0 absolute inset-0 z-0 pointer-events-none"}`}
                 style={{ background: a.bg }}
               >
-                {/* Icon decorativo */}
-                <div className="hidden sm:flex h-16 w-16 rounded-2xl bg-white/10 items-center justify-center shrink-0">
-                  <Icon size={30} className="text-white/80" />
+                <div className="flex items-center gap-4 px-5 sm:px-10 pt-6 pb-10">
+                  {/* Icon decorativo */}
+                  <div className="hidden sm:flex h-14 w-14 rounded-2xl bg-white/10 items-center justify-center shrink-0">
+                    <Icon size={26} className="text-white/80" />
+                  </div>
+
+                  {/* Texto */}
+                  <div className="flex-1 min-w-0">
+                    <span className="inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest mb-2" style={{ background: a.tagColor + "40", color: "white" }}>
+                      {a.tag}
+                    </span>
+                    <h2 className="text-base sm:text-xl font-extrabold text-white leading-snug mb-1.5">{a.titulo}</h2>
+                    <p className="text-white/65 text-xs sm:text-sm leading-relaxed">{a.descricao}</p>
+                  </div>
+
+                  {/* CTA — apenas desktop */}
+                  <Link
+                    to={a.ctaLink}
+                    className="hidden md:flex items-center gap-2 rounded-xl bg-white/15 hover:bg-white/25 transition-colors px-5 py-2.5 text-sm font-bold text-white shrink-0 border border-white/20"
+                  >
+                    {a.cta} <ArrowRight size={14} />
+                  </Link>
                 </div>
 
-                {/* Texto */}
-                <div className="flex-1 min-w-0">
-                  <span className="inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-widest mb-2" style={{ background: a.tagColor + "40", color: "white" }}>
-                    {a.tag}
-                  </span>
-                  <h2 className="text-lg sm:text-xl font-extrabold text-white leading-snug mb-1.5">{a.titulo}</h2>
-                  <p className="text-white/65 text-sm leading-relaxed max-w-xl">{a.descricao}</p>
+                {/* CTA mobile — dentro do slide para não ser cortado */}
+                <div className="px-5 pb-10 md:hidden">
+                  <Link
+                    to={a.ctaLink}
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-white/15 hover:bg-white/25 transition-colors px-4 py-2 text-xs font-bold text-white border border-white/20"
+                  >
+                    {a.cta} <ArrowRight size={12} />
+                  </Link>
                 </div>
-
-                {/* CTA */}
-                <Link
-                  to={a.ctaLink}
-                  className="hidden md:flex items-center gap-2 rounded-xl bg-white/15 hover:bg-white/25 transition-colors px-5 py-2.5 text-sm font-bold text-white shrink-0 border border-white/20"
-                >
-                  {a.cta} <ArrowRight size={14} />
-                </Link>
               </div>
             );
           })}

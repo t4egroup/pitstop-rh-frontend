@@ -15,7 +15,7 @@ const testimonials = [
     companyDisplay: "Tech Solutions",
     size: "Mid-Market",
     industry: "Tecnologia",
-    quote: "Conseguimos otimizar em 40% nossos processos de seleção com a PitStop RH. A metodologia P.I.T realmente faz diferença na qualidade das contratações — os profissionais chegam mais alinhados com a cultura e entregam resultados mais rápido.",
+    quote: "A PitStop RH preencheu 5 vagas técnicas em menos de 3 semanas. A plataforma centraliza tudo: triagem, entrevistas e feedback — o time de RH ganhou horas de produtividade por semana.",
     author: "Ana Paula Rodrigues",
     role: "Coordenadora de RH · Tech Solutions Brasil",
   },
@@ -23,7 +23,7 @@ const testimonials = [
     companyDisplay: "Startup XP",
     size: "Startup",
     industry: "Fintech",
-    quote: "A equipe da PitStop entendeu exatamente o perfil técnico que precisávamos em poucos dias. Contratamos 3 engenheiros seniores em tempo recorde, sem abrir mão da qualidade ou do fit cultural com o time.",
+    quote: "Contratamos 3 engenheiros seniores em tempo recorde. A visibilidade do funil e a comunicação automática com candidatos tornaram o processo muito mais ágil e profissional.",
     author: "Ricardo Mendes",
     role: "CEO · StartupXP",
   },
@@ -31,7 +31,7 @@ const testimonials = [
     companyDisplay: "LOG BR",
     size: "Enterprise",
     industry: "Logística",
-    quote: "A terceirização com a PitStop transformou nossa operação completamente. Reduzimos custos em 30% e ganhamos foco total no que realmente importa para o negócio. O suporte é impecável e a comunicação sempre clara.",
+    quote: "Com a PitStop RH reduzimos o tempo médio de contratação em 40%. O módulo de triagem inteligente filtra os candidatos certos antes mesmo da primeira entrevista.",
     author: "Fernanda Lima",
     role: "Diretora de Operações · LogBR",
   },
@@ -39,7 +39,7 @@ const testimonials = [
     companyDisplay: "GrupoHR",
     size: "Enterprise",
     industry: "Recursos Humanos",
-    quote: "Com a PitStop estruturamos nosso processo de hunting ativo para posições estratégicas. A assertividade nas indicações é incomparável — os candidatos chegam realmente prontos para o desafio e para a cultura da empresa.",
+    quote: "A plataforma unificou nossos processos seletivos de ponta a ponta. Hoje gerenciamos mais de 50 vagas simultâneas com total rastreabilidade e relatórios em tempo real.",
     author: "Carlos Souza",
     role: "Head de Talent Acquisition · GrupoHR",
   },
@@ -47,11 +47,12 @@ const testimonials = [
 
 /* ───── FAQ Data ───── */
 const faqs = [
-  { q: "Quais tipos de empresa a PitStop RH atende?", a: "Atendemos desde startups e PMEs até grandes corporações de todos os segmentos, com soluções personalizadas para cada porte e necessidade." },
-  { q: "Sou candidato. Como me candidato às vagas?", a: "Basta criar seu cadastro na plataforma, preencher 100% do perfil e você estará elegível para todas as vagas compatíveis com seu perfil." },
-  { q: "Qual o diferencial da PitStop RH em Recrutamento e Seleção?", a: "Nossa metodologia P.I.T (Performance, Inteligência e Tempo) garante processos ágeis, humanizados e assertivos, do operacional ao estratégico." },
-  { q: "A PitStop RH cobra alguma taxa dos candidatos?", a: "Não. Nossos serviços são 100% gratuitos para candidatos. A cobrança é feita apenas para as empresas contratantes." },
-  { q: "Como posso solicitar um orçamento?", a: "Você pode preencher o formulário de contato, enviar um e-mail para atendimento@pitstoprh.com.br ou chamar no WhatsApp." },
+  { q: "Como a plataforma ajuda minha empresa a contratar mais rápido?", a: "A PitStop RH centraliza todo o funil de recrutamento — publicação de vagas, triagem automática, agendamento de entrevistas e comunicação com candidatos — em um único lugar, reduzindo o tempo médio de contratação em até 40%." },
+  { q: "Sou candidato. Como funcionam as candidaturas?", a: "Crie seu perfil gratuitamente, preencha suas informações e se candidate a vagas compatíveis com um clique. Você acompanha o status de cada candidatura em tempo real." },
+  { q: "Posso gerenciar múltiplas vagas ao mesmo tempo?", a: "Sim. A plataforma foi projetada para equipes de RH que lidam com dezenas de vagas simultâneas, com visão unificada do pipeline e relatórios por vaga, área ou período." },
+  { q: "A PitStop RH cobra alguma taxa dos candidatos?", a: "Não. A plataforma é 100% gratuita para candidatos. Os planos pagos são voltados para empresas e recrutadores que desejam publicar vagas e gerenciar processos seletivos." },
+  { q: "O que é a metodologia P.I.T e como ela impacta os resultados?", a: "P.I.T significa Performance, Inteligência e Tempo. É o conjunto de práticas e automações da plataforma que garante processos ágeis, decisões baseadas em dados e contratações de maior qualidade." },
+  { q: "Como solicitar uma demonstração ou suporte?", a: "Clique em 'Solicitar demonstração' para falar com um consultor, ou entre em contato pelo WhatsApp ou pelo e-mail atendimento@pitstoprh.com.br." },
 ];
 
 const clientLogos = [
@@ -95,7 +96,7 @@ const Index = () => {
       {/* ══════════════════════════════════════════
           1. HERO
       ══════════════════════════════════════════ */}
-      <section id="inicio" className="relative z-10 flex flex-col justify-center gap-8 pb-16 overflow-x-hidden h-screen -mt-[6.75rem] pt-[6.75rem]" style={{ background: "linear-gradient(145deg, #0a1628 0%, #0f2044 40%, #162952 100%)" }}>
+      <section id="inicio" className="relative z-10 flex flex-col justify-center gap-8 pb-16 overflow-x-hidden min-h-screen -mt-[6.75rem] pt-[6.75rem]" style={{ background: "linear-gradient(145deg, #0a1628 0%, #0f2044 40%, #162952 100%)" }}>
 
         {/* ── Geometric shapes ── */}
         <div className="absolute top-0 right-0 w-[520px] h-[520px] pointer-events-none opacity-50"
@@ -128,11 +129,11 @@ const Index = () => {
 
             <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/8 px-4 py-1.5 text-xs font-semibold text-white/80 backdrop-blur-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
-              Plataforma líder em recrutamento inteligente
+              Plataforma completa de recrutamento e seleção
             </div>
 
             <div>
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.0] tracking-tight text-white">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold leading-[1.05] tracking-tight text-white">
                 A Parada<br />
                 certa para<br />
                 o seu{" "}
@@ -141,7 +142,7 @@ const Index = () => {
             </div>
 
             <p className="text-white/55 text-base leading-relaxed max-w-sm">
-              Conectamos empresas e talentos com propósito, velocidade e precisão. Do operacional ao estratégico.
+              Publique vagas, gerencie candidatos e feche contratações mais rápido — tudo em uma plataforma criada para equipes de RH e recrutadores.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 pt-1">
@@ -150,7 +151,7 @@ const Index = () => {
                 className="inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-sm font-bold text-white hover:opacity-90 transition-opacity shadow-2xl"
                 style={{ background: "linear-gradient(135deg,#4060aa 0%,#638cdc 50%,#d04870 85%,#f06868 100%)", boxShadow: "0 8px 30px rgba(234,56,57,0.35)" }}
               >
-                Solicitar demonstração <ArrowRight size={15} />
+                Começar gratuitamente <ArrowRight size={15} />
               </Link>
               <Link
                 to="/cadastro"
@@ -177,7 +178,7 @@ const Index = () => {
           </div>
 
           {/* ── Right — cards layout ── */}
-          <div className="relative h-[580px] lg:-ml-16">
+          <div className="relative h-[580px] lg:-ml-16 hidden lg:block">
 
             {/* Glow */}
             <div className="absolute inset-0 pointer-events-none"
@@ -344,20 +345,20 @@ const Index = () => {
               Nossa história
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight mb-5">
-              Gestão de talentos que move seu negócio
+              Recrutamento mais inteligente, do anúncio à contratação
             </h2>
             <p className="text-muted-foreground text-sm sm:text-base leading-relaxed mb-6">
-              A PitStop RH nasceu da convicção de que contratar bem é uma vantagem competitiva. Desde nossa fundação, combinamos tecnologia, metodologia e um atendimento genuinamente humano para garantir que cada posição seja preenchida com o profissional certo.
+              A PitStop RH é uma plataforma de recrutamento e seleção que automatiza as etapas repetitivas, organiza o funil de candidatos e entrega visibilidade total do processo — para você contratar as pessoas certas, no tempo certo.
             </p>
             <p className="text-muted-foreground text-sm leading-relaxed mb-8">
-              Atendemos PMEs e grandes corporações em todo o Brasil, com soluções que vão do operacional ao estratégico — sempre guiados pela nossa metodologia P.I.T.
+              Usada por PMEs e grandes corporações em todo o Brasil, a plataforma foi construída com base na metodologia P.I.T: Performance, Inteligência e Tempo.
             </p>
             <Link
               to="/login"
               className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white hover:opacity-90 transition-opacity shadow-md"
               style={{ background: "linear-gradient(135deg,#4060aa 0%,#638cdc 50%,#d04870 85%,#f06868 100%)", boxShadow: "0 8px 30px rgba(234,56,57,0.35)" }}
             >
-              Conheça nossa equipe <ArrowRight size={15} />
+              Ver como funciona <ArrowRight size={15} />
             </Link>
           </div>
         </div>
@@ -376,10 +377,10 @@ const Index = () => {
               Nossas Soluções
             </p>
             <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight mb-4 text-white">
-              Tudo que sua empresa precisa<br className="hidden sm:block" /> em um só lugar
+              Uma plataforma para cada etapa<br className="hidden sm:block" /> do seu recrutamento
             </h2>
             <p className="text-white/60 text-sm max-w-xl mx-auto">
-              Do recrutamento estratégico à terceirização operacional, entregamos resultados com metodologia e cuidado.
+              Do anúncio da vaga ao onboarding do novo colaborador, a PitStop RH centraliza tudo para equipes de RH e recrutadores.
             </p>
           </div>
 
@@ -393,24 +394,26 @@ const Index = () => {
                 <div className="h-11 w-11 rounded-xl bg-white/10 flex items-center justify-center text-white mb-5">
                   <Search size={22} />
                 </div>
-                <h3 className="text-xl font-extrabold mb-3 text-white">Recrutamento e Seleção</h3>
+                <h3 className="text-xl font-extrabold mb-3 text-white">Gestão de Vagas e Funil</h3>
                 <p className="text-white/65 text-sm leading-relaxed mb-6">
-                  Processos ágeis, assertivos e humanizados. Conectamos sua empresa aos melhores candidatos com nossa metodologia exclusiva P.I.T.
+                  Publique vagas, visualize o funil completo de candidatos e mova perfis entre etapas com um clique. Controle total do processo seletivo em um único painel.
                 </p>
                 {/* mini pipeline visual */}
-                <div className="flex items-center gap-1.5 mt-auto mb-6">
-                  {["Triagem", "Entrevista", "Assessment", "Oferta"].map((step, i) => (
-                    <div key={i} className="flex items-center gap-1.5">
-                      <div className="rounded-md bg-white/10 border border-white/20 px-2.5 py-1 text-[10px] font-semibold text-white whitespace-nowrap">
-                        {step}
+                <div className="mt-auto space-y-4">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {["Triagem", "Entrevista", "Assessment", "Oferta"].map((step, i) => (
+                      <div key={i} className="flex items-center gap-1.5">
+                        <div className="rounded-md bg-white/10 border border-white/20 px-2.5 py-1 text-[10px] font-semibold text-white whitespace-nowrap">
+                          {step}
+                        </div>
+                        {i < 3 && <ArrowRight size={10} className="text-white/40 shrink-0" />}
                       </div>
-                      {i < 3 && <ArrowRight size={10} className="text-white/40 shrink-0" />}
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                  <Link to="/login" className="inline-flex items-center gap-1 text-blue-300 font-semibold text-sm hover:underline">
+                    Saiba mais <ArrowRight size={14} />
+                  </Link>
                 </div>
-                <Link to="/login" className="inline-flex items-center gap-1 text-blue-300 font-semibold text-sm hover:underline">
-                  Saiba mais <ArrowRight size={14} />
-                </Link>
               </div>
             </div>
 
@@ -421,9 +424,9 @@ const Index = () => {
                 <div className="h-11 w-11 rounded-xl bg-cyan-400/15 flex items-center justify-center text-cyan-300 mb-5">
                   <CalendarRange size={22} />
                 </div>
-                <h3 className="text-lg font-extrabold mb-2 text-white">Mão de Obra Temporária</h3>
+                <h3 className="text-lg font-extrabold mb-2 text-white">Triagem Inteligente</h3>
                 <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">
-                  Flexibilidade para demandas sazonais, substituições emergenciais e projetos pontuais.
+                  Filtre candidatos automaticamente por habilidades, experiência e fit cultural antes mesmo da primeira entrevista.
                 </p>
                 <Link to="/login" className="inline-flex items-center gap-1 text-blue-300 font-semibold text-sm hover:underline mt-auto">
                   Saiba mais <ArrowRight size={14} />
@@ -438,9 +441,9 @@ const Index = () => {
                 <div className="h-11 w-11 rounded-xl bg-amber-400/15 flex items-center justify-center text-amber-300 mb-5">
                   <Building2 size={22} />
                 </div>
-                <h3 className="text-lg font-extrabold mb-2 text-white">Terceirização</h3>
+                <h3 className="text-lg font-extrabold mb-2 text-white">Comunicação Automática</h3>
                 <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">
-                  Recepção, logística, limpeza e apoio corporativo. Foque no core e deixe a operação conosco.
+                  Envie atualizações, convites para entrevistas e feedbacks para candidatos de forma automatizada e personalizada.
                 </p>
                 <Link to="/login" className="inline-flex items-center gap-1 text-blue-300 font-semibold text-sm hover:underline mt-auto">
                   Saiba mais <ArrowRight size={14} />
@@ -448,16 +451,16 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Card — Hunting Ativo */}
+            {/* Card — Banco de Talentos */}
             <div className="rounded-2xl overflow-hidden hover:shadow-xl transition-all hover:-translate-y-0.5 duration-200 flex flex-col" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
               <div className="h-1.5 w-full bg-violet-500" />
               <div className="p-7 flex flex-col flex-1">
                 <div className="h-11 w-11 rounded-xl bg-violet-400/15 flex items-center justify-center text-violet-300 mb-5">
                   <Target size={22} />
                 </div>
-                <h3 className="text-lg font-extrabold mb-2 text-white">Hunting Ativo</h3>
+                <h3 className="text-lg font-extrabold mb-2 text-white">Banco de Talentos</h3>
                 <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">
-                  Busca ativa dos melhores talentos, inclusive os que não estão no mercado aberto.
+                  Crie e gerencie sua base de talentos. Encontre o candidato certo para uma nova vaga antes mesmo de publicá-la.
                 </p>
                 <Link to="/login" className="inline-flex items-center gap-1 text-blue-300 font-semibold text-sm hover:underline mt-auto">
                   Saiba mais <ArrowRight size={14} />
@@ -465,16 +468,16 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Card — Employer Branding */}
+            {/* Card — Relatórios e Analytics */}
             <div className="rounded-2xl overflow-hidden hover:shadow-xl transition-all hover:-translate-y-0.5 duration-200 flex flex-col" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
               <div className="h-1.5 w-full bg-rose-500" />
               <div className="p-7 flex flex-col flex-1">
                 <div className="h-11 w-11 rounded-xl bg-rose-400/15 flex items-center justify-center text-rose-300 mb-5">
                   <Award size={22} />
                 </div>
-                <h3 className="text-lg font-extrabold mb-2 text-white">Employer Branding</h3>
+                <h3 className="text-lg font-extrabold mb-2 text-white">Relatórios e Analytics</h3>
                 <p className="text-white/60 text-sm leading-relaxed mb-4 flex-1">
-                  Posicione-se como empresa dos sonhos. Atraia e retenha talentos com uma marca empregadora forte.
+                  Acompanhe métricas de tempo de contratação, taxa de conversão e desempenho por vaga com dashboards em tempo real.
                 </p>
                 <Link to="/login" className="inline-flex items-center gap-1 text-blue-300 font-semibold text-sm hover:underline mt-auto">
                   Saiba mais <ArrowRight size={14} />
@@ -518,7 +521,7 @@ const Index = () => {
               </span>
             </h2>
             <p className="text-muted-foreground text-sm max-w-lg mx-auto">
-              Três pilares que sustentam cada processo da PitStop RH — do diagnóstico à entrega.
+              Três pilares que orientam cada funcionalidade da plataforma e cada decisão de recrutamento.
             </p>
           </div>
 
@@ -527,7 +530,7 @@ const Index = () => {
             {[
               {
                 letter: "P", title: "Performance",
-                desc: "Entregamos resultados mensuráveis com KPIs claros e relatórios em tempo real para cada processo seletivo.",
+                desc: "Cada vaga tem métricas claras: tempo médio de fechamento, taxa de conversão por etapa e qualidade dos candidatos indicados.",
                 icon: TrendingUp,
                 accent: "#3b6fd4",
                 gradient: "linear-gradient(135deg, #3b6fd4, #243c7e)",
@@ -536,7 +539,7 @@ const Index = () => {
               },
               {
                 letter: "I", title: "Inteligência",
-                desc: "Análise de dados, mapeamento de mercado e avaliação comportamental para decisões mais assertivas.",
+                desc: "Triagem por IA, matching automático de perfis e avaliações comportamentais para decisões de contratação mais precisas.",
                 icon: Lightbulb,
                 accent: "#8b5cf6",
                 gradient: "linear-gradient(135deg, #8b5cf6, #6d28d9)",
@@ -545,7 +548,7 @@ const Index = () => {
               },
               {
                 letter: "T", title: "Tempo",
-                desc: "Agilidade sem abrir mão da qualidade. Processos estruturados que respeitam os prazos do seu negócio.",
+                desc: "Automações que eliminam tarefas manuais repetitivas, encurtando o ciclo de contratação sem sacrificar a qualidade.",
                 icon: Clock,
                 accent: "#0284c7",
                 gradient: "linear-gradient(135deg, #06b6d4, #0284c7)",
@@ -598,7 +601,7 @@ const Index = () => {
 
               {[
                 { letter: "S", icon: Search,        title: "Sinergia",   desc: "Diagnóstico da vaga e cultura da empresa.", color: "#ea3839" },
-                { letter: "T", icon: CalendarRange,  title: "Triagem",    desc: "Hunting ativo e mapeamento de candidatos.",  color: "#f97316" },
+                { letter: "T", icon: CalendarRange,  title: "Triagem",    desc: "Mapeamento e busca ativa de candidatos qualificados.",  color: "#f97316" },
                 { letter: "O", icon: ClipboardCheck, title: "Observação", desc: "Entrevistas e avaliações personalizadas.",   color: "#3b6fd4" },
                 { letter: "P", icon: Handshake,      title: "Parceria",   desc: "Acompanhamento pós-contratação.",            color: "#243c7e" },
               ].map((step, i) => (
@@ -661,9 +664,9 @@ const Index = () => {
               Depoimentos
             </p>
             <h2 className="text-3xl sm:text-4xl font-extrabold mb-3">
-              Clientes que confiam na PitStop RH
+              Empresas que recrutam melhor com a PitStop RH
             </h2>
-            <p className="text-muted-foreground text-sm">O que dizem quem já passou pela nossa parada estratégica.</p>
+            <p className="text-muted-foreground text-sm">Resultados reais de quem usa a plataforma no dia a dia.</p>
           </div>
 
           {/* Carousel controls row */}
@@ -761,7 +764,7 @@ const Index = () => {
               FAQ
             </p>
             <h2 className="text-3xl sm:text-4xl font-extrabold mb-3">Perguntas Frequentes</h2>
-            <p className="text-muted-foreground text-sm">Respostas rápidas sobre nossos serviços, metodologia e processos.</p>
+            <p className="text-muted-foreground text-sm">Tudo que você precisa saber sobre a plataforma de recrutamento da PitStop RH.</p>
           </div>
 
           <div className="space-y-3">
@@ -817,10 +820,10 @@ const Index = () => {
                 Pronto para começar?
               </p>
               <h2 className="text-3xl sm:text-4xl font-extrabold leading-tight text-white max-w-lg">
-                Contrate melhor e mais rápido com a PitStop RH
+                Pronto para transformar seu recrutamento?
               </h2>
               <p className="text-white/65 text-sm sm:text-base max-w-md mt-4">
-                Fale com nossos consultores e descubra como podemos tornar seu recrutamento mais inteligente, ágil e eficiente.
+                Crie sua conta gratuitamente e veja como a PitStop RH pode reduzir seu tempo de contratação em até 40%.
               </p>
             </div>
             <div className="flex flex-col gap-3 shrink-0">
@@ -870,7 +873,7 @@ const Index = () => {
             <div>
               <h3 className="text-xs font-bold uppercase tracking-widest text-white/80 mb-4">Soluções</h3>
               <ul className="space-y-2.5 text-sm text-white/60">
-                {["Recrutamento e Seleção", "Mão de Obra Temporária", "Terceirização", "Hunting Ativo", "Employer Branding"].map((item) => (
+                {["Gestão de Vagas e Funil", "Triagem Inteligente", "Comunicação Automática", "Banco de Talentos", "Relatórios e Analytics"].map((item) => (
                   <li key={item}>
                     <a href="#solucoes" className="hover:text-white transition-colors">{item}</a>
                   </li>
@@ -936,6 +939,20 @@ const Index = () => {
           </div>
         </div>
       </footer>
+
+      {/* ── WhatsApp floating button ── */}
+      <a
+        href="https://wa.me/5511933320173"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Falar no WhatsApp"
+        className="fixed bottom-6 right-6 z-50 flex items-center justify-center h-14 w-14 rounded-full shadow-2xl transition-transform hover:scale-110 duration-200"
+        style={{ background: "#25D366", boxShadow: "0 4px 24px rgba(37,211,102,0.45)" }}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="white" className="h-8 w-8">
+          <path d="M16 2C8.268 2 2 8.268 2 16c0 2.492.655 4.829 1.8 6.854L2 30l7.338-1.773A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.5a11.43 11.43 0 0 1-5.838-1.602l-.418-.248-4.353 1.052 1.082-4.23-.272-.435A11.47 11.47 0 0 1 4.5 16C4.5 9.649 9.649 4.5 16 4.5S27.5 9.649 27.5 16 22.351 27.5 16 27.5zm6.29-8.617c-.344-.172-2.037-1.004-2.352-1.118-.316-.115-.547-.172-.777.172-.23.344-.892 1.118-1.094 1.349-.2.23-.402.258-.746.086-.344-.172-1.454-.535-2.77-1.71-1.023-.913-1.713-2.04-1.914-2.384-.2-.344-.021-.53.15-.701.155-.155.344-.402.516-.603.172-.2.23-.344.344-.574.115-.23.058-.43-.029-.603-.086-.172-.777-1.872-1.064-2.563-.28-.673-.564-.582-.777-.593l-.66-.011c-.23 0-.603.086-.918.43-.316.344-1.204 1.176-1.204 2.868s1.233 3.327 1.405 3.557c.172.23 2.427 3.706 5.88 5.196.822.354 1.463.566 1.963.724.824.263 1.574.226 2.167.137.661-.099 2.037-.832 2.323-1.636.287-.803.287-1.492.2-1.636-.086-.143-.316-.23-.66-.402z"/>
+        </svg>
+      </a>
 
     </div>
   );

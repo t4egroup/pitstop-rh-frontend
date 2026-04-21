@@ -1,6 +1,6 @@
 import {
   Briefcase, Users, CalendarCheck, TrendingUp,
-  Clock, CheckCircle2, PauseCircle, ChevronRight,
+  Clock, CheckCircle2, PauseCircle, ChevronRight, Image,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -127,6 +127,7 @@ const CompanyDashboard = () => {
           { label: "Ver Candidatos",   to: "/empresa/candidatos", icon: Users,        color: "text-blue-500"     },
           { label: "Relatórios",       to: "/empresa/relatorios", icon: TrendingUp,   color: "text-amber-500"    },
           { label: "Perfil da Empresa",to: "/empresa/perfil",     icon: CalendarCheck,color: "text-emerald-500"  },
+          { label: "Banners",          to: "/empresa/banners",    icon: Image,        color: "text-purple-500"   },
         ].map(l => (
           <Link
             key={l.to}

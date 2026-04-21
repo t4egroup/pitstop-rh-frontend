@@ -1,6 +1,6 @@
 import { useState } from "react";
 import AppSidebar from "@/components/AppSidebar";
-import { ZoomIn, ZoomOut } from "lucide-react";
+import { ZoomIn, ZoomOut, Menu } from "lucide-react";
 
 const ZOOM_STEP = 0.1;
 const ZOOM_MIN  = 0.5;
@@ -11,6 +11,8 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     const saved = localStorage.getItem("dashZoom");
     return saved ? parseFloat(saved) : 1.1;
   });
+
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   const change = (delta: number) => {
     setZoom((prev) => {
@@ -27,8 +29,31 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <AppSidebar />
+      {/* Mobile overlay */}
+      {mobileSidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 lg:hidden"
+          onClick={() => setMobileSidebarOpen(false)}
+        />
+      )}
+
+      <AppSidebar
+        mobileOpen={mobileSidebarOpen}
+        onMobileClose={() => setMobileSidebarOpen(false)}
+      />
+
       <main className="flex-1 overflow-y-auto bg-blue-50 relative">
+        {/* Mobile header */}
+        <div className="lg:hidden sticky top-0 z-20 flex items-center gap-3 bg-white border-b px-4 py-3 shadow-sm">
+          <button
+            onClick={() => setMobileSidebarOpen(true)}
+            className="p-1.5 rounded-lg hover:bg-slate-100 transition-colors"
+          >
+            <Menu size={20} className="text-slate-600" />
+          </button>
+          <span className="text-sm font-bold text-[#243c7e]">PitStop RH</span>
+        </div>
+
         <div style={{ zoom }}>
           {children}
         </div>

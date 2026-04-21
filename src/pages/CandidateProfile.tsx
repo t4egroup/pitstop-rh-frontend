@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   User, Mail, Phone, MapPin, Calendar, GraduationCap,
   Briefcase, Wrench, Languages, FileText, DollarSign,
-  Clock, Pencil, Upload, CheckCircle2, X, Save, CreditCard,
+  Clock, Pencil, Upload, CheckCircle2, X, Save, CreditCard, Sparkles,
+  Lock, Camera,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -50,12 +52,13 @@ const mockProfile = {
 
 /* ── Helpers ── */
 const SectionCard = ({
-  icon: Icon, title, editing, onEdit, children,
+  icon: Icon, title, editing, onEdit, locked, children,
 }: {
   icon: React.ElementType;
   title: string;
   editing?: boolean;
   onEdit?: () => void;
+  locked?: boolean;
   children: React.ReactNode;
 }) => (
   <div className="rounded-xl border bg-white">
@@ -64,7 +67,11 @@ const SectionCard = ({
         <Icon size={16} className="text-primary" />
         <h2 className="text-sm font-semibold">{title}</h2>
       </div>
-      {onEdit && (
+      {locked ? (
+        <span className="flex items-center gap-1.5 rounded-lg border border-amber-200 bg-amber-50 px-2.5 py-1 text-xs font-medium text-amber-700">
+          <Lock size={11} /> Bloqueado
+        </span>
+      ) : onEdit && (
         <button
           onClick={onEdit}
           className={`flex items-center gap-1.5 rounded-lg border px-2.5 py-1 text-xs font-medium transition-colors ${
@@ -93,6 +100,8 @@ const inputCls = "w-full rounded-lg border bg-background px-3 py-2 text-sm outli
 /* ── Page ── */
 const CandidateProfile = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const photoInputRef = useRef<HTMLInputElement>(null);
 
   const [profile, setProfile] = useState({
     ...mockProfile,
@@ -100,14 +109,19 @@ const CandidateProfile = () => {
     email: user?.email ?? mockProfile.email,
   });
 
+  /* Photo state */
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+
+  /* Personal data locked after registration is completed */
+  const [personalDataLocked] = useState(true);
+
   // per-section edit flags
   const [editing, setEditing] = useState({
-    pessoal: false,
-    sobre:   false,
-    formacao: false,
+    sobre:        false,
+    formacao:     false,
     experiencias: false,
-    habilidades: false,
-    idiomas: false,
+    habilidades:  false,
+    idiomas:      false,
     complementar: false,
   });
 
@@ -133,6 +147,13 @@ const CandidateProfile = () => {
     setTimeout(() => setSaved(null), 2500);
   };
 
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    setPhotoUrl(url);
+  };
+
   const SaveBar = ({ section }: { section: keyof typeof editing }) => (
     <div className="flex items-center justify-end gap-2 pt-3 border-t mt-3">
       {saved === section && (
@@ -156,13 +177,58 @@ const CandidateProfile = () => {
   );
 
   return (
-    <div className="container max-w-3xl py-8 space-y-5">
+    <div className="container max-w-3xl py-6 px-4 sm:px-6 space-y-5">
 
       {/* Header card */}
-      <div className="rounded-xl border bg-white px-6 py-5 flex items-start gap-5">
-        <div className="shrink-0 h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl font-extrabold text-primary">
-          {profile.name[0]}
+      <div className="rounded-xl border bg-white px-4 sm:px-6 py-5 flex flex-col sm:flex-row items-start gap-4 sm:gap-5">
+        {/* Avatar with photo upload */}
+        <div className="relative shrink-0 group">
+          {photoUrl ? (
+            <img
+              src={photoUrl}
+              alt="Foto do perfil"
+              className="h-16 w-16 rounded-full object-cover border-2 border-primary/20"
+            />
+          ) : (
+            <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl font-extrabold text-primary">
+              {profile.name[0]}
+            </div>
+          )}
+          {/* Camera overlay */}
+          <button
+            onClick={() => photoInputRef.current?.click()}
+            className="absolute inset-0 rounded-full flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity"
+            title="Alterar foto"
+          >
+            <Camera size={18} className="text-white" />
+          </button>
+          <input
+            ref={photoInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handlePhotoChange}
+          />
+          {/* Badge: câmera (sem foto) ou X (com foto) */}
+          {photoUrl ? (
+            <button
+              onClick={() => setPhotoUrl(null)}
+              className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-red-500 flex items-center justify-center shadow"
+              title="Remover foto"
+            >
+              <X size={10} className="text-white" />
+            </button>
+          ) : (
+            <button
+              onClick={() => photoInputRef.current?.click()}
+              className="absolute -bottom-1 -right-1 h-5 w-5 rounded-full bg-primary flex items-center justify-center shadow"
+              title="Adicionar foto"
+            >
+              <Camera size={10} className="text-white" />
+            </button>
+          )}
         </div>
+
         <div className="flex-1 min-w-0">
           <h1 className="text-2xl font-extrabold truncate">{profile.name}</h1>
           <p className="text-sm text-muted-foreground">{profile.headline}</p>
@@ -174,48 +240,21 @@ const CandidateProfile = () => {
         </div>
       </div>
 
-      {/* Dados Pessoais */}
-      <SectionCard
-        icon={User} title="Dados Pessoais"
-        editing={editing.pessoal}
-        onEdit={() => editing.pessoal ? cancelEdit("pessoal") : startEdit("pessoal")}
-      >
-        {editing.pessoal ? (
-          <>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              {[
-                { label: "Nome",           key: "name",      type: "text"  },
-                { label: "CPF",            key: "cpf",       type: "text"  },
-                { label: "Data de Nasc.",  key: "birthDate", type: "text"  },
-                { label: "Telefone",       key: "phone",     type: "tel"   },
-                { label: "E-mail",         key: "email",     type: "email" },
-                { label: "Cidade",         key: "city",      type: "text"  },
-                { label: "Estado",         key: "state",     type: "text"  },
-              ].map(({ label, key, type }) => (
-                <div key={key} className="space-y-1">
-                  <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">{label}</label>
-                  <input
-                    type={type}
-                    value={draft[key as keyof typeof draft] as string}
-                    onChange={e => setDraft(d => ({ ...d, [key]: e.target.value }))}
-                    className={inputCls}
-                  />
-                </div>
-              ))}
-            </div>
-            <SaveBar section="pessoal" />
-          </>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            <Field label="Nome"           value={profile.name} />
-            <Field label="CPF"            value={profile.cpf} />
-            <Field label="Data de Nasc."  value={profile.birthDate} />
-            <Field label="Telefone"       value={profile.phone} />
-            <Field label="E-mail"         value={profile.email} />
-            <Field label="Cidade"         value={profile.city} />
-            <Field label="Estado"         value={profile.state} />
-          </div>
-        )}
+      {/* Dados Pessoais — bloqueado após cadastro */}
+      <SectionCard icon={User} title="Dados Pessoais" locked={personalDataLocked}>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <Field label="Nome"           value={profile.name} />
+          <Field label="CPF"            value={profile.cpf} />
+          <Field label="Data de Nasc."  value={profile.birthDate} />
+          <Field label="Telefone"       value={profile.phone} />
+          <Field label="E-mail"         value={profile.email} />
+          <Field label="Cidade"         value={profile.city} />
+          <Field label="Estado"         value={profile.state} />
+        </div>
+        <p className="mt-3 text-[11px] text-amber-600 flex items-center gap-1">
+          <Lock size={11} />
+          Os dados pessoais são bloqueados após a conclusão do cadastro. Em caso de correção, entre em contato com o suporte.
+        </p>
       </SectionCard>
 
       {/* Sobre */}
@@ -440,65 +479,57 @@ const CandidateProfile = () => {
       >
         {editing.complementar ? (
           <>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-1">
-                <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Pretensão Salarial</label>
-                <input
-                  type="text"
-                  value={draft.salary}
-                  onChange={e => setDraft(d => ({ ...d, salary: e.target.value }))}
-                  className={inputCls}
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Disponibilidade</label>
-                <select
-                  value={draft.availability}
-                  onChange={e => setDraft(d => ({ ...d, availability: e.target.value }))}
-                  className={inputCls}
-                >
-                  {["Imediata", "15 dias", "30 dias", "A combinar"].map(o => (
-                    <option key={o} value={o}>{o}</option>
-                  ))}
-                </select>
-              </div>
+            <div className="space-y-1 max-w-xs">
+              <label className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">Disponibilidade</label>
+              <select
+                value={draft.availability}
+                onChange={e => setDraft(d => ({ ...d, availability: e.target.value }))}
+                className={inputCls}
+              >
+                {["Imediata", "15 dias", "30 dias", "A combinar"].map(o => (
+                  <option key={o} value={o}>{o}</option>
+                ))}
+              </select>
             </div>
             <SaveBar section="complementar" />
           </>
         ) : (
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Pretensão Salarial</p>
-              <p className="text-sm font-semibold text-emerald-600">{profile.salary}</p>
-            </div>
-            <div>
-              <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Disponibilidade</p>
-              <p className="text-sm font-medium flex items-center gap-1">
-                <Clock size={12} className="text-muted-foreground" />{profile.availability}
-              </p>
-            </div>
+          <div>
+            <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide mb-0.5">Disponibilidade</p>
+            <p className="text-sm font-medium flex items-center gap-1">
+              <Clock size={12} className="text-muted-foreground" />{profile.availability}
+            </p>
           </div>
         )}
       </SectionCard>
 
       {/* Currículo */}
       <SectionCard icon={FileText} title="Currículo (CV)">
-        {profile.cvUploaded ? (
-          <div className="flex items-center gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-3">
-            <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium">curriculo_joao_silva.pdf</p>
-              <p className="text-xs text-muted-foreground">Enviado em 10/04/2026</p>
-            </div>
-            <button className="text-xs text-primary font-medium hover:underline shrink-0">Substituir</button>
-          </div>
-        ) : (
-          <button className="w-full flex flex-col items-center gap-2 rounded-xl border-2 border-dashed py-8 text-muted-foreground hover:bg-muted/30 transition-colors">
-            <Upload size={24} />
-            <span className="text-sm font-medium">Clique para enviar seu currículo</span>
-            <span className="text-xs">PDF, DOC ou DOCX · até 5 MB</span>
+        <div className="space-y-3">
+          <button
+            onClick={() => navigate("/candidato/curriculo")}
+            className="w-full flex items-center justify-center gap-2.5 rounded-xl border-2 border-[#243c7e] bg-[#243c7e]/5 text-[#243c7e] py-3 text-sm font-bold hover:bg-[#243c7e]/10 transition-colors"
+          >
+            <Sparkles size={16} /> Gerar currículo automaticamente
           </button>
-        )}
+
+          {profile.cvUploaded ? (
+            <div className="flex items-center gap-3 rounded-lg border border-emerald-200 bg-emerald-50 p-3">
+              <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium">curriculo_joao_silva.pdf</p>
+                <p className="text-xs text-muted-foreground">Enviado em 10/04/2026</p>
+              </div>
+              <button className="text-xs text-primary font-medium hover:underline shrink-0">Substituir</button>
+            </div>
+          ) : (
+            <button className="w-full flex flex-col items-center gap-2 rounded-xl border-2 border-dashed py-8 text-muted-foreground hover:bg-muted/30 transition-colors">
+              <Upload size={24} />
+              <span className="text-sm font-medium">Ou envie seu próprio currículo</span>
+              <span className="text-xs">PDF, DOC ou DOCX · até 5 MB</span>
+            </button>
+          )}
+        </div>
       </SectionCard>
 
     </div>
