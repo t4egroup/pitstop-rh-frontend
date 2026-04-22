@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import {
   Briefcase, Building2, Users, FileText,
-  ClipboardList, Mail, Star, MessageSquare, Settings,
+  ClipboardList, Mail, Star, MessageSquare, DollarSign,
 } from "lucide-react";
 
 const sections = [
@@ -31,7 +31,8 @@ const sections = [
   {
     titulo: "Configurações avançadas",
     items: [
-      { to: "/setup/pesquisa-satisfacao", label: "Pesquisa de satisfação", desc: "Pesquisa enviada ao final do processo", icon: MessageSquare },
+      { to: "/setup/pesquisa-satisfacao",    label: "Pesquisa de satisfação",      desc: "Pesquisa enviada ao final do processo",                    icon: MessageSquare },
+      { to: "/setup/controle-financeiro",    label: "Controle Financeiro",         desc: "Defina quais dados financeiros cada recrutador visualiza",  icon: DollarSign    },
     ],
   },
 ];

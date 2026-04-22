@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import {
   Search, MapPin, Briefcase, Clock, DollarSign,
-  SlidersHorizontal, X, Building2, BookmarkPlus, ChevronDown,
+  SlidersHorizontal, X, Building2, BookmarkPlus, ChevronDown, Sparkles,
 } from "lucide-react";
 
 /* ── Types ── */
@@ -10,6 +10,8 @@ interface Job {
   title: string;
   company: string;
   location: string;
+  city: string;
+  country: string;
   modality: "Remoto" | "Híbrido" | "Presencial";
   type: "CLT" | "PJ" | "Estágio" | "Temporário";
   area: string;
@@ -24,7 +26,8 @@ interface Job {
 const allJobs: Job[] = [
   {
     id: 1, title: "Desenvolvedor Front-end Pleno", company: "Inovatech",
-    location: "São Paulo, SP", modality: "Híbrido", type: "CLT", area: "TI",
+    location: "São Paulo, SP", city: "São Paulo", country: "Brasil",
+    modality: "Híbrido", type: "CLT", area: "TI",
     salary: "R$ 6.000 – 9.000", salaryMin: 6000,
     tags: ["React", "TypeScript", "Tailwind"],
     posted: "Há 2 dias",
@@ -32,7 +35,8 @@ const allJobs: Job[] = [
   },
   {
     id: 2, title: "Analista de Marketing Digital", company: "Tech Corp",
-    location: "São Paulo, SP", modality: "Presencial", type: "CLT", area: "Marketing",
+    location: "São Paulo, SP", city: "São Paulo", country: "Brasil",
+    modality: "Presencial", type: "CLT", area: "Marketing",
     salary: "R$ 4.000 – 6.000", salaryMin: 4000,
     tags: ["SEO", "Google Ads", "Meta Ads"],
     posted: "Há 3 dias",
@@ -40,7 +44,8 @@ const allJobs: Job[] = [
   },
   {
     id: 3, title: "UX Designer Sênior", company: "DesignLab",
-    location: "Remoto", modality: "Remoto", type: "PJ", area: "Design",
+    location: "Remoto", city: "Remoto", country: "Brasil",
+    modality: "Remoto", type: "PJ", area: "Design",
     salary: "R$ 8.000 – 12.000", salaryMin: 8000,
     tags: ["Figma", "Design System", "Pesquisa"],
     posted: "Há 1 dia",
@@ -48,7 +53,8 @@ const allJobs: Job[] = [
   },
   {
     id: 4, title: "Analista de RH Pleno", company: "PitStop RH",
-    location: "São Paulo, SP", modality: "Híbrido", type: "CLT", area: "RH",
+    location: "São Paulo, SP", city: "São Paulo", country: "Brasil",
+    modality: "Híbrido", type: "CLT", area: "RH",
     salary: "R$ 4.500 – 6.500", salaryMin: 4500,
     tags: ["Recrutamento", "People Analytics", "DHO"],
     posted: "Há 5 dias",
@@ -56,7 +62,8 @@ const allJobs: Job[] = [
   },
   {
     id: 5, title: "Desenvolvedor Back-end Node.js", company: "StartupX",
-    location: "Remoto", modality: "Remoto", type: "PJ", area: "TI",
+    location: "Remoto", city: "Remoto", country: "Brasil",
+    modality: "Remoto", type: "PJ", area: "TI",
     salary: "R$ 9.000 – 14.000", salaryMin: 9000,
     tags: ["Node.js", "PostgreSQL", "AWS"],
     posted: "Há 1 dia",
@@ -64,7 +71,8 @@ const allJobs: Job[] = [
   },
   {
     id: 6, title: "Assistente Financeiro", company: "Grupo Alfa",
-    location: "Rio de Janeiro, RJ", modality: "Presencial", type: "CLT", area: "Financeiro",
+    location: "Rio de Janeiro, RJ", city: "Rio de Janeiro", country: "Brasil",
+    modality: "Presencial", type: "CLT", area: "Financeiro",
     salary: "R$ 2.500 – 3.500", salaryMin: 2500,
     tags: ["Excel", "Conciliação", "ERP"],
     posted: "Há 4 dias",
@@ -72,7 +80,8 @@ const allJobs: Job[] = [
   },
   {
     id: 7, title: "Estágio em Desenvolvimento Web", company: "Agência Z",
-    location: "São Paulo, SP", modality: "Híbrido", type: "Estágio", area: "TI",
+    location: "São Paulo, SP", city: "São Paulo", country: "Brasil",
+    modality: "Híbrido", type: "Estágio", area: "TI",
     salary: "R$ 1.500 – 2.000", salaryMin: 1500,
     tags: ["HTML", "CSS", "JavaScript"],
     posted: "Há 6 dias",
@@ -80,7 +89,8 @@ const allJobs: Job[] = [
   },
   {
     id: 8, title: "Gerente de Produto (PM)", company: "DataCo",
-    location: "Remoto", modality: "Remoto", type: "CLT", area: "Produto",
+    location: "Remoto", city: "Remoto", country: "Brasil",
+    modality: "Remoto", type: "CLT", area: "Produto",
     salary: "R$ 12.000 – 18.000", salaryMin: 12000,
     tags: ["Product Discovery", "OKR", "Roadmap"],
     posted: "Há 2 dias",
@@ -88,7 +98,8 @@ const allJobs: Job[] = [
   },
   {
     id: 9, title: "Representante Comercial", company: "VendeMais",
-    location: "Curitiba, PR", modality: "Presencial", type: "CLT", area: "Comercial",
+    location: "Curitiba, PR", city: "Curitiba", country: "Brasil",
+    modality: "Presencial", type: "CLT", area: "Comercial",
     salary: "R$ 3.000 + comissão", salaryMin: 3000,
     tags: ["Vendas", "B2B", "CRM"],
     posted: "Há 3 dias",
@@ -96,7 +107,8 @@ const allJobs: Job[] = [
   },
   {
     id: 10, title: "Analista de Dados Jr.", company: "DataCo",
-    location: "São Paulo, SP", modality: "Híbrido", type: "CLT", area: "TI",
+    location: "São Paulo, SP", city: "São Paulo", country: "Brasil",
+    modality: "Híbrido", type: "CLT", area: "TI",
     salary: "R$ 4.000 – 6.000", salaryMin: 4000,
     tags: ["Python", "SQL", "Power BI"],
     posted: "Há 7 dias",
@@ -104,7 +116,8 @@ const allJobs: Job[] = [
   },
   {
     id: 11, title: "Designer Gráfico Pleno", company: "Agência Z",
-    location: "São Paulo, SP", modality: "Presencial", type: "CLT", area: "Design",
+    location: "São Paulo, SP", city: "São Paulo", country: "Brasil",
+    modality: "Presencial", type: "CLT", area: "Design",
     salary: "R$ 3.500 – 5.000", salaryMin: 3500,
     tags: ["Illustrator", "Photoshop", "Branding"],
     posted: "Há 5 dias",
@@ -112,13 +125,21 @@ const allJobs: Job[] = [
   },
   {
     id: 12, title: "DevOps Engineer", company: "Inovatech",
-    location: "Remoto", modality: "Remoto", type: "PJ", area: "TI",
+    location: "Remoto", city: "Remoto", country: "Brasil",
+    modality: "Remoto", type: "PJ", area: "TI",
     salary: "R$ 11.000 – 16.000", salaryMin: 11000,
     tags: ["Docker", "Kubernetes", "CI/CD"],
     posted: "Há 1 dia",
     description: "Gestão de infraestrutura cloud, pipelines de CI/CD e observabilidade para sistemas de alta disponibilidade.",
   },
 ];
+
+/* ── Candidate profile mock (areas/skills from registration) ── */
+const candidateProfile = {
+  area: "TI",
+  skills: ["React", "TypeScript", "Node.js", "Git"],
+  city: "São Paulo",
+};
 
 /* ── Filter options ── */
 const areas      = ["Todas", "TI", "Marketing", "Design", "RH", "Financeiro", "Produto", "Comercial"];
@@ -131,6 +152,8 @@ const salaryRanges = [
   { label: "A partir de R$ 9.000", min: 9000 },
   { label: "A partir de R$ 12.000", min: 12000 },
 ];
+const cities = ["Todas as cidades", "São Paulo", "Rio de Janeiro", "Curitiba", "Remoto"];
+const countries = ["Todos os países", "Brasil", "Portugal", "EUA"];
 
 /* ── Filter pill ── */
 const Pill = ({ label, onRemove }: { label: string; onRemove: () => void }) => (
@@ -149,15 +172,22 @@ const modalityColor: Record<string, string> = {
   Presencial: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-800",
 };
 
-const JobCard = ({ job }: { job: Job }) => (
-  <div className="group rounded-xl border bg-white p-5 flex flex-col gap-3 hover:shadow-md hover:border-primary/30 transition-all">
+const JobCard = ({ job, recommended }: { job: Job; recommended?: boolean }) => (
+  <div className={`group rounded-xl border bg-white p-5 flex flex-col gap-3 hover:shadow-md transition-all ${recommended ? "border-primary/40 hover:border-primary/60" : "hover:border-primary/30"}`}>
     {/* Header */}
     <div className="flex items-start gap-3">
       <div className="h-10 w-10 shrink-0 rounded-lg bg-primary/10 flex items-center justify-center font-bold text-primary text-sm">
         {job.company[0]}
       </div>
       <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors">{job.title}</h3>
+        <div className="flex items-center gap-2 flex-wrap">
+          <h3 className="font-semibold text-sm leading-snug group-hover:text-primary transition-colors">{job.title}</h3>
+          {recommended && (
+            <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 text-primary px-2 py-0.5 text-[10px] font-bold">
+              <Sparkles size={9} /> Recomendada
+            </span>
+          )}
+        </div>
         <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
           <Building2 size={11} />{job.company}
         </p>
@@ -173,7 +203,11 @@ const JobCard = ({ job }: { job: Job }) => (
     {/* Tags */}
     <div className="flex flex-wrap gap-1.5">
       {job.tags.map(tag => (
-        <span key={tag} className="rounded-md border bg-muted/40 px-2 py-0.5 text-[11px] font-medium text-muted-foreground">
+        <span key={tag} className={`rounded-md border px-2 py-0.5 text-[11px] font-medium ${
+          candidateProfile.skills.includes(tag)
+            ? "bg-primary/5 border-primary/30 text-primary"
+            : "bg-muted/40 text-muted-foreground"
+        }`}>
           {tag}
         </span>
       ))}
@@ -228,7 +262,17 @@ const Vagas = () => {
   const [modality,    setModality]    = useState("Todas");
   const [type,        setType]        = useState("Todos");
   const [salaryMin,   setSalaryMin]   = useState(0);
+  const [city,        setCity]        = useState("Todas as cidades");
+  const [country,     setCountry]     = useState("Todos os países");
   const [showFilters, setShowFilters] = useState(false);
+
+  /* Vagas recomendadas: mesma área e ao menos 1 skill em comum */
+  const recommended = useMemo(() =>
+    allJobs.filter(j =>
+      j.area === candidateProfile.area &&
+      j.tags.some(t => candidateProfile.skills.includes(t))
+    ).slice(0, 3),
+  []);
 
   const filtered = useMemo(() => {
     return allJobs.filter(j => {
@@ -237,21 +281,26 @@ const Vagas = () => {
       if (modality !== "Todas" && j.modality !== modality) return false;
       if (type     !== "Todos" && j.type     !== type)     return false;
       if (j.salaryMin < salaryMin) return false;
+      if (city    !== "Todas as cidades"  && j.city    !== city)    return false;
+      if (country !== "Todos os países"   && j.country !== country) return false;
       return true;
     });
-  }, [search, area, modality, type, salaryMin]);
+  }, [search, area, modality, type, salaryMin, city, country]);
 
   /* active filter pills */
   const activePills: { label: string; clear: () => void }[] = [
-    ...(area     !== "Todas"  ? [{ label: area,     clear: () => setArea("Todas")      }] : []),
-    ...(modality !== "Todas"  ? [{ label: modality, clear: () => setModality("Todas")  }] : []),
-    ...(type     !== "Todos"  ? [{ label: type,     clear: () => setType("Todos")      }] : []),
-    ...(salaryMin > 0         ? [{ label: `≥ R$ ${salaryMin.toLocaleString("pt-BR")}`, clear: () => setSalaryMin(0) }] : []),
+    ...(area     !== "Todas"             ? [{ label: area,     clear: () => setArea("Todas")                          }] : []),
+    ...(modality !== "Todas"             ? [{ label: modality, clear: () => setModality("Todas")                      }] : []),
+    ...(type     !== "Todos"             ? [{ label: type,     clear: () => setType("Todos")                          }] : []),
+    ...(salaryMin > 0                    ? [{ label: `≥ R$ ${salaryMin.toLocaleString("pt-BR")}`, clear: () => setSalaryMin(0) }] : []),
+    ...(city    !== "Todas as cidades"   ? [{ label: city,    clear: () => setCity("Todas as cidades")                }] : []),
+    ...(country !== "Todos os países"    ? [{ label: country, clear: () => setCountry("Todos os países")              }] : []),
   ];
 
   const clearAll = () => {
     setSearch(""); setArea("Todas"); setModality("Todas");
     setType("Todos"); setSalaryMin(0);
+    setCity("Todas as cidades"); setCountry("Todos os países");
   };
 
   return (
@@ -262,6 +311,20 @@ const Vagas = () => {
         <h1 className="text-2xl font-extrabold">Vagas disponíveis</h1>
         <p className="text-sm text-muted-foreground mt-1">Encontre oportunidades alinhadas com o seu perfil.</p>
       </div>
+
+      {/* Vagas Recomendadas */}
+      {recommended.length > 0 && (
+        <div className="rounded-xl border border-primary/20 bg-primary/5 p-4 space-y-3">
+          <div className="flex items-center gap-2">
+            <Sparkles size={16} className="text-primary" />
+            <h2 className="text-sm font-bold text-primary">Vagas recomendadas para você</h2>
+            <span className="text-xs text-muted-foreground ml-1">com base no seu perfil ({candidateProfile.area})</span>
+          </div>
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-3">
+            {recommended.map(job => <JobCard key={job.id} job={job} recommended />)}
+          </div>
+        </div>
+      )}
 
       {/* Search bar */}
       <div className="flex gap-2">
@@ -336,6 +399,21 @@ const Vagas = () => {
                 options={salaryRanges.map(r => r.label)}
                 onChange={v => setSalaryMin(salaryRanges.find(r => r.label === v)?.min ?? 0)}
               />
+            </div>
+
+            {/* Localidade */}
+            <div className="pt-1 border-t space-y-3">
+              <p className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide flex items-center gap-1">
+                <MapPin size={11} /> Localidade
+              </p>
+              <div className="space-y-1">
+                <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">Cidade</label>
+                <FilterSelect label="Cidade" value={city} options={cities} onChange={setCity} />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[11px] font-semibold text-muted-foreground uppercase tracking-wide">País</label>
+                <FilterSelect label="País" value={country} options={countries} onChange={setCountry} />
+              </div>
             </div>
           </div>
         </aside>

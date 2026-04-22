@@ -22,6 +22,44 @@ const roles: { value: UserRole; label: string }[] = [
   { value: "recrutador", label: "Recrutador" },
 ];
 
+const ROLE_HERO: Record<UserRole, {
+  image: string;
+  headline: string;
+  sub: string;
+  stats: { icon: React.ElementType; num: string; label: string; accent: string }[];
+}> = {
+  candidato: {
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1400&q=80",
+    headline: "A parada certa\npara o seu\nsucesso.",
+    sub: "Candidate-se a vagas, acompanhe processos e construa a carreira que você merece.",
+    stats: [
+      { icon: Users,      num: "+5.000", label: "candidatos ativos", accent: "#60a5fa" },
+      { icon: TrendingUp, num: "92%",    label: "taxa de contratação", accent: "#4ade80" },
+      { icon: Shield,     num: "+600",   label: "vagas novas/mês",    accent: "#fbbf24" },
+    ],
+  },
+  empresa: {
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1400&q=80",
+    headline: "A parada certa\npara o seu\nsucesso.",
+    sub: "Gerencie vagas, candidatos e todo o processo seletivo em um único lugar.",
+    stats: [
+      { icon: Users,      num: "+1.000", label: "empresas parceiras", accent: "#60a5fa" },
+      { icon: TrendingUp, num: "98%",    label: "satisfação",         accent: "#4ade80" },
+      { icon: Shield,     num: "48h",    label: "tempo médio de hire", accent: "#fbbf24" },
+    ],
+  },
+  recrutador: {
+    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1400&q=80",
+    headline: "A parada certa\npara o seu\nsucesso.",
+    sub: "Acompanhe processos, avalie perfis e feche vagas com muito mais produtividade.",
+    stats: [
+      { icon: Users,      num: "+1.000", label: "processos/ano",  accent: "#60a5fa" },
+      { icon: TrendingUp, num: "98%",    label: "satisfação",     accent: "#4ade80" },
+      { icon: Shield,     num: "+600",   label: "vagas fechadas", accent: "#fbbf24" },
+    ],
+  },
+};
+
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [selectedRole, setSelectedRole] = useState<UserRole>("candidato");
@@ -35,23 +73,23 @@ const Login = () => {
   };
 
   return (
-    <div className="h-screen flex overflow-hidden">
+    <div className="min-h-screen lg:h-screen flex overflow-hidden">
 
       {/* ── Left panel – formulário ── */}
       <div
-        className="w-full lg:w-[42%] flex flex-col px-10 overflow-y-auto"
+        className="w-full lg:w-[42%] flex flex-col px-5 sm:px-8 lg:px-10 overflow-y-auto"
         style={{ background: "linear-gradient(160deg, #f8faff 0%, #eef3ff 100%)" }}
       >
-        <div className="sticky top-0 pt-5 pb-2">
-              <Link
-                to="/"
-                className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors"
-              >
-                <ArrowLeft size={14} /> Voltar ao início
-              </Link>
-            </div>
-        <div className="flex-1 flex items-center justify-center">
-          <div className="w-full max-w-[360px] py-8">
+        <div className="pt-5 pb-2">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-slate-800 transition-colors"
+          >
+            <ArrowLeft size={14} /> Voltar ao início
+          </Link>
+        </div>
+        <div className="flex-1 flex items-start lg:items-center justify-center">
+          <div className="w-full max-w-[360px] py-6 lg:py-8">
 
             {/* Mobile logo */}
             <div className="mb-8 lg:hidden">
@@ -182,64 +220,43 @@ const Login = () => {
         </p>
       </div>
 
-      {/* ── Right panel – branding (hero-style) ── */}
+      {/* ── Right panel – hero dinâmico por perfil ── */}
       <div
         className="hidden lg:flex flex-col justify-between w-[58%] p-14 relative overflow-hidden"
-        style={{ background: "linear-gradient(145deg, #0a1628 0%, #0f2044 40%, #162952 100%)" }}
+        style={{ background: "#0f2044" }}
       >
-        {/* ── Geometric shapes ── */}
-        <div className="absolute top-0 right-0 w-[420px] h-[420px] pointer-events-none opacity-50"
-          style={{ background: "linear-gradient(160deg,#1e3a7a,#243c7e)", clipPath: "polygon(100% 0%,30% 0%,100% 70%)" }} />
-        <div className="absolute top-0 right-0 w-[260px] h-[260px] pointer-events-none opacity-30"
-          style={{ background: "#31549c", clipPath: "polygon(100% 0%,55% 0%,100% 45%)" }} />
-        <div className="absolute bottom-0 left-0 w-[320px] h-[320px] pointer-events-none opacity-25"
-          style={{ background: "linear-gradient(45deg,#c0392b,#ea3839)", clipPath: "polygon(0% 100%,0% 35%,65% 100%)" }} />
-        <div className="absolute bottom-0 right-0 w-[180px] h-[180px] pointer-events-none opacity-15"
-          style={{ background: "#f59e0b", clipPath: "polygon(100% 100%,30% 100%,100% 30%)" }} />
-
-        {/* Grid lines */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.06]"
-          style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,1) 1px,transparent 1px)", backgroundSize: "60px 60px" }} />
-
-        {/* SVG circles */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.07 }} aria-hidden>
-          <circle cx="75%" cy="50%" r="160" fill="none" stroke="white" strokeWidth="1" />
-          <circle cx="75%" cy="50%" r="260" fill="none" stroke="white" strokeWidth="0.7" />
-          <circle cx="75%" cy="50%" r="360" fill="none" stroke="white" strokeWidth="0.4" />
-        </svg>
-
-        {/* Dot grid */}
-        <div className="dot-grid absolute inset-0 pointer-events-none opacity-15" />
-
-        {/* Top stripe */}
-        <div className="absolute top-0 left-0 right-0 h-[3px] pointer-events-none"
-          style={{ background: "linear-gradient(90deg,#ea3839 0%,#3b6fd4 45%,#243c7e 70%,transparent 100%)" }} />
-        {/* Left stripe */}
-        <div className="absolute top-0 left-0 bottom-0 w-[3px] pointer-events-none"
-          style={{ background: "linear-gradient(180deg,#ea3839,rgba(59,111,212,0.4),transparent)" }} />
+        {/* Foto de fundo com overlay azul escuro */}
+        <div
+          key={selectedRole}
+          className="absolute inset-0 bg-cover bg-center transition-opacity duration-700"
+          style={{ backgroundImage: `url(${ROLE_HERO[selectedRole].image})`, opacity: 0.6 }}
+        />
+        {/* Overlay azul para unificar o visual */}
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "rgba(15,32,68,0.50)" }} />
 
         <div />
 
-        {/* Copy */}
+        {/* Copy — muda conforme o perfil */}
         <div className="relative z-10">
           <p className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: "#ea3839" }}>
             Plataforma de recrutamento
           </p>
           <h2 className="text-5xl font-extrabold text-white leading-[1.05] mb-6">
-            A parada certa<br />para o seu{" "}
-            <span style={{ color: "#FFD700" }}>sucesso.</span>
+            {ROLE_HERO[selectedRole].headline.split("\n").map((line, i, arr) => (
+              <span key={i}>
+                {i === arr.length - 1
+                  ? <span style={{ color: "#FFD700" }}>{line}</span>
+                  : <>{line}<br /></>}
+              </span>
+            ))}
           </h2>
           <p className="text-white/55 text-base leading-relaxed max-w-md">
-            Gerencie processos seletivos, candidatos e admissões em um só lugar — com inteligência e agilidade.
+            {ROLE_HERO[selectedRole].sub}
           </p>
 
           {/* Stats */}
           <div className="flex gap-8 mt-10">
-            {[
-              { icon: Users,      num: "+1000", label: "processos/ano",  accent: "#60a5fa" },
-              { icon: TrendingUp, num: "98%",   label: "satisfação",     accent: "#4ade80" },
-              { icon: Shield,     num: "+600",  label: "vagas fechadas", accent: "#fbbf24" },
-            ].map(({ icon: Icon, num, label, accent }, i) => (
+            {ROLE_HERO[selectedRole].stats.map(({ icon: Icon, num, label, accent }, i) => (
               <div key={i}>
                 <div className="flex items-center gap-1.5 mb-1">
                   <Icon size={13} style={{ color: accent }} />

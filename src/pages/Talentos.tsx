@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Eye, UserPlus, SlidersHorizontal, X, ChevronDown, ChevronUp } from "lucide-react";
 import { talentos } from "@/data/talentos";
@@ -57,6 +57,18 @@ const CheckFilter = ({ label, checked, onChange }: { label: string; checked: boo
 const Talentos = () => {
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+
+  const [zoom, setZoom] = useState(() =>
+    parseFloat(localStorage.getItem("dashZoom") ?? "1.1")
+  );
+  useEffect(() => {
+    const onStorage = () =>
+      setZoom(parseFloat(localStorage.getItem("dashZoom") ?? "1.1"));
+    window.addEventListener("storage", onStorage);
+    return () => window.removeEventListener("storage", onStorage);
+  }, []);
+
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const [filtros, setFiltros] = useState({
     status:         [] as string[],
@@ -126,23 +138,42 @@ const Talentos = () => {
           ))}
         </div>
 
-        {/* Search */}
-        <div className="relative">
-          <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Buscar por nome, cargo, cidade ou habilidade..."
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            className="w-full rounded-xl border border-blue-200 bg-white pl-10 pr-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all shadow-sm"
-          />
+        {/* Search + mobile filter toggle */}
+        <div className="flex gap-2">
+          <div className="relative flex-1">
+            <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Buscar por nome, cargo, cidade ou habilidade..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              className="w-full rounded-xl border border-blue-200 bg-white pl-10 pr-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all shadow-sm"
+            />
+          </div>
+          <button
+            onClick={() => setShowMobileFilters(v => !v)}
+            className={`lg:hidden flex items-center gap-1.5 rounded-xl border px-3 py-2.5 text-sm font-medium transition-colors ${
+              showMobileFilters ? "bg-primary text-white border-primary" : "bg-white border-blue-200 text-slate-600 hover:bg-slate-50"
+            }`}
+          >
+            <SlidersHorizontal size={15} />
+            Filtros
+            {activeCount > 0 && (
+              <span className={`h-4 w-4 rounded-full text-[10px] font-bold flex items-center justify-center ${showMobileFilters ? "bg-white text-primary" : "bg-primary text-white"}`}>
+                {activeCount}
+              </span>
+            )}
+          </button>
         </div>
 
         {/* Body: sidebar + list */}
         <div className="flex gap-5 items-start">
 
           {/* ── Sidebar de filtros ── */}
-          <aside className="hidden lg:block w-56 shrink-0 bg-white border border-blue-200 rounded-xl p-4 sticky top-6">
+          <aside
+            className={`${showMobileFilters ? "block" : "hidden"} lg:block w-full lg:w-56 shrink-0 bg-white border border-blue-200 rounded-xl p-4 lg:sticky lg:top-4 lg:overflow-y-auto`}
+            style={{ maxHeight: window.innerWidth >= 1024 ? `calc((100vh - 3rem) / ${zoom})` : undefined }}
+          >
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-1.5">
                 <SlidersHorizontal size={14} className="text-slate-500" />
@@ -210,7 +241,8 @@ const Talentos = () => {
             ) : filtrados.map(t => (
               <div
                 key={t.id}
-                className="bg-white border border-blue-200 rounded-xl px-5 py-3.5 flex items-center gap-4 hover:shadow-md hover:border-primary/30 transition-all duration-150"
+                onClick={() => navigate(`/talentos/${t.id}`)}
+                className="bg-white border border-blue-200 rounded-xl px-4 py-3.5 flex items-center gap-3 hover:shadow-md hover:border-primary/30 transition-all duration-150 cursor-pointer"
               >
                 {/* Avatar */}
                 <div
@@ -220,8 +252,8 @@ const Talentos = () => {
                   {getInitial(t.nome)}
                 </div>
 
-                {/* Nome + cargo */}
-                <div className="w-44 shrink-0">
+                {/* Nome + cargo — flex-1 para não vazar no mobile */}
+                <div className="flex-1 min-w-0">
                   <p className="font-semibold text-sm text-slate-900 truncate">{t.nome}</p>
                   <p className="text-xs text-slate-400 truncate">{t.cargo}</p>
                 </div>
@@ -250,13 +282,13 @@ const Talentos = () => {
                 {/* Salário */}
                 <span className="hidden xl:block text-xs font-semibold text-slate-600 w-20 shrink-0 text-right">{t.salario}</span>
 
-                {/* Status */}
-                <span className={`text-[10px] font-semibold px-2.5 py-1 rounded-full shrink-0 ${statusStyle[t.status]}`}>
+                {/* Status — ml-auto empurra para direita sem forçar overflow */}
+                <span className={`text-[10px] font-semibold px-2 py-1 rounded-full shrink-0 ml-auto ${statusStyle[t.status]}`}>
                   {t.status}
                 </span>
 
                 {/* Ações */}
-                <div className="flex items-center gap-1.5 shrink-0 ml-auto">
+                <div className="flex items-center gap-1.5 shrink-0" onClick={e => e.stopPropagation()}>
                   <button
                     onClick={() => navigate(`/talentos/${t.id}`)}
                     className="flex items-center gap-1 rounded-lg border border-slate-200 px-2.5 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 transition-colors"

@@ -49,6 +49,10 @@ import SetupTemplatesVaga from "./pages/setup/SetupTemplatesVaga";
 import SetupTemplatesEmail from "./pages/setup/SetupTemplatesEmail";
 import SetupRoteiros from "./pages/setup/SetupRoteiros";
 import SetupPesquisaSatisfacao from "./pages/setup/SetupPesquisaSatisfacao";
+import SetupControleFinanceiro from "./pages/setup/SetupControleFinanceiro";
+import EmpresaBanners from "./pages/EmpresaBanners";
+import CartaOferta from "./pages/CartaOferta";
+import CurriculoGerado from "./pages/CurriculoGerado";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -83,6 +87,11 @@ const App = () => (
               <DashboardLayout><Vagas /></DashboardLayout>
             </ProtectedRoute>
           } />
+          <Route path="/candidato/curriculo" element={
+            <ProtectedRoute roles={["candidato"]}>
+              <CurriculoGerado />
+            </ProtectedRoute>
+          } />
 
           <Route path="/empresa" element={
             <ProtectedRoute roles={["empresa"]}>
@@ -107,6 +116,11 @@ const App = () => (
           <Route path="/empresa/branding" element={
             <ProtectedRoute roles={["empresa"]}>
               <DashboardLayout><Branding /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/empresa/banners" element={
+            <ProtectedRoute roles={["empresa"]}>
+              <DashboardLayout><EmpresaBanners /></DashboardLayout>
             </ProtectedRoute>
           } />
           <Route path="/empresa/perfil" element={
@@ -254,6 +268,16 @@ const App = () => (
           <Route path="/setup/pesquisa-satisfacao" element={
             <ProtectedRoute roles={["recrutador"]}>
               <DashboardLayout><SetupPesquisaSatisfacao /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/setup/controle-financeiro" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><SetupControleFinanceiro /></DashboardLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/carta-oferta" element={
+            <ProtectedRoute roles={["recrutador"]}>
+              <DashboardLayout><CartaOferta /></DashboardLayout>
             </ProtectedRoute>
           } />
           <Route path="/parceiros" element={

@@ -4,7 +4,7 @@ import {
   Users, BarChart2, Megaphone, UserCheck,
   LogOut, Settings, Briefcase, Building2, User, Search,
   PanelLeftClose, PanelLeftOpen, ChevronDown,
-  Globe, List, FileText, MessageSquare, CheckSquare, Handshake,
+  Globe, List, FileText, MessageSquare, CheckSquare, Handshake, Image,
 } from "lucide-react";
 import { useState } from "react";
 import { useAuth, UserRole } from "@/contexts/AuthContext";
@@ -37,8 +37,9 @@ const navLinks: Record<UserRole, NavItem[]> = {
     { to: "/analisar-dados",   label: "Analisar dados",   icon: BarChart2       },
     { to: "/relatorios",       label: "Relatórios",       icon: FileText        },
     { to: "/gerenciar-tarefas",label: "Gerenciar tarefas", icon: CheckSquare    },
+    { to: "/carta-oferta",     label: "Carta Oferta",      icon: FileText        },
     { to: "/parceiros",        label: "Parceiros",         icon: Handshake       },
-    { to: "/setup",              label: "Setup",             icon: Settings        },
+    { to: "/setup",            label: "Setup",             icon: Settings        },
   ],
   candidato: [
     { to: "/candidato/vagas", label: "Vagas",        icon: Search    },
@@ -51,6 +52,7 @@ const navLinks: Record<UserRole, NavItem[]> = {
     { to: "/empresa/candidatos",  label: "Candidatos", icon: Users           },
     { to: "/empresa/relatorios",  label: "Relatórios", icon: BarChart2       },
     { to: "/empresa/branding",    label: "Branding",   icon: Megaphone       },
+    { to: "/empresa/banners",     label: "Banners",    icon: Image           },
     { to: "/empresa/perfil",      label: "Perfil",     icon: Building2       },
   ],
 };
@@ -61,7 +63,13 @@ const bottomLinks: Record<UserRole, { to: string; label: string; icon: React.Ele
   empresa: [],
 };
 
-const AppSidebar = () => {
+const AppSidebar = ({
+  mobileOpen = false,
+  onMobileClose,
+}: {
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
+}) => {
   const { pathname } = useLocation();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -89,9 +97,14 @@ const AppSidebar = () => {
 
   return (
     <aside
-      className={`sticky top-0 h-screen flex flex-col border-r border-[#1b2e63] transition-[width,min-width] duration-200 shrink-0 overflow-hidden whitespace-nowrap ${
-        collapsed ? "w-[68px] min-w-[68px]" : "w-[260px] min-w-[260px]"
-      }`}
+      className={`
+        fixed lg:sticky top-0 z-40 lg:z-auto
+        h-screen flex flex-col border-r border-[#1b2e63]
+        transition-[width,min-width,transform] duration-200
+        shrink-0 overflow-hidden whitespace-nowrap
+        ${collapsed ? "w-[68px] min-w-[68px]" : "w-[260px] min-w-[260px]"}
+        ${mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
+      `}
       style={{ background: "linear-gradient(180deg, #243c7e 0%, #1b2e63 100%)" }}
     >
       {/* ── Header: só o logo ── */}
@@ -175,6 +188,7 @@ const AppSidebar = () => {
                         <Link
                           key={child.to}
                           to={child.to}
+                          onClick={() => onMobileClose?.()}
                           className={`block rounded-lg px-3 py-2 text-sm transition-colors ${
                             childActive
                               ? "bg-white/15 text-white font-semibold"
@@ -197,6 +211,7 @@ const AppSidebar = () => {
               key={l.to}
               to={l.to}
               title={collapsed ? l.label : undefined}
+              onClick={() => onMobileClose?.()}
               className={`flex items-center gap-3 rounded-xl py-2.5 text-sm font-medium transition-colors ${
                 active
                   ? "bg-white/15 text-white font-semibold"
