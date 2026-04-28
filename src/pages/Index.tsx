@@ -45,6 +45,60 @@ const testimonials = [
   },
 ];
 
+/* ───── Candidate Testimonials Data ───── */
+const candidateTestimonials = [
+  {
+    name: "Lucas Ferreira",
+    role: "Desenvolvedor Front-end",
+    company: "Contratado na Inovatech",
+    time: "Contratado em 18 dias",
+    quote: "Eu estava há 4 meses procurando emprego sem sucesso. Cadastrei meu perfil na PitStop RH numa quinta-feira e na semana seguinte já tinha uma entrevista marcada. Em menos de 3 semanas estava com a proposta assinada.",
+    initials: "LF",
+    gradient: "from-blue-500 to-blue-700",
+    stars: 5,
+  },
+  {
+    name: "Juliana Martins",
+    role: "Analista de RH Pleno",
+    company: "Contratada na Tech Corp",
+    time: "Contratada em 12 dias",
+    quote: "O que mais me surpreendeu foi o feedback em tempo real. Em outras plataformas você manda currículo e some no vácuo. Aqui eu acompanhei cada etapa do processo e soube exatamente o que estava acontecendo.",
+    initials: "JM",
+    gradient: "from-violet-500 to-purple-700",
+    stars: 5,
+  },
+  {
+    name: "Rafael Costa",
+    role: "Gerente de Produto",
+    company: "Contratado na DataCo",
+    time: "Contratado em 21 dias",
+    quote: "A PitStop me conectou com uma vaga que eu nem sabia que existia. O sistema identificou que meu perfil combinava com a posição e me sugeriu a candidatura. Foi a melhor decisão da minha carreira.",
+    initials: "RC",
+    gradient: "from-emerald-500 to-teal-700",
+    stars: 5,
+  },
+  {
+    name: "Camila Souza",
+    role: "UX Designer Sênior",
+    company: "Contratada na DesignLab",
+    time: "Contratada em 15 dias",
+    quote: "Fiz o cadastro, o assistente de IA me ajudou a melhorar meu currículo e em 2 semanas estava empregada. A plataforma é intuitiva, o processo é transparente e o resultado fala por si só.",
+    initials: "CS",
+    gradient: "from-rose-500 to-pink-700",
+    stars: 5,
+  },
+  {
+    name: "Marcos Oliveira",
+    role: "Analista de Dados Jr.",
+    company: "Contratado no Grupo Alfa",
+    time: "Contratado em 9 dias",
+    quote: "Estava terminando a faculdade e não tinha experiência formal. A PitStop RH me ajudou a montar um currículo profissional e me conectou com uma empresa que valorizava candidatos em início de carreira.",
+    initials: "MO",
+    gradient: "from-amber-500 to-orange-600",
+    stars: 5,
+  },
+];
+
 /* ───── FAQ Data ───── */
 const faqs = [
   { q: "Como a plataforma ajuda minha empresa a contratar mais rápido?", a: "A PitStop RH centraliza todo o funil de recrutamento — publicação de vagas, triagem automática, agendamento de entrevistas e comunicação com candidatos — em um único lugar, reduzindo o tempo médio de contratação em até 40%." },
@@ -750,6 +804,98 @@ const Index = () => {
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════
+          7b. DEPOIMENTOS DE CANDIDATOS
+      ══════════════════════════════════════════ */}
+      <section id="candidatos" className="py-20 sm:py-28 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #07101e 0%, #0c1d3f 50%, #0f2654 100%)" }}>
+        <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
+          style={{ backgroundImage: "radial-gradient(circle, rgba(255,255,255,0.8) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] rounded-full pointer-events-none opacity-20"
+          style={{ background: "radial-gradient(circle, rgba(36,60,126,0.5), transparent)", transform: "translate(30%, -30%)" }} />
+
+        <div className="container max-w-6xl relative z-10">
+
+          {/* Section header */}
+          <div className="text-center mb-10">
+            <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-blue-300 mb-3">
+              <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: "#ea3839" }} />
+              Candidatos
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-extrabold mb-3 text-white">
+              Histórias reais de quem encontrou a vaga certa
+            </h2>
+            <p className="text-white/60 text-sm">
+              Candidatos que usaram a plataforma e transformaram sua carreira
+            </p>
+          </div>
+
+          {/* Quick metrics */}
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            {[
+              { icon: "⚡", label: "Tempo médio de contratação", value: "15 dias", color: "text-amber-400" },
+              { icon: "✅", label: "Taxa de aprovação", value: "94%", color: "text-green-400" },
+              { icon: "🌟", label: "Satisfação dos candidatos", value: "4.9/5", color: "text-blue-300" },
+            ].map((m, i) => (
+              <div key={i} className="flex items-center gap-3 rounded-xl px-5 py-3.5" style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
+                <span className="text-xl leading-none">{m.icon}</span>
+                <div>
+                  <p className={`text-xl font-extrabold leading-none text-white`}>{m.value}</p>
+                  <p className={`text-[11px] mt-0.5 ${m.color}`}>{m.label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Cards grid — 3 cols desktop; last 2 centered via 6-col sub-grid trick */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6">
+            {candidateTestimonials.map((t, i) => (
+              <div
+                key={i}
+                className={`relative rounded-2xl overflow-hidden hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-200 lg:col-span-2${i === 3 ? " lg:col-start-2" : ""}`}
+                style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}
+              >
+                {/* Colored top border */}
+                <div className={`h-[3px] w-full bg-gradient-to-r ${t.gradient}`} />
+
+                {/* Time badge */}
+                <div className="absolute top-4 right-4 rounded-full px-3 py-1 text-[11px] font-semibold text-green-400 whitespace-nowrap" style={{ background: "rgba(34,197,94,0.15)", border: "1px solid rgba(34,197,94,0.3)" }}>
+                  {t.time}
+                </div>
+
+                <div className="p-6 pt-5">
+                  {/* Stars */}
+                  <div className="flex gap-0.5 mb-4">
+                    {Array.from({ length: t.stars }).map((_, si) => (
+                      <svg key={si} className="h-4 w-4" viewBox="0 0 20 20" fill="#f59e0b" aria-hidden>
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+
+                  {/* Quote */}
+                  <p className="text-white/80 text-sm leading-relaxed font-normal mb-6">
+                    "{t.quote}"
+                  </p>
+
+                  {/* Author footer */}
+                  <div className="flex items-center gap-3 pt-4" style={{ borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+                    <div className={`h-10 w-10 rounded-full bg-gradient-to-br ${t.gradient} flex items-center justify-center text-white font-bold text-sm shrink-0`}>
+                      {t.initials}
+                    </div>
+                    <div>
+                      <p className="font-bold text-white text-sm">{t.name}</p>
+                      <p className="text-xs text-white/50">{t.role}</p>
+                      <p className="text-xs text-white/50">{t.company}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
         </div>
       </section>
 
