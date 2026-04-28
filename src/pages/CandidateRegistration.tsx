@@ -115,7 +115,7 @@ const sections = [
   },
 ];
 
-const inputCls = "w-full border border-gray-100 rounded-lg bg-white px-4 py-3 text-sm text-slate-800 placeholder:text-slate-400 hover:border-blue-200 hover:shadow-sm transition-all duration-250 focus:outline-none focus:bg-white focus:border-blue-400 focus:shadow-[0_0_0_3px_rgba(70,104,179,0.08)]";
+const inputCls = "w-full border border-slate-200 rounded-xl bg-white px-4 py-2 text-sm text-slate-800 placeholder:text-slate-400 hover:border-slate-300 hover:shadow-sm transition-all duration-250 focus:outline-none focus:bg-white focus:border-blue-400 focus:shadow-[0_0_0_3px_rgba(70,104,179,0.08)]"
 
 /* ── FieldWrapper ── */
 const FieldWrapper = ({
@@ -130,7 +130,7 @@ const FieldWrapper = ({
   children: React.ReactNode;
 }) => (
   <div className="relative">
-    <label htmlFor={id} className="block text-xs font-semibold mb-2 text-slate-700 uppercase tracking-wide">
+    <label htmlFor={id} className="block text-xs font-semibold mb-1.5 text-slate-700 uppercase tracking-wide">
       {label}{required && <span className="text-red-500 ml-1">*</span>}
     </label>
     <div className="relative">
@@ -192,7 +192,7 @@ const DadosPessoaisForm = ({ onConfirm }: { onConfirm: () => void }) => {
 
   return (
     <form onSubmit={e => { e.preventDefault(); onConfirm(); }}>
-      <div className="space-y-7">
+      <div className="space-y-4">
 
         <FieldWrapper id="nome" label="Nome Completo" required error={err("nome")} valid={ok("nome")}>
           <input id="nome" type="text" placeholder="Seu nome completo" value={values.nome}
@@ -208,7 +208,7 @@ const DadosPessoaisForm = ({ onConfirm }: { onConfirm: () => void }) => {
             className={cls("email")} />
         </FieldWrapper>
 
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-2 gap-3">
           <FieldWrapper id="cpf" label="CPF" required error={err("cpf")} valid={ok("cpf")}>
             <input id="cpf" type="text" placeholder="000.000.000-00" value={values.cpf}
               onChange={e => handleChange("cpf", e.target.value)}
@@ -224,7 +224,7 @@ const DadosPessoaisForm = ({ onConfirm }: { onConfirm: () => void }) => {
           </FieldWrapper>
         </div>
 
-        <div className="grid" style={{ gridTemplateColumns: "40% 1fr", gap: "1.25rem" }}>
+        <div className="grid" style={{ gridTemplateColumns: "40% 1fr", gap: "1rem" }}>
           <div>
             <FieldWrapper id="dataNascimento" label="Data de Nascimento" required
               error={err("dataNascimento")} valid={ok("dataNascimento")}>
@@ -235,7 +235,7 @@ const DadosPessoaisForm = ({ onConfirm }: { onConfirm: () => void }) => {
             </FieldWrapper>
           </div>
 
-          <div className="grid" style={{ gridTemplateColumns: "75% 25%", gap: "1.25rem" }}>
+          <div className="grid" style={{ gridTemplateColumns: "75% 25%", gap: "1rem" }}>
             <div>
               <FieldWrapper id="cidade" label="Cidade" required error={err("cidade")} valid={ok("cidade")}>
                 <input id="cidade" type="text" placeholder="Sua cidade" value={values.cidade}
@@ -503,35 +503,35 @@ const CandidateRegistration = () => {
         <div className="flex flex-col justify-center items-center flex-1 px-6 py-12">
 
           {/* Formulário em card flutuante */}
-          <div className="w-full max-w-2xl bg-white rounded-3xl shadow-xl p-14" style={{
+          <div className="w-full max-w-lg bg-white rounded-3xl shadow-xl p-10" style={{
             boxShadow: "0 20px 40px rgba(0, 0, 0, 0.08), 0 8px 16px rgba(0, 0, 0, 0.04)"
           }}>
-            <div className="space-y-9">
+            <div className="space-y-5">
               <div>
-                <h1 className="text-5xl font-extrabold text-slate-900 tracking-tight leading-tight mb-2">
-                  Criar sua conta
+                <h1 className="text-2xl mt-4 font-extrabold text-slate-900 tracking-tight leading-tight mb-1 text-center">
+                  Dê o próximo passo na sua carreira
                 </h1>
-                <p className="text-lg text-slate-500 font-normal">
-                  Preencha seus dados básicos para começar.
+                <p className="text-xs text-slate-500 font-normal text-center mb-8">
+                 Preencha seus dados para acessar oportunidades exclusivas.
                 </p>
               </div>
 
-              <div className="flex items-start gap-2 rounded-lg p-3" style={{
-                background: "rgba(70, 104, 179, 0.04)",
-                borderLeft: "2px solid rgba(70, 104, 179, 0.2)"
+              <div className="flex items-start gap-2 rounded-lg p-2.5" style={{
+                background: "rgba(10, 81, 222, 0.11)",
+                borderLeft: "2px solid rgba(0, 47, 255, 0.2)"
               }}>
-                <Info size={12} className="shrink-0 mt-0.5" style={{ color: "rgba(70, 104, 179, 0.6)" }} />
+                <Info size={12} className="shrink-0 mt-0.5" style={{ color: "rgb(40, 67, 125)" }} />
                 <p className="text-xs leading-relaxed text-slate-600">
                   Só o essencial agora — complete seu perfil após o login.
                 </p>
               </div>
 
-              <div className="pt-4">
+              <div className="pt-2">
                 <DadosPessoaisForm onConfirm={() => markFilled(0)} />
               </div>
 
               <button
-                className="w-full rounded-xl py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:shadow-md hover:scale-[1.01] active:scale-[0.98]"
+                className="w-full rounded-xl py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] mt-6"
                 style={{
                   background: "linear-gradient(135deg, #4668B3 0%, #E1596B 100%)",
                   boxShadow: "0 12px 32px rgba(70, 104, 179, 0.25), 0 4px 12px rgba(225, 89, 107, 0.15), inset 0 1px 0 rgba(255,255,255,0.15)",
@@ -540,7 +540,7 @@ const CandidateRegistration = () => {
                 Criar conta e acessar plataforma
               </button>
 
-              <p className="text-center text-xs text-slate-600 mt-2">
+              <p className="text-center text-xs text-slate-600 mt-0">
                 Já tem uma conta?{" "}
                 <a href="/login" className="text-blue-600 font-semibold hover:text-blue-700 transition-colors">
                   Entrar
@@ -579,85 +579,167 @@ const CandidateRegistration = () => {
 
       {/* ══ Desktop right panel (lg+) - Blue Sidebar ══ */}
       <div className="hidden lg:flex relative overflow-hidden flex-col sticky top-0 h-screen order-1 shadow-[-4px_0_16px_rgba(0,0,0,0.08)]" style={{
-        ...darkPanelStyle,
+        background: "radial-gradient(circle at 50% 50%, #1a1b2e 0%, #0f1118 100%)",
         borderRadius: "60px 0 0 60px"
       }}>
-        <div className="relative z-10 flex flex-col h-full px-12 py-16 justify-center items-end text-right">
+        {/* Grid Blueprint - Fundo Técnico */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.15]" preserveAspectRatio="none">
+          <defs>
+            <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="0.5"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#gridPattern)" />
+        </svg>
+
+        {/* Círculos Concêntricos (Radar) - Marca d'água - Canto Superior Direito */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.12 }} preserveAspectRatio="none">
+          <defs>
+            <radialGradient id="radarGradient" cx="90%" cy="10%">
+              <stop offset="0%" style={{ stopColor: "white", stopOpacity: 0.1 }} />
+              <stop offset="100%" style={{ stopColor: "white", stopOpacity: 0 }} />
+            </radialGradient>
+          </defs>
+          <circle cx="90%" cy="10%" r="15%" fill="none" stroke="white" strokeWidth="0.5" opacity="0.4"/>
+          <circle cx="90%" cy="10%" r="30%" fill="none" stroke="white" strokeWidth="0.5" opacity="0.25"/>
+          <circle cx="90%" cy="10%" r="45%" fill="none" stroke="white" strokeWidth="0.5" opacity="0.15"/>
+          <circle cx="90%" cy="10%" r="60%" fill="url(#radarGradient)" strokeWidth="0"/>
+        </svg>
+
+        {/* Formas Geométricas Coloridas - Diferencial de Identidade Visual */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ mixBlendMode: "screen" }} preserveAspectRatio="none">
+          <defs>
+            {/* Gradiente roxo para triângulo inferior esquerdo */}
+            <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style={{ stopColor: "#8B5CF6", stopOpacity: 0.2 }} />
+              <stop offset="100%" style={{ stopColor: "#8B5CF6", stopOpacity: 0 }} />
+            </linearGradient>
+            {/* Gradiente ciano/verde para forma lateral esquerda */}
+            <linearGradient id="cyanGrad" x1="100%" y1="50%" x2="0%" y2="50%">
+              <stop offset="0%" style={{ stopColor: "#06B6D4", stopOpacity: 0.15 }} />
+              <stop offset="100%" style={{ stopColor: "#06B6D4", stopOpacity: 0 }} />
+            </linearGradient>
+          </defs>
+          {/* Polígono inclinado roxo - Canto inferior esquerdo */}
+          <polygon points="-10,100% 40,70% 15,120%" fill="url(#purpleGrad)" />
+          {/* Forma abstrata ciano - Lateral esquerda */}
+          <path d="M -5 20% Q 5 30%, 15 50% T 10 80%" stroke="url(#cyanGrad)" strokeWidth="50" fill="none" strokeLinecap="round" opacity="0.3" />
+        </svg>
+
+        {/* Pontos de Luz nos Cantos - Intensificado */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          background: "radial-gradient(circle at 15% 10%, rgba(59, 130, 246, 0.3) 0%, transparent 35%), radial-gradient(circle at 85% 90%, rgba(225, 89, 107, 0.3) 0%, transparent 40%)",
+          filter: "blur(100px)"
+        }} />
+
+        {/* Mesh Gradient Effect - Glow Blur com Cores do Botão */}
+        <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ filter: "blur(80px)" }} preserveAspectRatio="none">
+          <defs>
+            <radialGradient id="meshGradient1" cx="90%" cy="10%">
+              <stop offset="0%" style={{ stopColor: "#4668B3", stopOpacity: 0.15 }} />
+              <stop offset="100%" style={{ stopColor: "#4668B3", stopOpacity: 0 }} />
+            </radialGradient>
+            <radialGradient id="meshGradient2" cx="5%" cy="90%">
+              <stop offset="0%" style={{ stopColor: "#E1596B", stopOpacity: 0.12 }} />
+              <stop offset="100%" style={{ stopColor: "#E1596B", stopOpacity: 0 }} />
+            </radialGradient>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#meshGradient1)" />
+          <rect width="100%" height="100%" fill="url(#meshGradient2)" />
+        </svg>
+        
+        <div className="relative z-10 flex flex-col h-full px-12 py-16 justify-center items-start text-left">
 
           {/* Conteúdo Principal */}
           <div className="max-w-md">
             {/* Tag Superior */}
-            <div className="inline-block mb-6">
+            <div className="inline-block mb-4">
               <span className="text-xs font-bold uppercase tracking-widest px-3 py-1.5 rounded-full" style={{ backgroundColor: "rgba(225, 89, 107, 0.15)", color: "#E1596B" }}>
                 PASSO A PASSO
               </span>
             </div>
 
             {/* Título Principal */}
-            <h1 className="text-4xl font-extrabold text-white leading-tight mb-4">
+            <h1 className="text-4xl font-semibold text-white leading-tight mb-3">
               A sua{" "}
-              <span style={{ color: "#FFD700" }}>
+              <span style={{ color: "#FFD700", fontWeight: "900" }}>
                 carreira
               </span>
               {" "}começa com este clique.
             </h1>
 
             {/* Subtítulo */}
-            <p className="text-base text-white/70 leading-relaxed mb-16">
+            <p className="text-sm text-white/70 leading-relaxed mb-12">
               Complete seu perfil para acessar as melhores oportunidades do mercado.
             </p>
 
-            {/* Blocos de Progresso */}
-            <div className="space-y-8">
-              {/* Bloco 1 - Ativo */}
-              <div className="flex gap-5 items-start justify-end">
-                <div className="text-right flex-1">
-                  <p className="text-lg font-bold text-yellow-400 leading-tight">
+            {/* Timeline Vertical */}
+            <div className="space-y-10">
+              {/* Passo 1 - Ativo */}
+              <div className="flex gap-6 items-start pb-0 relative">
+                {/* Linha Vertical Conectante */}
+                <div className="absolute left-7 top-20 w-0.5 h-16 pointer-events-none" style={{ background: "rgba(255, 255, 255, 0.2)" }} />
+                {/* Círculo com Glow e Vidro */}
+                <div className="relative flex-shrink-0">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center" style={{ backgroundColor: "#FFD700", boxShadow: "0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 215, 0, 0.3), 0 0 0 4px rgba(255, 215, 0, 0.2)", backdropFilter: "blur(10px)" }}>
+                    <span className="text-lg font-black text-slate-900">1</span>
+                  </div>
+                </div>
+                {/* Conteúdo */}
+                <div className="pt-2 flex-1">
+                  <p className="text-xl font-semibold text-white leading-tight">
                     Dados Pessoais
                   </p>
-                  <p className="text-sm text-white/60 mt-1 leading-tight">
+                  <p className="text-xs text-white/60 mt-0.5 leading-tight">
                     Identificação e contato básico
                   </p>
                 </div>
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "rgba(255, 215, 0, 0.15)" }}>
-                  <User size={28} color="#FFD700" strokeWidth={1.5} />
-                </div>
               </div>
 
-              {/* Bloco 2 - Inativo */}
-              <div className="flex gap-5 items-start justify-end opacity-60">
-                <div className="text-right flex-1">
-                  <p className="text-lg font-bold text-white/70 leading-tight">
+              {/* Passo 2 - Inativo */}
+              <div className="flex gap-6 items-start pb-0 relative">
+                {/* Linha Vertical Conectante */}
+                <div className="absolute left-8 top-20 w-0.5 h-16 pointer-events-none" style={{ background: "rgba(255, 255, 255, 0.2)" }} />
+                {/* Círculo com Vidro */}
+                <div className="relative flex-shrink-0">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center border-2 border-white/30" style={{ backdropFilter: "blur(8px)" }}>
+                    <span className="text-lg font-black text-white/30">2</span>
+                  </div>
+                </div>
+                {/* Conteúdo */}
+                <div className="pt-2 flex-1">
+                  <p className="text-xl font-semibold text-white/50 leading-tight">
                     Experiência
                   </p>
-                  <p className="text-sm text-white/50 mt-1 leading-tight">
+                  <p className="text-xs text-white/40 mt-0.5 leading-tight">
                     Seu histórico profissional e acadêmico
                   </p>
                 </div>
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "rgba(59, 130, 246, 0.15)" }}>
-                  <BookOpen size={28} color="#93c5fd" strokeWidth={1.5} />
-                </div>
               </div>
 
-              {/* Bloco 3 - Inativo */}
-              <div className="flex gap-5 items-start justify-end opacity-60">
-                <div className="text-right flex-1">
-                  <p className="text-lg font-bold text-white/70 leading-tight">
+              {/* Passo 3 - Inativo */}
+              <div className="flex gap-6 items-start">
+                {/* Círculo com Vidro */}
+                <div className="relative flex-shrink-0">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center border-2 border-white/30" style={{ backdropFilter: "blur(8px)" }}>
+                    <span className="text-lg font-black text-white/30">3</span>
+                  </div>
+                </div>
+                {/* Conteúdo */}
+                <div className="pt-2 flex-1">
+                  <p className="text-xl font-semibold text-white/50 leading-tight">
                     Finalização
                   </p>
-                  <p className="text-sm text-white/50 mt-1 leading-tight">
+                  <p className="text-xs text-white/40 mt-0.5 leading-tight">
                     Perfil pronto para as vagas
                   </p>
-                </div>
-                <div className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "rgba(59, 130, 246, 0.15)" }}>
-                  <Rocket size={28} color="#93c5fd" strokeWidth={1.5} />
                 </div>
               </div>
             </div>
           </div>
 
           {/* Logo no Rodapé */}
-          <div className="absolute bottom-12 right-12 opacity-50">
+          <div className="absolute bottom-12 right-12 opacity-80">
             <Logo white />
           </div>
 
